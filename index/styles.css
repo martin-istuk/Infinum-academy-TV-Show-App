@@ -15,7 +15,7 @@ html, body {
 	margin: 1rem auto;
 }
 .container > * {
-	background: white;
+	background: hsl(0, 0%, 95%);
 	border-radius: 12px;
 	margin-bottom: 3rem;
 }
@@ -70,7 +70,7 @@ html, body {
 	width: 30px;
 	margin: 0;
 	padding: 0;
-	color:lightgrey;
+	color:hsl(0, 0%, 75%);
 	font-size: 2rem;
 }
 .starsHovered {
@@ -96,6 +96,9 @@ html, body {
 /* REVIEWS */
 .reviews {
 	padding: 1rem 2rem;
+}
+.reviews * {
+	margin-bottom: 1rem;
 }
 .reviews h2 {
 	font-size: 1.2rem;
