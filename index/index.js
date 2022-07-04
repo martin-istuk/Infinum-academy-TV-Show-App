@@ -12,9 +12,10 @@ const stars = [ star1, star2, star3, star4, star5 ];
 const rating = document.getElementById("hiddenRating");
 
 for ( let i=0; i<5; i++ ) {
-	// SET RATING IN HIDDEN INPUT
 	stars[i].addEventListener("click", (event) => {
+		// SET RATING IN HIDDEN INPUT
 		rating.value = i+1;
+		// REMOVE CSS CLASS FOR COLOR FOR ALL STARS GREATER THAN RATING
 		for ( let k=rating.value; k<5; k++ ) {
 			stars[k].classList.remove("starsHovered");
 		}
