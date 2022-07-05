@@ -1,6 +1,9 @@
 "use strict";
 
-// ADDING NEW REVIEWS
+// INIT
+
+const avgRating = document.getElementById("avgRating");
+
 const reviewText = document.getElementById("reviewText");
 
 const star1 = document.getElementById("star1");
@@ -13,9 +16,19 @@ const stars = [ star1, star2, star3, star4, star5 ];
 
 const ratingInput = document.getElementById("ratingInput");
 
+const initReviews = [
+	{ review: "Not great, not terrible.", rating: 3	},
+	{ review: "Great, not terrible.", rating: 5 },
+	{ review: "Not great, terrible.", rating: 1	}
+];
+
 const reviewsList = document.getElementById("reviewsList");
 
-// SET RATING AND CHANGE COLOR OF THE STARS
+
+
+
+
+// ADD EVENT LISTENERS FOR HOVER AND NEW REVIEW
 for ( let i=0; i<5; i++ ) {
 	stars[i].addEventListener("click", (event) => {
 		// SET RATING IN HIDDEN INPUT
@@ -43,22 +56,9 @@ for ( let i=0; i<5; i++ ) {
 
 
 
-// ALL REVIEWS LIST
-const initReviews = [
-	{
-		review: "Not great, not terrible.",
-		rating: 3
-	},
-	{
-		review: "Great, not terrible.",
-		rating: 5
-	},
-	{
-		review: "Not great, terrible.",
-		rating: 1
-	}
-];
 
+
+// ALL REVIEWS LIST
 function renderReviewList() {
 	if ( localStorage["reviews"] ) {
 		// localStorage present
@@ -88,8 +88,25 @@ function renderReviewList() {
 		localStorage.setItem("reviews", jsonData);
 	}
 }
-
 renderReviewList();
+
+
+
+
+
+// CALCULATE AVERAGE RATING
+function calcAvgRating() {
+	let sum = 0;
+	let localData = JSON.parse(localStorage.getItem("reviews"));
+	for ( let i=0; i<localData.length; i++ ) {
+		sum += localData[i].rating;
+	}
+	let avg = ( sum / localData.length ).toFixed(1);
+	avgRating.innerText = "Average rating: " + avg;
+}
+calcAvgRating();
+
+
 
 
 
@@ -105,7 +122,10 @@ function postNewReview() {
 	localStorage.setItem("reviews", jsonData);
 
 	renderReviewList();
+	calcAvgRating();
 }
+
+
 
 
 
@@ -132,4 +152,5 @@ function deleteReview() {
 	localStorage.setItem("reviews", jsonData);
 
 	renderReviewList();
+	calcAvgRating();
 }

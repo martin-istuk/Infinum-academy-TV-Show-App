@@ -42,6 +42,9 @@ html, body {
 .tvshow p {
 	padding: 1rem 2rem;
 }
+.tvshow #avgRating {
+	font-weight: bold;
+}
 
 
 
@@ -107,7 +110,7 @@ html, body {
 }
 .review {
 	background: purple;
-	border-radius: 0 12px 12px 12px;
+	border-radius: 0 16px 16px 16px;
 	padding: 1rem;
 }
 .review p {
@@ -115,7 +118,8 @@ html, body {
 	line-height: 1.5;
 }
 .review > button {
-	padding: 5px;
+	padding: 2px;
+	width: 60px;
 	border-radius: 5px;
 	color: black;
 	background: white;
