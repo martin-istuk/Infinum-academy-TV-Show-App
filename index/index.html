@@ -19,7 +19,7 @@
 		<section class="newReview">
 			<h2>Add Your own review:</h2>
 			<form>
-				<textarea id="reviewText" rows="7" required>Yes</textarea>
+				<textarea id="reviewText" rows="7" required></textarea>
 				<div class="ratings">
 					<span class="stars" id="star1" value="1">&#9733;</span>
 					<span class="stars" id="star2" value="2">&#9733;</span>
@@ -28,29 +28,13 @@
 					<span class="stars" id="star5" value="5">&#9733;</span>
 				</div>
 				<input type="hidden" required id="ratingInput" value="0" min="0" max="5" step="1">
-				<button type="button" onclick="postReview()">Post</button>
+				<button type="button" onclick="postNewReview()">Post</button>
 			</form>
 		</section>
 
 		<section class="reviews">
 			<h2>All reviews:</h2>
-			<div id="reviewsList">
-				<div class="review">
-					<p>Not great, not terrible.</p>
-					<p>3 / 5</p>
-					<button type="button" onclick="deleteReview()">Delete</button>
-				</div>
-				<div class="review">
-					<p>Great, not terrible.</p>
-					<p>5 / 5</p>
-					<button type="button" onclick="deleteReview()">Delete</button>
-				</div>
-				<div class="review">
-					<p>Not great, terrible.</p>
-					<p>1 / 5</p>
-					<button type="button" onclick="deleteReview()">Delete</button>
-				</div>
-			</div>
+			<div id="reviewsList"></div>
 		</section>
 
 	</div>

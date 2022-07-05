@@ -61,21 +61,29 @@ const initReviews = [
 
 function renderReviewList() {
 	if ( localStorage["reviews"] ) {
-		console.log("ima localStorage");
+		// localStorage present
 		let localData = JSON.parse(localStorage.getItem("reviews"));
 		reviewsList.innerHTML = "";
 		for ( let i=0; i<localData.length; i++) {
 			reviewsList.innerHTML +=
-				"<div class='review'><p>" +
-				localData[i]["review"] +
-				"</p><p>" +
-				localData[i]["rating"] +
-				" / 5" +
-				"</p><button type='button' onclick='deleteReview()'>Delete</button></div>"
+				"<div class='review'>" +
+					"<p>" + localData[i]["review"] + "</p>" +
+					"<p>" +	localData[i]["rating"] + " / 5</p>" +
+					"<button type='button' onclick='deleteReview()'>Delete</button>" +
+				"</div>"
 			;
 		}
 	} else {
-		console.log("nema localStorage");
+		// localStorage not present
+		for ( let i=0; i<initReviews.length; i++) {
+			reviewsList.innerHTML +=
+				"<div class='review'>" +
+					"<p>" + initReviews[i]["review"] + "</p>" +
+					"<p>" +	initReviews[i]["rating"] + " / 5</p>" +
+					"<button type='button' onclick='deleteReview(event)'>Delete</button>" +
+				"</div>"
+			;
+		}
 		let jsonData = JSON.stringify(initReviews);
 		localStorage.setItem("reviews", jsonData);
 	}
@@ -86,14 +94,41 @@ renderReviewList();
 
 
 // POST NEW REVIEW
-function postReview() {
-	let newPost = {
+function postNewReview() {
+	let newReview = {
 		review: reviewText.value,
 		rating: Number(ratingInput.value)
 	};
-	let localData = JSON.parse(localStorage.getItem("reviews"));
-	localData.push(newPost);
-	let jsonData = JSON.stringify(localData);
+	let reviewsData = JSON.parse(localStorage.getItem("reviews"));
+	reviewsData.push(newReview);
+	let jsonData = JSON.stringify(reviewsData);
+	localStorage.setItem("reviews", jsonData);
+
+	renderReviewList();
+}
+
+
+
+// DELETE A REVIEW
+function deleteReview() {
+	let reviewToDelete = {
+		review: event.target.parentElement.children[0].innerText,
+		rating: Number(
+			event.target.parentElement.children[1].innerText.charAt(0)
+		)
+	};
+	let reviewsData = JSON.parse(localStorage.getItem("reviews"));
+	let index;
+	for ( let i=0; i<reviewsData.length; i++ ) {
+		if (
+			reviewToDelete.review === reviewsData[i].review &&
+			reviewToDelete.rating === reviewsData[i].rating
+		) {
+			index = i;
+		}
+	}
+	reviewsData.splice(index, 1);
+	let jsonData = JSON.stringify(reviewsData);
 	localStorage.setItem("reviews", jsonData);
 
 	renderReviewList();
