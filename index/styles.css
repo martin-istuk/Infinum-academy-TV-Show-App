@@ -11,6 +11,7 @@ html, body {
 	background: hsl(0, 0%, 10%);
 }
 .container {
+	width: 90vw;
 	max-width: 600px;
 	margin: 1rem auto;
 }
@@ -112,5 +113,17 @@ html, body {
 .review p {
 	color: white;
 	line-height: 1.5;
+}
+.review > button {
+	padding: 5px;
+	border-radius: 5px;
+	color: black;
+	background: white;
+	border: none;
+	transition: all 0.3s ease;
 	margin-bottom: 0; /* reset */
+}
+.review > button:focus,
+.review > button:hover {
+	background: red;
 }
