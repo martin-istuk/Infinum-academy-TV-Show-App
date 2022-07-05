@@ -65,10 +65,20 @@ function renderReviewList() {
 		let localData = JSON.parse(localStorage.getItem("reviews"));
 		reviewsList.innerHTML = "";
 		for ( let i=0; i<localData.length; i++) {
+			let starRating = "";
+			for ( let j=1; j<6; j++ ) {
+				if ( j <= localData[i].rating ) {
+					starRating += "<span class='stars starsHovered'>&#9733;</span>"
+				} else {
+					starRating += "<span class='stars'>&#9733;</span>"
+				}
+			}
 			reviewsList.innerHTML +=
 				"<div class='review'>" +
 					"<p>" + localData[i]["review"] + "</p>" +
-					"<p>" +	localData[i]["rating"] + " / 5</p>" +
+					"<p>" +	localData[i]["rating"] + " / 5" +
+					starRating +
+					"</p>" +
 					"<button type='button' onclick='deleteReview()'>Delete</button>" +
 				"</div>"
 			;
@@ -76,11 +86,21 @@ function renderReviewList() {
 	} else {
 		// localStorage not present
 		for ( let i=0; i<initReviews.length; i++) {
+			let starRating = "";
+			for ( let j=1; j<6; j++ ) {
+				if ( j <= initReviews[i].rating ) {
+					starRating += "<span class='stars starsHovered'>&#9733;</span>"
+				} else {
+					starRating += "<span class='stars'>&#9733;</span>"
+				}
+			}
 			reviewsList.innerHTML +=
 				"<div class='review'>" +
 					"<p>" + initReviews[i]["review"] + "</p>" +
-					"<p>" +	initReviews[i]["rating"] + " / 5</p>" +
-					"<button type='button' onclick='deleteReview(event)'>Delete</button>" +
+					"<p>" +	initReviews[i]["rating"] + " / 5" +
+					starRating +
+					"</p>" +
+					"<button type='button' onclick='deleteReview()'>Delete</button>" +
 				"</div>"
 			;
 		}
