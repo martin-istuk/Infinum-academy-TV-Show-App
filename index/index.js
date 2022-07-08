@@ -62,7 +62,7 @@ for ( let i=0; i<5; i++ ) {
 function renderReviewList() {
 	if ( localStorage["reviews"] ) {
 		// localStorage present
-		let localData = JSON.parse(localStorage.getItem("reviews"));
+		const localData = JSON.parse(localStorage.getItem("reviews"));
 		reviewsList.innerHTML = "";
 		for ( let i=0; i<localData.length; i++) {
 			let starRating = "";
@@ -104,7 +104,7 @@ function renderReviewList() {
 				"</div>"
 			;
 		}
-		let jsonData = JSON.stringify(initReviews);
+		const jsonData = JSON.stringify(initReviews);
 		localStorage.setItem("reviews", jsonData);
 	}
 }
@@ -117,11 +117,11 @@ renderReviewList();
 // CALCULATE AVERAGE RATING
 function calcAvgRating() {
 	let sum = 0;
-	let localData = JSON.parse(localStorage.getItem("reviews"));
+	const localData = JSON.parse(localStorage.getItem("reviews"));
 	for ( let i=0; i<localData.length; i++ ) {
 		sum += localData[i].rating;
 	}
-	let avg = ( sum / localData.length ).toFixed(1);
+	const avg = ( sum / localData.length ).toFixed(1);
 	avgRating.innerText = "Average rating: " + avg;
 }
 calcAvgRating();
@@ -132,13 +132,13 @@ calcAvgRating();
 
 // POST NEW REVIEW
 function postNewReview() {
-	let newReview = {
+	const newReview = {
 		review: reviewText.value,
 		rating: Number(ratingInput.value)
 	};
-	let reviewsData = JSON.parse(localStorage.getItem("reviews"));
+	const reviewsData = JSON.parse(localStorage.getItem("reviews"));
 	reviewsData.push(newReview);
-	let jsonData = JSON.stringify(reviewsData);
+	const jsonData = JSON.stringify(reviewsData);
 	localStorage.setItem("reviews", jsonData);
 
 	renderReviewList();
@@ -151,13 +151,13 @@ function postNewReview() {
 
 // DELETE A REVIEW
 function deleteReview() {
-	let reviewToDelete = {
+	const reviewToDelete = {
 		review: event.target.parentElement.children[0].innerText,
 		rating: Number(
 			event.target.parentElement.children[1].innerText.charAt(0)
 		)
 	};
-	let reviewsData = JSON.parse(localStorage.getItem("reviews"));
+	const reviewsData = JSON.parse(localStorage.getItem("reviews"));
 	let index;
 	for ( let i=0; i<reviewsData.length; i++ ) {
 		if (
@@ -168,7 +168,7 @@ function deleteReview() {
 		}
 	}
 	reviewsData.splice(index, 1);
-	let jsonData = JSON.stringify(reviewsData);
+	const jsonData = JSON.stringify(reviewsData);
 	localStorage.setItem("reviews", jsonData);
 
 	renderReviewList();
