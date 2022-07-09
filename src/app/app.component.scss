@@ -1,0 +1,9 @@
+app-shows-container {
+	background: grey;
+	padding: 20px;
+	margin: auto;
+	width: 100%;
+	max-width: 1000px;
+	display: grid;
+	grid-template-columns: 780px auto;
+}

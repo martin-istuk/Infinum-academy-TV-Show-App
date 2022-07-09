@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { IShow } from 'src/app/services/show/show.interface';
+import { Show } from 'src/app/services/show/show.model';
 
 @Component({
 	selector: 'app-shows-list',
@@ -10,5 +10,5 @@ import { IShow } from 'src/app/services/show/show.interface';
 export class ShowsListComponent {
 	constructor() {}
 
-	@Input() showsData: Array<IShow> = [];
+	@Input() showsData: Array<Show> = [];
 }

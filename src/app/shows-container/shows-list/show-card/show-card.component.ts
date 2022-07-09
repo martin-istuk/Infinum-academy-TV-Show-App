@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+
+import { Show } from 'src/app/services/show/show.model';
 
 @Component({
 	selector: 'app-show-card',
@@ -7,4 +9,6 @@ import { Component } from '@angular/core';
 })
 export class ShowCardComponent {
 	constructor() {}
+
+	@Input() showsData: Array<Show> = [];
 }
