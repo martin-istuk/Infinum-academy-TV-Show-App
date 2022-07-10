@@ -1,4 +1,16 @@
+app-shows-list {
+	margin: auto;
+}
+
 app-show-form {
 	background: lightgrey;
 	padding: 20px;
+	width: 100%;
+	max-width: 200px;
+}
+
+@media only screen and (max-width: 1060px) {
+	app-show-form {
+		margin: auto;
+	}
 }

@@ -1,5 +1,13 @@
 app-show-card {
+	margin: 1rem auto;
 	display: grid;
+	align-content: center;
 	grid-template-columns: 240px 240px 240px;
 	gap: 20px;
+}
+
+@media only screen and (max-width: 1060px) {
+	app-show-card {
+		grid-template-columns: 240px;
+	}
 }

@@ -11,6 +11,12 @@ export class RatingComponent {
 	@Input() avgRating: number | null = 0;
 
 	goldArray: Array<number> = new Array(8);
+	// goldArray: Array<number> = new Array(
+	// 	Math.round( Number(0 + this.avgRating) )
+	// );
 
 	greyArray: Array<number> = new Array(2);
+	// greyArray: Array<number> = new Array(
+	// 	Math.round( Number(10 - this.avgRating) )
+	// );
 }
