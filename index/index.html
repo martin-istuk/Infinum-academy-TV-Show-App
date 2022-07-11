@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>TV Show APP</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<div class="container">
+
+		<section class="tvshow">
+			<div class="splash"></div>
+			<h2>TV Show Abcd</h2>
+			<p>I am a TV Show. I am a TV Show. I am a TV Show. I am a TV Show. I am a TV Show. I am a TV Show. I am a TV Show. I am a TV Show. I am a TV Show. I am a TV Show. I am a TV Show. I am a TV Show. I am a TV Show. I am a TV Show. I am a TV Show. I am a TV Show. I am a TV Show. I am a TV Show. </p>
+			<p id="avgRating"></p>
+		</section>
+
+		<section class="newReview">
+			<h2>Add Your own review:</h2>
+			<form>
+				<textarea id="reviewText" rows="7" required></textarea>
+				<div class="ratings">
+					<span class="stars" id="star1" value="1">&#9733;</span>
+					<span class="stars" id="star2" value="2">&#9733;</span>
+					<span class="stars" id="star3" value="3">&#9733;</span>
+					<span class="stars" id="star4" value="4">&#9733;</span>
+					<span class="stars" id="star5" value="5">&#9733;</span>
+				</div>
+				<input type="hidden" required id="ratingInput" value="0" min="0" max="5" step="1">
+				<button type="button" onclick="postNewReview()">Post</button>
+			</form>
+		</section>
+
+		<section class="reviews">
+			<h2>All reviews:</h2>
+			<div id="reviewsList"></div>
+		</section>
+
+	</div>
+
+	<script src="index.js"></script>
+</body>
+</html>
