@@ -1,7 +1,7 @@
 <div *ngIf="avgRating">
 	<p class="avgRating">Average rating {{ avgRating | number: '1.1-1' }}</p>
-	<mat-icon *ngFor="let n of goldArray" class="star goldStar"> star </mat-icon>
-	<mat-icon *ngFor="let n of greyArray" class="star greyStar"> star </mat-icon>
+	<mat-icon *ngFor="let n of [].constructor(goldStars)" class="star goldStar"> star </mat-icon>
+	<mat-icon *ngFor="let n of [].constructor(greyStars)" class="star greyStar"> star </mat-icon>
 </div>
 
 <p class="avgRating" *ngIf="!avgRating">No average rating.</p>

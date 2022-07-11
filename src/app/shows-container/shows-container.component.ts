@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { IShow } from '../services/show/show.interface';
 
 import { Show } from '../services/show/show.model';
 
@@ -42,7 +43,9 @@ export class ShowsContainerComponent {
 			average_rating: 0,
 			image_url: '',
 		},
-	];
+	].map((show: IShow) => {
+		return new Show(show);
+	});
 
 	addNewShow(newShow: Show) {
 		this.shows.push(new Show(newShow));
