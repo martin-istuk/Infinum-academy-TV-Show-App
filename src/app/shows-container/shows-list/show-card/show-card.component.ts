@@ -10,5 +10,10 @@ import { Show } from 'src/app/services/show/show.model';
 export class ShowCardComponent {
 	constructor() {}
 
-	@Input() showsData: Array<Show> = [];
+	@Input() showData: Show = {
+		title: '',
+		description: '',
+		averageRating: null,
+		imageUrl: null,
+	};
 }
