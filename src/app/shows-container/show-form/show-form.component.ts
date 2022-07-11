@@ -18,14 +18,14 @@ export class ShowFormComponent {
 
 	onAddShow(title: string, description: string) {
 		if (title && description) {
-			const newShow = new Show({
-				title: title,
-				description: description,
-				average_rating: null,
-				image_url: null,
-			});
-
-			this.addShow.emit(newShow);
+			this.addShow.emit(
+				new Show({
+					title: title,
+					description: description,
+					average_rating: null,
+					image_url: null,
+				}),
+			);
 		}
 	}
 }

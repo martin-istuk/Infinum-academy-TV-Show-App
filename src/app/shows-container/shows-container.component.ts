@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { IShow } from '../services/show/show.interface';
 
+import { IShow } from '../services/show/show.interface';
 import { Show } from '../services/show/show.model';
 
 @Component({
@@ -48,6 +48,7 @@ export class ShowsContainerComponent {
 	});
 
 	addNewShow(newShow: Show) {
-		this.shows.push(new Show(newShow));
+		this.shows.push(newShow);
+		console.log(this.shows);
 	}
 }

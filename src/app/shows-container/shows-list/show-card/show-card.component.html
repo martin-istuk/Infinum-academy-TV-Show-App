@@ -2,10 +2,10 @@
 	<mat-card-header>
 		<mat-card-title>{{ show.title }}</mat-card-title>
 	</mat-card-header>
-	<img *ngIf="show.image_url" mat-card-image [src]="show.image_url" />
-	<img *ngIf="!show.image_url" mat-card-image src="https://via.placeholder.com/240x300" />
+	<img *ngIf="show.imageUrl" mat-card-image [src]="show.imageUrl" />
+	<img *ngIf="!show.imageUrl" mat-card-image src="https://via.placeholder.com/240x300" />
 	<mat-card-content>
 		<p>{{ show.description }}</p>
-		<app-rating [avgRating]="show.average_rating"></app-rating>
+		<app-rating [avgRating]="show.averageRating"></app-rating>
 	</mat-card-content>
 </mat-card>
