@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-
-import { Show } from 'src/app/services/show/show.model';
+import { Show } from 'src/app/interfaces/show.model';
+import { ShowService } from 'src/app/services/show/show.service';
 
 @Component({
 	selector: 'app-show-card',
@@ -8,12 +8,17 @@ import { Show } from 'src/app/services/show/show.model';
 	styleUrls: ['./show-card.component.scss'],
 })
 export class ShowCardComponent {
-	constructor() {}
+	constructor(private showService: ShowService) {}
 
 	@Input() showData: Show = {
+		id: 0,
 		title: '',
 		description: '',
 		averageRating: null,
 		imageUrl: null,
 	};
+
+	@Input() showId: number = 0;
+
+	public randomNumber = this.showService.randomNumber;
 }
