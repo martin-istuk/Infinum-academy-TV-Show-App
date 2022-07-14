@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ShowDetailsComponent } from './show-details.component';
-import { ShowCardModule } from 'src/app/components/shows-container/shows-list/show-card/show-card.module';
+import { ShowCardDetailsModule } from './show-card-details/show-card-details.module';
 
 @NgModule({
 	declarations: [ShowDetailsComponent],
-	imports: [CommonModule, ShowCardModule],
+	imports: [CommonModule, ShowCardDetailsModule],
 	exports: [ShowDetailsComponent],
 })
 export class ShowDetailsModule {}

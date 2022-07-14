@@ -95,21 +95,17 @@ export class ShowService {
 		return new Show(show);
 	});
 
-	getAllShows(): Array<Show> {
+	public getAllShows(): Array<Show> {
 		return this.shows;
 	}
 
-	getTopRatedShows(): Array<Show> {
+	public getTopRatedShows(): Array<Show> {
 		return this.shows.filter((show: Show) => {
 			return show.averageRating !== null && show.averageRating >= 8.7;
 		});
 	}
 
-	getDetails(showId: number): void {
-		this.router.navigate(['/details', showId]);
-	}
-
-	addNewShow(title: string, description: string): void {
+	public addNewShow(title: string, description: string): void {
 		if (title && description) {
 			this.shows.push(
 				new Show({

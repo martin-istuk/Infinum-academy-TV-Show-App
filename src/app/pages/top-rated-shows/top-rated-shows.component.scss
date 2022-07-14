@@ -1,4 +1,13 @@
-app-show-card {
-	height: 100%;
-	cursor: pointer;
+app-shows-list {
+	margin: 1rem auto;
+	display: grid;
+	align-content: center;
+	grid-template-columns: 240px 240px 240px;
+	gap: 20px;
+	justify-content: space-evenly;
+}
+@media only screen and (max-width: 1060px) {
+	app-shows-list {
+		grid-template-columns: 240px;
+	}
 }

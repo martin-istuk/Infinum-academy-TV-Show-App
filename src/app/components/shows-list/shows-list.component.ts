@@ -12,7 +12,5 @@ export class ShowsListComponent {
 
 	allShows: Array<Show> = this.showService.getAllShows();
 
-	showDetails(showId: number) {
-		this.showService.getDetails(showId);
-	}
+	topShows: Array<Show> = this.showService.getTopRatedShows();
 }

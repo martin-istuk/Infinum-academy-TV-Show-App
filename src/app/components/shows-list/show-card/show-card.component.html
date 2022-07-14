@@ -1,0 +1,11 @@
+<mat-card>
+	<mat-card-header>
+		<mat-card-title>{{ showData.title }}</mat-card-title>
+	</mat-card-header>
+	<img *ngIf="showData.imageUrl" mat-card-image [src]="showData.imageUrl" />
+	<img *ngIf="!showData.imageUrl" mat-card-image src="https://via.placeholder.com/240x300" />
+	<mat-card-content>
+		<app-rating [avgRating]="showData.averageRating"></app-rating>
+		<p>{{ randomNumber }}</p>
+	</mat-card-content>
+</mat-card>

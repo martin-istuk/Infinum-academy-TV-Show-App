@@ -13,26 +13,3 @@ h2 {
 	margin: 0 auto;
 	width: 1060px;
 }
-
-
-
-app-top-rated-shows {
-	margin: 1rem auto;
-	display: grid;
-	align-content: center;
-	grid-template-columns: 240px 240px 240px;
-	gap: 20px;
-	justify-content: space-evenly;
-}
-@media only screen and (max-width: 1060px) {
-	app-top-rated-shows {
-		grid-template-columns: 240px;
-	}
-}
-
-
-
-app-show-details {
-	margin: 1rem auto;
-	display: block;
-}
