@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Show } from 'src/app/interfaces/show.model';
-import { ShowService } from 'src/app/services/show/show.service';
 
 @Component({
 	selector: 'app-shows-list',
@@ -8,9 +7,5 @@ import { ShowService } from 'src/app/services/show/show.service';
 	styleUrls: ['./shows-list.component.scss'],
 })
 export class ShowsListComponent {
-	constructor(private showService: ShowService) {}
-
-	allShows: Array<Show> = this.showService.getAllShows();
-
-	topShows: Array<Show> = this.showService.getTopRatedShows();
+	@Input() shows: Array<Show> = [];
 }
