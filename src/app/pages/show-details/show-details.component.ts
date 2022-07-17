@@ -22,7 +22,7 @@ export class ShowDetailsComponent implements OnDestroy {
 	};
 
 	private subscription: Subscription = this.showService.getAllShows().subscribe({
-		next: (shows) => {
+		next: (shows: Array<Show>) => {
 			const id = this.route.snapshot.params['id'];
 			this.show = shows[id - 1];
 		},

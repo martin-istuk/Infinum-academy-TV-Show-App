@@ -18,6 +18,4 @@ export class ShowCardComponent {
 		imageUrl: null,
 		reviews: [],
 	};
-
-	public randomNumber = this.showService.randomNumber;
 }

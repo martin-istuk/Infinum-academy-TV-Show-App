@@ -14,6 +14,23 @@ app-shows-list {
 
 
 
+div {
+	width: 25vh;
+	height: 25vh;
+	background: white;
+	border-radius: 50%;
+	margin: 25vh auto;
+}
+mat-spinner,
+button {
+	position: relative;
+	margin: auto;
+  top: 50%;
+	transform: translateY(-50%);
+}
+
+
+
 app-show-form {
 	background: lightgrey;
 	padding: 20px;

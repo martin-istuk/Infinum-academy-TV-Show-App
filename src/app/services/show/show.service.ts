@@ -11,7 +11,7 @@ const SHOW_KEY = 'myShows';
 	providedIn: 'root',
 })
 export class ShowService {
-	constructor(private readonly storageService: StorageService) {}
+	constructor(private storageService: StorageService) {}
 
 	private shows: Array<Show> = [
 		{
@@ -139,11 +139,17 @@ export class ShowService {
 		return new BehaviorSubject<Array<Show>>(this.storageService.loadLocalStorage<Array<Show>>(SHOW_KEY) || this.shows);
 	}
 
-	private readonly shows$ = this.createShowsBehaviorSubject();
+	private shows$ = this.createShowsBehaviorSubject();
 
 	public getAllShows(): Observable<Array<Show>> {
-		this.storageService.saveToLocalStorage(SHOW_KEY, this.shows$.value);
-		return this.shows$.asObservable().pipe(delay(this.randomNumber));
+		if (Math.random() > 0.99) {
+			this.storageService.saveToLocalStorage(SHOW_KEY, this.shows$.value);
+			return this.shows$.asObservable().pipe(delay(this.randomNumber));
+		} else {
+			// How to send an error with delay?
+			// return new Error(); setTimeout();
+			return this.shows$.asObservable().pipe(delay(this.randomNumber));
+		}
 	}
 
 	public getTopRatedShows(): Observable<Array<Show>> {
@@ -176,5 +182,5 @@ export class ShowService {
 		}
 	}
 
-	public readonly randomNumber: number = 1000 * (1 + Math.random());
+	public readonly randomNumber: number = 1000 * (0.5 + Math.random());
 }

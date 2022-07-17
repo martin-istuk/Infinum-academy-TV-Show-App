@@ -14,12 +14,23 @@ export class AllShowsComponent implements OnDestroy {
 	constructor(private showService: ShowService) {}
 
 	public allShows: Array<Show> = [];
+	public loadingInProgress: boolean = !Boolean(this.allShows.length);
+	public errorOnGetShows: boolean = false;
 
 	private subscription: Subscription = this.showService.getAllShows().subscribe({
-		next: (shows) => {
+		next: (shows: Array<Show>) => {
+			this.loadingInProgress = false;
 			this.allShows = shows;
 		},
+		error: () => {
+			this.loadingInProgress = false;
+			this.errorOnGetShows = true;
+		},
 	});
+
+	public getShows(): void {
+		this.showService.getAllShows();
+	}
 
 	ngOnDestroy(): void {
 		this.subscription.unsubscribe();

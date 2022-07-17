@@ -1,1 +1,5 @@
 <app-shows-list [shows]="topShows"></app-shows-list>
+
+<div *ngIf="!topShows.length">
+	<mat-spinner></mat-spinner>
+</div>
