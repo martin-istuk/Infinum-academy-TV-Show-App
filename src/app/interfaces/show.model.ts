@@ -6,6 +6,12 @@ export class Show {
 	public description: string;
 	public averageRating: number | null;
 	public imageUrl: string | null;
+	public reviews:
+		| Array<{
+				comment: string;
+				rating: number;
+		  }>
+		| [];
 
 	constructor(show: IShow) {
 		this.id = show.id;
@@ -13,5 +19,6 @@ export class Show {
 		this.description = show.description;
 		this.averageRating = show.average_rating;
 		this.imageUrl = show.image_url;
+		this.reviews = show.reviews;
 	}
 }

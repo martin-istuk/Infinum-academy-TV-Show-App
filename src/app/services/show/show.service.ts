@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { BehaviorSubject, delay, map, Observable } from 'rxjs';
+
 import { IShow } from 'src/app/interfaces/show.interface';
 import { Show } from 'src/app/interfaces/show.model';
+import { StorageService } from '../storage/storage.service';
+
+const SHOW_KEY = 'myShows';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class ShowService {
-	constructor(private router: Router) {}
+	constructor(private readonly storageService: StorageService) {}
 
 	private shows: Array<Show> = [
 		{
@@ -18,15 +22,31 @@ export class ShowService {
 			average_rating: 8,
 			image_url:
 				'https://m.media-amazon.com/images/M/MV5BN2EyZjM3NzUtNWUzMi00MTgxLWI0NTctMzY4M2VlOTdjZWRiXkEyXkFqcGdeQXVyNDUzOTQ5MjY@._V1_FMjpg_UY474_.jpg%20319w',
+			reviews: [
+				{
+					comment: 'Frodo rulez.',
+					rating: 9,
+				},
+			],
 		},
 		{
 			id: 2,
 			title: 'The Lord of the Rings: The Two Towers',
 			description:
 				"While Frodo and Sam edge closer to Mordor with the help of the shifty Gollum, the divided fellowship makes a stand against Sauron's new ally, Saruman, and his hordes of Isengard.",
-			average_rating: 9.1,
+			average_rating: 0,
 			image_url:
 				'https://m.media-amazon.com/images/M/MV5BZGMxZTdjZmYtMmE2Ni00ZTdkLWI5NTgtNjlmMjBiNzU2MmI5XkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_FMjpg_UY497_.jpg',
+			reviews: [
+				{
+					comment: 'Gollum rulez.',
+					rating: 10,
+				},
+				{
+					comment: 'Gimli rulez.',
+					rating: 9,
+				},
+			],
 		},
 		{
 			id: 3,
@@ -36,6 +56,20 @@ export class ShowService {
 			average_rating: 9.9,
 			image_url:
 				'https://m.media-amazon.com/images/M/MV5BNzA5ZDNlZWMtM2NhNS00NDJjLTk4NDItYTRmY2EwMWZlMTY3XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_FMjpg_UY474_.jpg',
+			reviews: [
+				{
+					comment: 'Galadriel rulez.',
+					rating: 10,
+				},
+				{
+					comment: 'Aragorn rulez.',
+					rating: 9,
+				},
+				{
+					comment: 'Gandalf rulez.',
+					rating: 8,
+				},
+			],
 		},
 		{
 			id: 4,
@@ -45,6 +79,7 @@ export class ShowService {
 			average_rating: 6.5,
 			image_url:
 				'https://m.media-amazon.com/images/M/MV5BMjA2NzQ3NjE4M15BMl5BanBnXkFtZTgwNTE5OTcyNDM@._V1_FMjpg_UY469_.jpg',
+			reviews: [],
 		},
 		{
 			id: 5,
@@ -54,6 +89,7 @@ export class ShowService {
 			average_rating: 6.6,
 			image_url:
 				'https://m.media-amazon.com/images/M/MV5BMDAzM2M0Y2UtZjRmZi00MzVlLTg4MjEtOTE3NzU5ZDVlMTU5XkEyXkFqcGdeQXVyNDUyOTg3Njg@._V1_FMjpg_UY484_.jpg',
+			reviews: [],
 		},
 		{
 			id: 6,
@@ -63,6 +99,7 @@ export class ShowService {
 			average_rating: 7.6,
 			image_url:
 				'https://m.media-amazon.com/images/M/MV5BNTc4MTc3NTQ5OF5BMl5BanBnXkFtZTcwOTg0NjI4NA@@._V1_FMjpg_UY426_.jpg',
+			reviews: [],
 		},
 		{
 			id: 7,
@@ -72,6 +109,7 @@ export class ShowService {
 			average_rating: 8.6,
 			image_url:
 				'https://m.media-amazon.com/images/M/MV5BNzg4MjQxNTQtZmI5My00YjMwLWJlMjUtMmJlY2U2ZWFlNzY1XkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_FMjpg_UY478_.jpg',
+			reviews: [],
 		},
 		{
 			id: 8,
@@ -81,6 +119,7 @@ export class ShowService {
 			average_rating: 8.7,
 			image_url:
 				'https://m.media-amazon.com/images/M/MV5BYmU1NDRjNDgtMzhiMi00NjZmLTg5NGItZDNiZjU5NTU4OTE0XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_FMjpg_UY498_.jpg',
+			reviews: [],
 		},
 		{
 			id: 9,
@@ -90,34 +129,52 @@ export class ShowService {
 			average_rating: 0,
 			image_url:
 				'https://m.media-amazon.com/images/M/MV5BOWZlMjFiYzgtMTUzNC00Y2IzLTk1NTMtZmNhMTczNTk0ODk1XkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_FMjpg_UY496_.jpg',
+			reviews: [],
 		},
 	].map((show: IShow) => {
 		return new Show(show);
 	});
 
-	public getAllShows(): Array<Show> {
-		return this.shows;
+	private createShowsBehaviorSubject(): BehaviorSubject<Array<Show>> {
+		return new BehaviorSubject<Array<Show>>(this.storageService.loadLocalStorage<Array<Show>>(SHOW_KEY) || this.shows);
 	}
 
-	public getTopRatedShows(): Array<Show> {
-		return this.shows.filter((show: Show) => {
-			return show.averageRating !== null && show.averageRating >= 8.7;
-		});
+	private readonly shows$ = this.createShowsBehaviorSubject();
+
+	public getAllShows(): Observable<Array<Show>> {
+		this.storageService.saveToLocalStorage(SHOW_KEY, this.shows$.value);
+		return this.shows$.asObservable().pipe(delay(this.randomNumber));
+	}
+
+	public getTopRatedShows(): Observable<Array<Show>> {
+		return this.shows$
+			.pipe(
+				map((shows) => {
+					return shows.filter((show: Show) => {
+						return show.averageRating !== null && show.averageRating >= 8.6;
+					});
+				}),
+			)
+			.pipe(delay(this.randomNumber));
 	}
 
 	public addNewShow(title: string, description: string): void {
 		if (title && description) {
-			this.shows.push(
+			const currentShows = this.shows$.getValue();
+			currentShows.push(
 				new Show({
 					id: this.shows.length + 1,
 					title: title,
 					description: description,
 					average_rating: null,
 					image_url: null,
+					reviews: [],
 				}),
 			);
+			this.shows$.next(currentShows);
+			this.storageService.saveToLocalStorage(SHOW_KEY, currentShows);
 		}
 	}
 
-	public readonly randomNumber: number = Math.random();
+	public readonly randomNumber: number = 1000 * (1 + Math.random());
 }

@@ -16,9 +16,8 @@ export class ShowCardComponent {
 		description: '',
 		averageRating: null,
 		imageUrl: null,
+		reviews: [],
 	};
-
-	@Input() showId: number = 0;
 
 	public randomNumber = this.showService.randomNumber;
 }

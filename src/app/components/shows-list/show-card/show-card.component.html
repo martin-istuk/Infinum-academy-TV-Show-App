@@ -6,6 +6,9 @@
 	<img *ngIf="!showData.imageUrl" mat-card-image src="https://via.placeholder.com/240x300" />
 	<mat-card-content>
 		<app-rating [avgRating]="showData.averageRating"></app-rating>
-		<p>{{ randomNumber }}</p>
+		<!-- Singleton service proof -->
+		<!-- <p>{{ randomNumber }}</p> -->
+		<p *ngIf="showData.reviews.length === 0">No reviews.</p>
+		<p *ngIf="showData.reviews.length > 0">{{ showData.reviews.length }} review(s).</p>
 	</mat-card-content>
 </mat-card>
