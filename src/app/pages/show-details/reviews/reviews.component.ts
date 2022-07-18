@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Show } from 'src/app/interfaces/show.model';
+import { Review } from 'src/app/interfaces/review.model';
 
 @Component({
 	selector: 'app-reviews',
@@ -7,12 +7,5 @@ import { Show } from 'src/app/interfaces/show.model';
 	styleUrls: ['./reviews.component.scss'],
 })
 export class ReviewsComponent {
-	@Input() showData: Show = {
-		id: 0,
-		title: '',
-		description: '',
-		averageRating: null,
-		imageUrl: null,
-		reviews: [],
-	};
+	@Input() reviewsData?: Array<Review>;
 }

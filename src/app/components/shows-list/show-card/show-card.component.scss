@@ -10,7 +10,17 @@ img {
 	width: 240px;
 	height: 300px;
 }
+div.rating {
+	display: grid;
+	grid-template-columns: auto 100px;
+	align-items: center;
+}
+div.rating p {
+	margin-bottom: 0;
+}
 app-rating {
-	background: lightskyblue;
-	margin: 1rem;
+	height: 20px;
+}
+div.reviews {
+	margin-top: 30px;
 }

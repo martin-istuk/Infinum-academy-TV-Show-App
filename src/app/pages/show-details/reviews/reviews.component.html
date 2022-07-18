@@ -3,16 +3,19 @@
 		<mat-card-title>Reviews</mat-card-title>
 	</mat-card-header>
 
-	<div *ngIf="showData.reviews">
-		<mat-card-content *ngFor="let review of showData.reviews">
+	<div *ngIf="reviewsData; else noReviews">
+		<mat-card-content *ngFor="let review of reviewsData">
 			<p>{{ review.comment }}</p>
-			<app-rating [reviewRating]="review.rating">Rating</app-rating>
+			<p>Rating: {{ review.rating }}</p>
+			<app-rating [rating]="review.rating">Rating</app-rating>
 		</mat-card-content>
 	</div>
 
-	<div *ngIf="!showData.reviews.length">
-		<mat-card-content>
-			<p>This show doesn't have any reviews yet.</p>
-		</mat-card-content>
-	</div>
+	<ng-template #noReviews>
+		<div>
+			<mat-card-content>
+				<p>This show doesn't have any reviews yet.</p>
+			</mat-card-content>
+		</div>
+	</ng-template>
 </mat-card>

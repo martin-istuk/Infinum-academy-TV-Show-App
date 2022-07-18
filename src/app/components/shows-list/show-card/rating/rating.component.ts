@@ -6,22 +6,13 @@ import { Component, Input } from '@angular/core';
 	styleUrls: ['./rating.component.scss'],
 })
 export class RatingComponent {
-	@Input() avgRating: number | null = 0;
-	@Input() reviewRating: number | null = 0;
+	@Input() rating: number | null = 0;
 
 	public get goldStars() {
-		if (this.avgRating) {
-			return Math.round(Number(this.avgRating));
-		} else {
-			return Math.round(Number(this.reviewRating));
-		}
+		return Math.round(Number(this.rating));
 	}
 
 	public get greyStars() {
-		if (this.avgRating) {
-			return 10 - Math.round(Number(this.avgRating));
-		} else {
-			return 10 - Math.round(Number(this.reviewRating));
-		}
+		return 5 - Math.round(Number(this.rating));
 	}
 }
