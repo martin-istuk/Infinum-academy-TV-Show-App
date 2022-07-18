@@ -1,6 +1,3 @@
-.rating {
-	font-weight: bold;
-}
 .star {
 	width: 20px;
 	font-size: 20px;
@@ -10,4 +7,7 @@
 }
 .greyStar {
 	color: hsl(0, 0%, 65%);
+}
+mat-icon {
+	vertical-align: middle;
 }
