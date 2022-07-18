@@ -24,6 +24,7 @@ export class ShowService {
 				'https://m.media-amazon.com/images/M/MV5BN2EyZjM3NzUtNWUzMi00MTgxLWI0NTctMzY4M2VlOTdjZWRiXkEyXkFqcGdeQXVyNDUzOTQ5MjY@._V1_FMjpg_UY474_.jpg%20319w',
 			reviews: [
 				{
+					id: 0,
 					comment: 'Frodo rulez.',
 					rating: 9,
 				},
@@ -39,10 +40,12 @@ export class ShowService {
 				'https://m.media-amazon.com/images/M/MV5BZGMxZTdjZmYtMmE2Ni00ZTdkLWI5NTgtNjlmMjBiNzU2MmI5XkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_FMjpg_UY497_.jpg',
 			reviews: [
 				{
+					id: 0,
 					comment: 'Gollum rulez.',
 					rating: 10,
 				},
 				{
+					id: 1,
 					comment: 'Gimli rulez.',
 					rating: 9,
 				},
@@ -58,14 +61,17 @@ export class ShowService {
 				'https://m.media-amazon.com/images/M/MV5BNzA5ZDNlZWMtM2NhNS00NDJjLTk4NDItYTRmY2EwMWZlMTY3XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_FMjpg_UY474_.jpg',
 			reviews: [
 				{
+					id: 0,
 					comment: 'Galadriel rulez.',
 					rating: 10,
 				},
 				{
+					id: 1,
 					comment: 'Aragorn rulez.',
 					rating: 9,
 				},
 				{
+					id: 2,
 					comment: 'Gandalf rulez.',
 					rating: 8,
 				},
