@@ -4,3 +4,19 @@ app-show-card-details {
 app-reviews {
 	width: 800px;
 }
+
+
+
+div {
+	width: 25vh;
+	height: 25vh;
+	background: white;
+	border-radius: 50%;
+	margin: 25vh auto;
+}
+mat-spinner {
+	position: relative;
+	margin: auto;
+  top: 50%;
+	transform: translateY(-50%);
+}
