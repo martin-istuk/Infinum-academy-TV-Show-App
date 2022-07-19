@@ -1,10 +1,10 @@
-<app-shows-list [shows]="allShows"></app-shows-list>
+<app-shows-list [shows]="allShows$ | async"></app-shows-list>
 
-<div *ngIf="loadingInProgress">
+<div *ngIf="loadingInProgress; else addNewShowForm">
 	<mat-spinner *ngIf="!errorOnGetShows"></mat-spinner>
-	<button *ngIf="errorOnGetShows" type="button" mat-raised-button color="primary" (click)="getShows()">
-		Try again
-	</button>
+	<button *ngIf="errorOnGetShows" type="button" mat-raised-button color="primary">Try again</button>
 </div>
 
-<app-show-form></app-show-form>
+<ng-template #addNewShowForm>
+	<app-show-form></app-show-form>
+</ng-template>

@@ -7,5 +7,5 @@ import { Show } from 'src/app/interfaces/show.model';
 	styleUrls: ['./show-card-details.component.scss'],
 })
 export class ShowCardDetailsComponent {
-	@Input() showData?: Show;
+	@Input() showData?: Show | null;
 }

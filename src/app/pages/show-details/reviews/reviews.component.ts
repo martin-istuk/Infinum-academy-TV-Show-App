@@ -7,5 +7,5 @@ import { Review } from 'src/app/interfaces/review.model';
 	styleUrls: ['./reviews.component.scss'],
 })
 export class ReviewsComponent {
-	@Input() reviewsData?: Array<Review>;
+	@Input() reviewsData?: Array<Review> | null;
 }

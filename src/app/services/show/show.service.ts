@@ -148,9 +148,11 @@ export class ShowService {
 
 	public getAllShows(): Observable<Array<Show>> {
 		if (Math.random() > 0.99) {
+			// NO ERROR
 			this.storageService.saveToLocalStorage(SHOW_KEY, this.shows$.value);
 			return this.shows$.asObservable().pipe(delay(this.randomNumber));
 		} else {
+			// ERROR
 			// How to send an error with delay?
 			// return new Error(); setTimeout();
 			return this.shows$.asObservable().pipe(delay(this.randomNumber));

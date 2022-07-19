@@ -1,5 +1,6 @@
-<app-shows-list [shows]="topShows"></app-shows-list>
+<app-shows-list [shows]="topShows$ | async"></app-shows-list>
 
-<div *ngIf="!topShows.length">
-	<mat-spinner></mat-spinner>
+<div *ngIf="loadingInProgress">
+	<mat-spinner *ngIf="!errorOnGetShows"></mat-spinner>
+	<button *ngIf="errorOnGetShows" type="button" mat-raised-button color="primary">Try again</button>
 </div>
