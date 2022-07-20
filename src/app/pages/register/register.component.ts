@@ -2,6 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 
 import { IAuthFormData } from 'src/app/interfaces/auth-form-data.interface';
@@ -14,7 +15,11 @@ import { emailMartinValidator } from 'src/app/validators/email-validator.directi
 	styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnDestroy {
-	constructor(private readonly authService: AuthService, private readonly router: Router) {}
+	constructor(
+		private readonly authService: AuthService,
+		private readonly router: Router,
+		private snackBar: MatSnackBar,
+	) {}
 
 	private subscription?: Subscription;
 	public loadingInProgress: boolean = false;
@@ -76,6 +81,9 @@ export class RegisterComponent implements OnDestroy {
 				error: (error) => {
 					console.error(error);
 					this.loadingInProgress = !this.loadingInProgress;
+					if (error.status === 422) {
+						this.snackBar.open('Email has already been taken.');
+					}
 				},
 			});
 	}
