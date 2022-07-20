@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
 	declarations: [LoginComponent],
@@ -22,6 +23,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 		MatIconModule,
 		MatButtonModule,
 		MatProgressSpinnerModule,
+		MatSnackBarModule,
 	],
 	exports: [LoginComponent],
 })
