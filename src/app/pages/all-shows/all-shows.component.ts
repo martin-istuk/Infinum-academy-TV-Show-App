@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
-import { Observable, Subscription, map } from 'rxjs';
+import { Observable, Subscription, from } from 'rxjs';
 
 import { Show } from 'src/app/interfaces/show.model';
 import { ShowService } from 'src/app/services/show/show.service';
@@ -19,10 +19,17 @@ export class AllShowsComponent implements OnInit, OnDestroy {
 	public errorOnGetShows: boolean = false;
 
 	ngOnInit(): void {
+		this.getData();
+	}
+
+	getData(): void {
+		this.loadingInProgress = true;
+		this.errorOnGetShows = false;
 		this.subscription = this.showService.getAllShows().subscribe({
 			next: (shows: Array<Show>) => {
 				this.allShows$ = this.showService.getAllShows();
 				this.loadingInProgress = false;
+				this.errorOnGetShows = false;
 			},
 			error: (error: Error) => {
 				this.loadingInProgress = false;

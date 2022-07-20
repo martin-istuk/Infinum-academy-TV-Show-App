@@ -1,5 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+
 import { Observable, Subscription } from 'rxjs';
+
 import { Show } from 'src/app/interfaces/show.model';
 import { ShowService } from 'src/app/services/show/show.service';
 
@@ -21,6 +23,7 @@ export class TopRatedShowsComponent implements OnInit, OnDestroy {
 			next: (shows: Array<Show>) => {
 				this.topShows$ = this.showService.getTopRatedShows();
 				this.loadingInProgress = false;
+				this.errorOnGetShows = false;
 			},
 			error: (error: Error) => {
 				this.loadingInProgress = false;

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, delay, map, Observable } from 'rxjs';
+import { BehaviorSubject, delay, map, Observable, tap } from 'rxjs';
 
 import { IShow } from 'src/app/interfaces/show.interface';
 import { Show } from 'src/app/interfaces/show.model';
@@ -147,28 +147,42 @@ export class ShowService {
 	private shows$ = this.createShowsBehaviorSubject();
 
 	public getAllShows(): Observable<Array<Show>> {
-		if (Math.random() > 0.99) {
+		// this.storageService.saveToLocalStorage(SHOW_KEY, this.shows$.value);
+
+		if (Math.random() > this.errorFactor) {
 			// NO ERROR
-			this.storageService.saveToLocalStorage(SHOW_KEY, this.shows$.value);
-			return this.shows$.asObservable().pipe(delay(this.randomNumber));
+			return this.shows$.pipe(delay(this.delayFactor));
 		} else {
-			// ERROR
-			// How to send an error with delay?
-			// return new Error(); setTimeout();
-			return this.shows$.asObservable().pipe(delay(this.randomNumber));
+			// SIMULATE ERROR
+			return this.shows$.pipe(
+				delay(this.delayFactor),
+				tap(() => {
+					throw new Error('Error getting shows data.');
+				}),
+			);
 		}
 	}
 
 	public getTopRatedShows(): Observable<Array<Show>> {
-		return this.shows$
-			.pipe(
+		if (Math.random() > this.errorFactor) {
+			// NO ERROR
+			return this.shows$.pipe(
 				map((shows) => {
 					return shows.filter((show: Show) => {
 						return show.averageRating !== null && show.averageRating >= 4.5;
 					});
 				}),
-			)
-			.pipe(delay(this.randomNumber));
+				delay(this.delayFactor),
+			);
+		} else {
+			// SIMULATE ERROR
+			return this.shows$.pipe(
+				delay(this.delayFactor),
+				tap(() => {
+					throw new Error('Error getting shows data.');
+				}),
+			);
+		}
 	}
 
 	public addNewShow(title: string, description: string): void {
@@ -176,7 +190,7 @@ export class ShowService {
 			const currentShows = this.shows$.getValue();
 			currentShows.push(
 				new Show({
-					id: this.shows.length + 1,
+					id: this.shows.length,
 					title: title,
 					description: description,
 					average_rating: null,
@@ -185,9 +199,12 @@ export class ShowService {
 				}),
 			);
 			this.shows$.next(currentShows);
-			this.storageService.saveToLocalStorage(SHOW_KEY, currentShows);
+			// this.storageService.saveToLocalStorage(SHOW_KEY, currentShows);
 		}
 	}
 
-	public readonly randomNumber: number = 1000 * (0.5 + Math.random());
+	// private readonly delayFactor: number = 1000 * (0.5 + Math.random());
+	private readonly delayFactor: number = 0.5;
+
+	private readonly errorFactor: number = 0.5;
 }

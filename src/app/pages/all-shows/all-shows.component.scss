@@ -28,7 +28,16 @@ button {
   top: 50%;
 	transform: translateY(-50%);
 }
-
+.retry {
+	display: grid;
+	grid-template-columns: auto;
+	justify-content: center;
+	align-content: center;
+	p {
+		color: red;
+		font-weight: bold;
+	}
+}
 
 
 app-show-form {
