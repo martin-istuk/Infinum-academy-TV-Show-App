@@ -1,9 +1,7 @@
-import { trigger } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
-import { Observable, tap, catchError, EMPTY, BehaviorSubject, switchMap } from 'rxjs';
+import { tap, catchError, EMPTY, BehaviorSubject, switchMap } from 'rxjs';
 
-import { Show } from 'src/app/interfaces/show.model';
 import { ShowService } from 'src/app/services/show/show.service';
 
 @Component({

@@ -205,5 +205,5 @@ export class ShowService {
 
 	private readonly delayFactor: number = 1000 * (0.5 + Math.random());
 
-	private readonly errorFactor: number = 0.25;
+	private readonly errorFactor: number = 0.1;
 }

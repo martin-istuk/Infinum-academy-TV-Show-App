@@ -1,8 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
-import { Observable, Subscription } from 'rxjs';
+import { tap, catchError, EMPTY, BehaviorSubject, switchMap } from 'rxjs';
 
-import { Show } from 'src/app/interfaces/show.model';
 import { ShowService } from 'src/app/services/show/show.service';
 
 @Component({
@@ -10,32 +9,35 @@ import { ShowService } from 'src/app/services/show/show.service';
 	templateUrl: './top-rated-shows.component.html',
 	styleUrls: ['./top-rated-shows.component.scss'],
 })
-export class TopRatedShowsComponent implements OnInit, OnDestroy {
+export class TopRatedShowsComponent {
 	constructor(private showService: ShowService) {}
 
-	private subscription?: Subscription;
-	public topShows$?: Observable<Array<Show> | undefined>;
 	public loadingInProgress: boolean = true;
 	public errorOnGetShows: boolean = false;
 
-	ngOnInit(): void {
-		this.subscription = this.showService.getTopRatedShows().subscribe({
-			next: (shows: Array<Show>) => {
-				this.topShows$ = this.showService.getTopRatedShows();
-				this.loadingInProgress = false;
-				this.errorOnGetShows = false;
-			},
-			error: (error: Error) => {
-				this.loadingInProgress = false;
-				this.errorOnGetShows = true;
-				console.error(error);
-			},
-		});
-	}
+	private trigger$ = new BehaviorSubject(undefined);
 
-	ngOnDestroy(): void {
-		if (this.subscription) {
-			this.subscription.unsubscribe();
-		}
+	public shows$ = this.trigger$.asObservable().pipe(
+		tap(() => {
+			this.loadingInProgress = true;
+			this.errorOnGetShows = false;
+		}),
+		switchMap(() => {
+			return this.showService.getTopRatedShows().pipe(
+				tap(() => {
+					this.loadingInProgress = false;
+					this.errorOnGetShows = false;
+				}),
+				catchError(() => {
+					this.loadingInProgress = false;
+					this.errorOnGetShows = true;
+					return EMPTY;
+				}),
+			);
+		}),
+	);
+
+	public onRetryClick() {
+		this.trigger$.next(undefined);
 	}
 }
