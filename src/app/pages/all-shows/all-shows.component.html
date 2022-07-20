@@ -1,4 +1,4 @@
-<app-shows-list [shows]="allShows$ | async"></app-shows-list>
+<app-shows-list [shows]="shows$ | async"></app-shows-list>
 
 <mat-spinner *ngIf="loadingInProgress && !errorOnGetShows"></mat-spinner>
 
@@ -6,5 +6,5 @@
 
 <div *ngIf="!loadingInProgress && errorOnGetShows" class="retry">
 	<p>Error getting data.</p>
-	<button type="button" mat-raised-button color="primary" (click)="getData()">Try again</button>
+	<button type="button" mat-raised-button color="primary" (click)="onRetryClick()">Try again</button>
 </div>

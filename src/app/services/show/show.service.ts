@@ -190,7 +190,7 @@ export class ShowService {
 			const currentShows = this.shows$.getValue();
 			currentShows.push(
 				new Show({
-					id: this.shows.length,
+					id: this.shows.length + 1,
 					title: title,
 					description: description,
 					average_rating: null,
@@ -203,8 +203,7 @@ export class ShowService {
 		}
 	}
 
-	// private readonly delayFactor: number = 1000 * (0.5 + Math.random());
-	private readonly delayFactor: number = 0.5;
+	private readonly delayFactor: number = 1000 * (0.5 + Math.random());
 
-	private readonly errorFactor: number = 0.5;
+	private readonly errorFactor: number = 0.25;
 }
