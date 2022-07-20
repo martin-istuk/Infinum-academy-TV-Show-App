@@ -5,55 +5,65 @@
 
 	<mat-card-content>
 		<ng-container *ngIf="registerForm" [formGroup]="registerForm">
-			<mat-form-field appearance="outline">
-				<mat-label>Email</mat-label>
-				<input
-					type="email"
-					[formControl]="registerForm.controls.email"
-					matInput
-					placeholder="Type in Your email adress..."
-					required
-				/>
-				<mat-error *ngIf="registerForm.controls.email.invalid">
-					{{ getErrMsgEmail() }}
-				</mat-error>
-				<mat-icon matPrefix>person</mat-icon>
-			</mat-form-field>
+			<form>
+				<mat-form-field appearance="outline">
+					<mat-label>Email</mat-label>
+					<input
+						type="email"
+						[formControl]="registerForm.controls.email"
+						matInput
+						placeholder="Type in Your email adress..."
+						required
+					/>
+					<mat-error *ngIf="registerForm.controls.email.invalid">
+						{{ getErrMsgEmail() }}
+					</mat-error>
+					<mat-icon matPrefix>person</mat-icon>
+				</mat-form-field>
 
-			<mat-form-field appearance="outline">
-				<mat-label>Password</mat-label>
-				<input
-					type="password"
-					[formControl]="registerForm.controls.password"
-					matInput
-					placeholder="Type in desired password..."
-					required
-				/>
-				<mat-error *ngIf="registerForm.controls.password.invalid">
-					{{ getErrMsgPass() }}
-				</mat-error>
-				<mat-icon matPrefix>lock</mat-icon>
-			</mat-form-field>
+				<mat-form-field appearance="outline">
+					<mat-label>Password</mat-label>
+					<input
+						type="password"
+						[formControl]="registerForm.controls.password"
+						matInput
+						placeholder="Type in desired password..."
+						required
+					/>
+					<mat-error *ngIf="registerForm.controls.password.invalid">
+						{{ getErrMsgPass() }}
+					</mat-error>
+					<mat-icon matPrefix>lock</mat-icon>
+				</mat-form-field>
 
-			<mat-form-field appearance="outline">
-				<mat-label>Password confirmation</mat-label>
-				<input
-					type="password"
-					[formControl]="registerForm.controls.password_confirmation"
-					matInput
-					placeholder="Confirm Your password..."
-					required
-				/>
-				<mat-error *ngIf="registerForm.controls.password_confirmation.invalid">
-					{{ getErrMsgPassConf() }}
-				</mat-error>
-				<mat-icon matPrefix>lock</mat-icon>
-			</mat-form-field>
+				<mat-form-field appearance="outline">
+					<mat-label>Password confirmation</mat-label>
+					<input
+						type="password"
+						[formControl]="registerForm.controls.password_confirmation"
+						matInput
+						placeholder="Confirm Your password..."
+						required
+					/>
+					<mat-error *ngIf="registerForm.controls.password_confirmation.invalid">
+						{{ getErrMsgPassConf() }}
+					</mat-error>
+					<mat-icon matPrefix>lock</mat-icon>
+				</mat-form-field>
+			</form>
 		</ng-container>
 	</mat-card-content>
 
 	<mat-card-actions>
-		<button [disabled]="registerForm.invalid" mat-raised-button color="primary" (click)="onFormSubmit($event)">
+		<button
+			[disabled]="
+				registerForm.invalid ||
+				registerForm.controls.password.value !== registerForm.controls.password_confirmation.value
+			"
+			mat-raised-button
+			color="primary"
+			(click)="onFormSubmit($event)"
+		>
 			<span *ngIf="!loadingInProgress; else loadingSpinner">Register </span>
 
 			<ng-template #loadingSpinner>

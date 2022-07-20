@@ -5,35 +5,37 @@
 
 	<mat-card-content>
 		<ng-container *ngIf="loginForm" [formGroup]="loginForm">
-			<mat-form-field appearance="outline">
-				<mat-label>Email</mat-label>
-				<input
-					type="email"
-					[formControl]="loginForm.controls.email"
-					matInput
-					placeholder="Type in Your email adress..."
-					required
-				/>
-				<mat-error *ngIf="loginForm.controls.email.invalid">
-					{{ getErrMsgEmail() }}
-				</mat-error>
-				<mat-icon matPrefix>person</mat-icon>
-			</mat-form-field>
+			<form>
+				<mat-form-field appearance="outline">
+					<mat-label>Email</mat-label>
+					<input
+						type="email"
+						[formControl]="loginForm.controls.email"
+						matInput
+						placeholder="Type in Your email adress..."
+						required
+					/>
+					<mat-error *ngIf="loginForm.controls.email.invalid">
+						{{ getErrMsgEmail() }}
+					</mat-error>
+					<mat-icon matPrefix>person</mat-icon>
+				</mat-form-field>
 
-			<mat-form-field appearance="outline">
-				<mat-label>Password</mat-label>
-				<input
-					type="password"
-					[formControl]="loginForm.controls.password"
-					matInput
-					placeholder="Type in Your password..."
-					required
-				/>
-				<mat-error *ngIf="loginForm.controls.password.invalid">
-					{{ getErrMsgPass() }}
-				</mat-error>
-				<mat-icon matPrefix>lock</mat-icon>
-			</mat-form-field>
+				<mat-form-field appearance="outline">
+					<mat-label>Password</mat-label>
+					<input
+						type="password"
+						[formControl]="loginForm.controls.password"
+						matInput
+						placeholder="Type in Your password..."
+						required
+					/>
+					<mat-error *ngIf="loginForm.controls.password.invalid">
+						{{ getErrMsgPass() }}
+					</mat-error>
+					<mat-icon matPrefix>lock</mat-icon>
+				</mat-form-field>
+			</form>
 		</ng-container>
 	</mat-card-content>
 
