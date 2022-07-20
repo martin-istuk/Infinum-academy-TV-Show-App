@@ -7,6 +7,9 @@ mat-card {
 	grid-template-columns: auto;
 	justify-content: center;
 }
+mat-card-header {
+	margin: 20px auto;
+}
 mat-card-content > div {
 	display: grid;
 	grid-template-columns: auto;
@@ -27,4 +30,11 @@ button {
 		from { transform: rotate(0deg);	}
 		to { transform: rotate(360deg);	}
 	}
+}
+a:link,
+a:visited,
+a:hover,
+a:active {
+	text-decoration: none;
+	font-weight: bold;
 }

@@ -35,12 +35,10 @@
 				<mat-icon matPrefix>lock</mat-icon>
 			</mat-form-field>
 		</ng-container>
-
-		<p>Don&apos;t have an account? <a [routerLink]="['/register']">Register</a></p>
 	</mat-card-content>
 
 	<mat-card-actions>
-		<button mat-raised-button color="primary" (click)="onFormSubmit($event)">
+		<button [disabled]="loginForm.invalid" mat-raised-button color="primary" (click)="onFormSubmit($event)">
 			<span *ngIf="!loadingInProgress; else loadingSpinner">Login </span>
 
 			<ng-template #loadingSpinner>
@@ -48,4 +46,9 @@
 			</ng-template>
 		</button>
 	</mat-card-actions>
+
+	<p>Don&apos;t have an account? <a [routerLink]="['/register']">Register</a></p>
+
+	<p>U: abc@def.gh</p>
+	<p>P: 1++8</p>
 </mat-card>

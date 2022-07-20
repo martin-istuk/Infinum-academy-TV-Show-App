@@ -13,10 +13,14 @@ export class AuthService {
 	constructor(private readonly http: HttpClient) {}
 
 	public registerUser(userData: IAuthFormData): Observable<IUser> {
-		return this.http.post<IUser>('https://tv-shows.infinum.academy/users', userData, { withCredentials: true });
+		console.log('userData');
+		console.log(userData);
+		return this.http.post<IUser>('https://tv-shows.infinum.academy/users', userData, { withCredentials: false });
 	}
 
 	public loginUser(userData: IAuthFormData): Observable<IUser> {
-		return this.http.post<IUser>('https://tv-shows.infinum.academy/users/sign_in', userData, { withCredentials: true });
+		return this.http.post<IUser>('https://tv-shows.infinum.academy/users/sign_in', userData, {
+			withCredentials: false,
+		});
 	}
 }
