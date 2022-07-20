@@ -1,4 +1,4 @@
-<header>
+<header *ngIf="router.url !== '/register' && router.url !== '/login'">
 	<div class="container centered">
 		<h2>TV-Show-App</h2>
 		<app-navigation></app-navigation>

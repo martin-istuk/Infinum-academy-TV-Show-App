@@ -1,0 +1,51 @@
+<mat-card>
+	<mat-card-header>
+		<mat-card-title>Login</mat-card-title>
+	</mat-card-header>
+
+	<mat-card-content>
+		<ng-container *ngIf="loginForm" [formGroup]="loginForm">
+			<mat-form-field appearance="outline">
+				<mat-label>Email</mat-label>
+				<input
+					type="email"
+					[formControl]="loginForm.controls.email"
+					matInput
+					placeholder="Type in Your email adress..."
+					required
+				/>
+				<mat-error *ngIf="loginForm.controls.email.invalid">
+					{{ getErrMsgEmail() }}
+				</mat-error>
+				<mat-icon matPrefix>person</mat-icon>
+			</mat-form-field>
+
+			<mat-form-field appearance="outline">
+				<mat-label>Password</mat-label>
+				<input
+					type="password"
+					[formControl]="loginForm.controls.password"
+					matInput
+					placeholder="Type in Your password..."
+					required
+				/>
+				<mat-error *ngIf="loginForm.controls.password.invalid">
+					{{ getErrMsgPass() }}
+				</mat-error>
+				<mat-icon matPrefix>lock</mat-icon>
+			</mat-form-field>
+		</ng-container>
+
+		<p>Don&apos;t have an account? <a [routerLink]="['/register']">Register</a></p>
+	</mat-card-content>
+
+	<mat-card-actions>
+		<button mat-raised-button color="primary" (click)="onFormSubmit($event)">
+			<span *ngIf="!loadingInProgress; else loadingSpinner">Login </span>
+
+			<ng-template #loadingSpinner>
+				<mat-icon class="loading">autorenew</mat-icon>
+			</ng-template>
+		</button>
+	</mat-card-actions>
+</mat-card>
