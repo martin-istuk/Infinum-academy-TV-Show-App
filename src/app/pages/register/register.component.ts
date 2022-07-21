@@ -31,7 +31,7 @@ export class RegisterComponent implements OnDestroy {
 			password: new FormControl('', [Validators.required, Validators.minLength(8)]),
 			password_confirmation: new FormControl('', [Validators.required, Validators.minLength(8)]),
 		},
-		[passMatchValidator('password', 'confirmPassword')],
+		[passMatchValidator('password', 'password_confirmation')],
 	);
 
 	public getErrMsgEmail() {
@@ -72,7 +72,7 @@ export class RegisterComponent implements OnDestroy {
 	public onFormSubmit(event: Event): void {
 		event.preventDefault();
 
-		this.loadingInProgress = !this.loadingInProgress;
+		this.loadingInProgress = true;
 
 		this.subscription = this.authService
 			.registerUser({
@@ -83,12 +83,12 @@ export class RegisterComponent implements OnDestroy {
 			.subscribe({
 				next: (response) => {
 					console.log(response);
-					this.loadingInProgress = !this.loadingInProgress;
+					this.loadingInProgress = false;
 					this.router.navigate(['']);
 				},
 				error: (error) => {
 					console.error(error);
-					this.loadingInProgress = !this.loadingInProgress;
+					this.loadingInProgress = false;
 					if (error.status === 422) {
 						this.snackBar.open('This email is already registered.', '', { duration: 3000 });
 					}

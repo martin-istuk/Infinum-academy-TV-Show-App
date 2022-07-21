@@ -46,6 +46,7 @@
 				</mat-form-field>
 			</form>
 		</ng-container>
+		<p *ngIf="passwordMatchError()" class="passMatchError">Passwords do not match!</p>
 	</mat-card-content>
 
 	<mat-card-actions>
@@ -56,7 +57,6 @@
 				<mat-icon class="loading">autorenew</mat-icon>
 			</ng-template>
 		</button>
-		<p *ngIf="passwordMatchError()" class="passMatchError">Passwords do not match!</p>
 	</mat-card-actions>
 
 	<p>Already have an account? <a [routerLink]="['/auth', 'login']">Login</a></p>

@@ -45,7 +45,7 @@ export class LoginComponent implements OnDestroy {
 	public onFormSubmit(event: Event): void {
 		event.preventDefault();
 
-		this.loadingInProgress = !this.loadingInProgress;
+		this.loadingInProgress = true;
 
 		this.subscription = this.authService
 			.loginUser({
@@ -55,12 +55,12 @@ export class LoginComponent implements OnDestroy {
 			.subscribe({
 				next: (response) => {
 					console.log(response);
-					this.loadingInProgress = !this.loadingInProgress;
+					this.loadingInProgress = false;
 					this.router.navigate(['']);
 				},
 				error: (error) => {
 					console.error(error);
-					this.loadingInProgress = !this.loadingInProgress;
+					this.loadingInProgress = false;
 					if (error.status === 401) {
 						this.snackBar.open('Invalid password.', '', { duration: 3000 });
 					}

@@ -1,4 +1,5 @@
 export interface IUser {
+	id: string;
 	email: string;
-	uuid: string;
+	image_url: string | null;
 }

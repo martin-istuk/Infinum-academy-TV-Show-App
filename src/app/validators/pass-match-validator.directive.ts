@@ -2,9 +2,9 @@ import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn } from '@angu
 
 export function passMatchValidator(password: string, passConf: string): ValidatorFn {
 	return (control: AbstractControl): ValidationErrors | null => {
-		const password = control.get('password');
-		const passConf = control.get('password_confirmation');
+		const passwordInput = control.get(password);
+		const passConfInput = control.get(passConf);
 
-		return password && passConf && password.value !== passConf.value ? { mismatch: true } : null;
+		return passwordInput && passConfInput && passwordInput.value !== passConfInput.value ? { mismatch: true } : null;
 	};
 }
