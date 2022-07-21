@@ -1,7 +1,7 @@
 import { IReview } from './review.interface';
 
 export class Review {
-	public id: number;
+	public id: string;
 	public comment: string;
 	public rating: number;
 
