@@ -8,13 +8,7 @@
 			<form>
 				<mat-form-field appearance="outline">
 					<mat-label>Email</mat-label>
-					<input
-						type="email"
-						[formControl]="loginForm.controls.email"
-						matInput
-						placeholder="Type in Your email adress..."
-						required
-					/>
+					<input type="email" formControlName="email" matInput placeholder="Type in Your email adress..." required />
 					<mat-error *ngIf="loginForm.controls.email.invalid">
 						{{ getErrMsgEmail() }}
 					</mat-error>
@@ -23,13 +17,7 @@
 
 				<mat-form-field appearance="outline">
 					<mat-label>Password</mat-label>
-					<input
-						type="password"
-						[formControl]="loginForm.controls.password"
-						matInput
-						placeholder="Type in Your password..."
-						required
-					/>
+					<input type="password" formControlName="password" matInput placeholder="Type in Your password..." required />
 					<mat-error *ngIf="loginForm.controls.password.invalid">
 						{{ getErrMsgPass() }}
 					</mat-error>
@@ -49,7 +37,7 @@
 		</button>
 	</mat-card-actions>
 
-	<p>Don&apos;t have an account? <a [routerLink]="['/register']">Register</a></p>
+	<p>Don&apos;t have an account? <a [routerLink]="['/auth', 'register']">Register</a></p>
 
 	<p>U: abc@def.gh</p>
 	<p>P: 1++8</p>

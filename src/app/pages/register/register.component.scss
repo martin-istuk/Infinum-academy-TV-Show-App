@@ -2,10 +2,7 @@ mat-card {
 	width: 90vw;
 	max-width: 300px;
 	padding: 40px;
-	margin: 25vh auto;
-	display: grid;
-	grid-template-columns: auto;
-	justify-content: center;
+	margin: 10vh auto;
 }
 mat-card-header {
 	margin: 20px auto;
@@ -23,6 +20,10 @@ p {
 button {
 	width: 100%;
 	height: 40px;
+}
+.passMatchError {
+	color: red;
+	font-weight: bold;
 }
 .loading {
 	animation: spin 2s linear infinite;

@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { MainLayoutModule } from './layouts/main-layout/main-layout.module';
 import { NavigationModule } from './components/navigation/navigation.module';
+import { AuthLayoutModule } from './layouts/auth-layout/auth-layout.module';
 
 @NgModule({
 	declarations: [AppComponent],
@@ -17,6 +18,7 @@ import { NavigationModule } from './components/navigation/navigation.module';
 		BrowserAnimationsModule,
 		RouterModule,
 		MainLayoutModule,
+		AuthLayoutModule,
 		NavigationModule,
 	],
 	providers: [],

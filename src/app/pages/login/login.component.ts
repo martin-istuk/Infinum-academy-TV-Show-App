@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 
-import { IAuthFormData } from 'src/app/interfaces/auth-form-data.interface';
+import { ILoginFormData } from 'src/app/interfaces/login-form-data.interface';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { emailMartinValidator } from 'src/app/validators/email-validator.directive';
 
@@ -51,7 +51,7 @@ export class LoginComponent implements OnDestroy {
 			.loginUser({
 				email: this.loginForm.controls.email.value,
 				password: this.loginForm.controls.password.value,
-			} as IAuthFormData)
+			} as ILoginFormData)
 			.subscribe({
 				next: (response) => {
 					console.log(response);
@@ -62,7 +62,7 @@ export class LoginComponent implements OnDestroy {
 					console.error(error);
 					this.loadingInProgress = !this.loadingInProgress;
 					if (error.status === 401) {
-						this.snackBar.open('Invalid password.');
+						this.snackBar.open('Invalid password.', '', { duration: 3000 });
 					}
 				},
 			});

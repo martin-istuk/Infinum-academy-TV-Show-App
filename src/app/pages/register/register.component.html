@@ -8,13 +8,7 @@
 			<form>
 				<mat-form-field appearance="outline">
 					<mat-label>Email</mat-label>
-					<input
-						type="email"
-						[formControl]="registerForm.controls.email"
-						matInput
-						placeholder="Type in Your email adress..."
-						required
-					/>
+					<input type="email" formControlName="email" matInput placeholder="Type in Your email adress..." required />
 					<mat-error *ngIf="registerForm.controls.email.invalid">
 						{{ getErrMsgEmail() }}
 					</mat-error>
@@ -25,7 +19,7 @@
 					<mat-label>Password</mat-label>
 					<input
 						type="password"
-						[formControl]="registerForm.controls.password"
+						formControlName="password"
 						matInput
 						placeholder="Type in desired password..."
 						required
@@ -40,7 +34,7 @@
 					<mat-label>Password confirmation</mat-label>
 					<input
 						type="password"
-						[formControl]="registerForm.controls.password_confirmation"
+						formControlName="password_confirmation"
 						matInput
 						placeholder="Confirm Your password..."
 						required
@@ -55,24 +49,17 @@
 	</mat-card-content>
 
 	<mat-card-actions>
-		<button
-			[disabled]="
-				registerForm.invalid ||
-				registerForm.controls.password.value !== registerForm.controls.password_confirmation.value
-			"
-			mat-raised-button
-			color="primary"
-			(click)="onFormSubmit($event)"
-		>
+		<button [disabled]="registerForm.invalid" mat-raised-button color="primary" (click)="onFormSubmit($event)">
 			<span *ngIf="!loadingInProgress; else loadingSpinner">Register </span>
 
 			<ng-template #loadingSpinner>
 				<mat-icon class="loading">autorenew</mat-icon>
 			</ng-template>
 		</button>
+		<p *ngIf="passwordMatchError()" class="passMatchError">Passwords do not match!</p>
 	</mat-card-actions>
 
-	<p>Already have an account? <a [routerLink]="['/login']">Login</a></p>
+	<p>Already have an account? <a [routerLink]="['/auth', 'login']">Login</a></p>
 
 	<p>U: abc@def.gh</p>
 	<p>P: 1++8</p>

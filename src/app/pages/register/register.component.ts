@@ -5,9 +5,10 @@ import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 
-import { IAuthFormData } from 'src/app/interfaces/auth-form-data.interface';
+import { IRegisterFormData } from 'src/app/interfaces/register-form-data.interface';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { emailMartinValidator } from 'src/app/validators/email-validator.directive';
+import { passMatchValidator } from 'src/app/validators/pass-match-validator.directive';
 
 @Component({
 	selector: 'app-register',
@@ -24,11 +25,14 @@ export class RegisterComponent implements OnDestroy {
 	private subscription?: Subscription;
 	public loadingInProgress: boolean = false;
 
-	public registerForm = new FormGroup({
-		email: new FormControl('', [Validators.required, Validators.email, emailMartinValidator(/martin/i)]),
-		password: new FormControl('', [Validators.required, Validators.minLength(8)]),
-		password_confirmation: new FormControl('', [Validators.required, Validators.minLength(8)]),
-	});
+	public registerForm = new FormGroup(
+		{
+			email: new FormControl('', [Validators.required, Validators.email, emailMartinValidator(/martin/i)]),
+			password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+			password_confirmation: new FormControl('', [Validators.required, Validators.minLength(8)]),
+		},
+		[passMatchValidator('password', 'confirmPassword')],
+	);
 
 	public getErrMsgEmail() {
 		if (this.registerForm.controls.email.hasError('required')) {
@@ -40,25 +44,29 @@ export class RegisterComponent implements OnDestroy {
 	}
 
 	public getErrMsgPass() {
-		if (this.registerForm.controls.password.value !== null) {
-			return this.registerForm.controls.password.hasError('required') ||
-				this.registerForm.controls.password.value.length < 8
-				? 'You must enter a value at least 8 characters long'
-				: '';
-		} else {
+		const passwordInput = this.registerForm.controls.password;
+		if (passwordInput.value !== null) {
+			if (passwordInput.hasError('required') || passwordInput.value.length < 8) {
+				return 'You must enter a value at least 8 characters long';
+			}
 			return '';
 		}
+		return '';
 	}
 
 	public getErrMsgPassConf() {
-		if (this.registerForm.controls.password_confirmation.value !== null) {
-			return this.registerForm.controls.password_confirmation.hasError('required') ||
-				this.registerForm.controls.password_confirmation.value.length < 8
-				? 'You must enter a value at least 8 characters long'
-				: '';
-		} else {
+		const passConfInput = this.registerForm.controls.password_confirmation;
+		if (passConfInput.value !== null) {
+			if (passConfInput.hasError('required') || passConfInput.value.length < 8) {
+				return 'You must enter a value at least 8 characters long';
+			}
 			return '';
 		}
+		return '';
+	}
+
+	public passwordMatchError() {
+		return this.registerForm.getError('mismatch') && this.registerForm.get('password_confirmation')?.touched;
 	}
 
 	public onFormSubmit(event: Event): void {
@@ -71,7 +79,7 @@ export class RegisterComponent implements OnDestroy {
 				email: this.registerForm.controls.email.value,
 				password: this.registerForm.controls.password.value,
 				password_confirmation: this.registerForm.controls.password_confirmation.value,
-			} as IAuthFormData)
+			} as IRegisterFormData)
 			.subscribe({
 				next: (response) => {
 					console.log(response);
@@ -82,7 +90,7 @@ export class RegisterComponent implements OnDestroy {
 					console.error(error);
 					this.loadingInProgress = !this.loadingInProgress;
 					if (error.status === 422) {
-						this.snackBar.open('Email has already been taken.');
+						this.snackBar.open('This email is already registered.', '', { duration: 3000 });
 					}
 				},
 			});
