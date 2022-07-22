@@ -1,8 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { map, Observable, Subscription } from 'rxjs';
-import { Review } from 'src/app/interfaces/review.model';
-import { Show } from 'src/app/interfaces/show.model';
+import { EMPTY, map, switchMap } from 'rxjs';
 import { ShowService } from 'src/app/services/show/show.service';
 
 @Component({
@@ -10,36 +8,33 @@ import { ShowService } from 'src/app/services/show/show.service';
 	templateUrl: './show-details.component.html',
 	styleUrls: ['./show-details.component.scss'],
 })
-export class ShowDetailsComponent implements OnInit, OnDestroy {
+export class ShowDetailsComponent {
 	constructor(private showService: ShowService, private route: ActivatedRoute) {}
 
-	private subscription?: Subscription;
-	public show$?: Observable<Show | undefined>;
-	public reviews$?: Observable<Array<Review> | undefined>;
+	private routeId$ = this.route.paramMap.pipe(
+		map((params: ParamMap) => {
+			return params.get('id');
+		}),
+	);
 
-	ngOnInit(): void {
-		this.subscription = this.route.paramMap.subscribe({
-			next: (params: ParamMap) => {
-				const id = Number(params.get('id'));
+	public show$ = this.routeId$.pipe(
+		switchMap((id: string | null) => {
+			if (!id) {
+				return EMPTY;
+			}
+			return this.showService.getShowById(id);
+		}),
+	);
 
-				this.show$ = this.showService.getAllShows().pipe(
-					map((shows: Array<Show>) => {
-						return shows[id];
-					}),
-				);
-
-				this.reviews$ = this.showService.getAllShows().pipe(
-					map((shows: Array<Show>) => {
-						return shows[id].reviews;
-					}),
-				);
-			},
-		});
-	}
-
-	ngOnDestroy(): void {
-		if (this.subscription) {
-			this.subscription.unsubscribe();
-		}
-	}
+	public reviews$ = this.routeId$.pipe(
+		switchMap((id: string | null) => {
+			if (!id) {
+				return EMPTY;
+			}
+			return this.showService.getShowById(id);
+		}),
+		map((show) => {
+			return show?.reviews;
+		}),
+	);
 }

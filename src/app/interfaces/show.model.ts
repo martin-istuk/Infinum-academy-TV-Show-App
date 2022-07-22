@@ -3,7 +3,7 @@ import { Review } from './review.model';
 import { IReview } from './review.interface';
 
 export class Show {
-	public id: number;
+	public id: string;
 	public title: string;
 	public description: string;
 	public averageRating: number | null;

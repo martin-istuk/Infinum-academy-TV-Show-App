@@ -1,0 +1,66 @@
+<mat-card>
+	<mat-card-header>
+		<mat-card-title>Register</mat-card-title>
+	</mat-card-header>
+
+	<mat-card-content>
+		<ng-container *ngIf="registerForm" [formGroup]="registerForm">
+			<form>
+				<mat-form-field appearance="outline">
+					<mat-label>Email</mat-label>
+					<input type="email" formControlName="email" matInput placeholder="Type in Your email adress..." required />
+					<mat-error *ngIf="registerForm.controls.email.invalid">
+						{{ getErrMsgEmail() }}
+					</mat-error>
+					<mat-icon matPrefix>person</mat-icon>
+				</mat-form-field>
+
+				<mat-form-field appearance="outline">
+					<mat-label>Password</mat-label>
+					<input
+						type="password"
+						formControlName="password"
+						matInput
+						placeholder="Type in desired password..."
+						required
+					/>
+					<mat-error *ngIf="registerForm.controls.password.invalid">
+						{{ getErrMsgPass() }}
+					</mat-error>
+					<mat-icon matPrefix>lock</mat-icon>
+				</mat-form-field>
+
+				<mat-form-field appearance="outline">
+					<mat-label>Password confirmation</mat-label>
+					<input
+						type="password"
+						formControlName="password_confirmation"
+						matInput
+						placeholder="Confirm Your password..."
+						required
+					/>
+					<mat-error *ngIf="registerForm.controls.password_confirmation.invalid">
+						{{ getErrMsgPassConf() }}
+					</mat-error>
+					<mat-icon matPrefix>lock</mat-icon>
+				</mat-form-field>
+			</form>
+		</ng-container>
+		<p *ngIf="passwordMatchError()" class="passMatchError">Passwords do not match!</p>
+	</mat-card-content>
+
+	<mat-card-actions>
+		<button [disabled]="registerForm.invalid" mat-raised-button color="primary" (click)="onFormSubmit($event)">
+			<span *ngIf="!loadingInProgress; else loadingSpinner">Register </span>
+
+			<ng-template #loadingSpinner>
+				<mat-icon class="loading">autorenew</mat-icon>
+			</ng-template>
+		</button>
+	</mat-card-actions>
+
+	<p>Already have an account? <a [routerLink]="['/auth', 'login']">Login</a></p>
+
+	<p>U: abc@def.gh</p>
+	<p>P: 1++8</p>
+</mat-card>

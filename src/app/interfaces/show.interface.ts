@@ -1,7 +1,7 @@
 import { IReview } from './review.interface';
 
 export interface IShow {
-	id: number;
+	id: string;
 	title: string;
 	description: string;
 	average_rating: number | null;
