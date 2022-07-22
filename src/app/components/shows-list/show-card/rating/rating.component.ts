@@ -6,15 +6,13 @@ import { Component, Input } from '@angular/core';
 	styleUrls: ['./rating.component.scss'],
 })
 export class RatingComponent {
-	constructor() {}
-
-	@Input() avgRating: number | null = 0;
+	@Input() rating: number | null = 0;
 
 	public get goldStars() {
-		return Math.round(Number(this.avgRating));
+		return Math.round(Number(this.rating));
 	}
 
 	public get greyStars() {
-		return 10 - Math.round(Number(this.avgRating));
+		return 5 - Math.round(Number(this.rating));
 	}
 }

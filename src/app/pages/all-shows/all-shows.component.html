@@ -1,3 +1,10 @@
-<app-shows-list [shows]="allShows"></app-shows-list>
+<app-shows-list [shows]="shows$ | async"></app-shows-list>
 
-<app-show-form></app-show-form>
+<mat-spinner *ngIf="loadingInProgress && !errorOnGetShows" class="circle"></mat-spinner>
+
+<div *ngIf="!loadingInProgress && errorOnGetShows" class="circle retry">
+	<p>Error getting data.</p>
+	<button type="button" mat-raised-button color="primary" (click)="onRetryClick()">Try again</button>
+</div>
+
+<app-show-form *ngIf="!loadingInProgress && !errorOnGetShows"></app-show-form>

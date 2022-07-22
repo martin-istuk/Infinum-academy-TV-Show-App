@@ -14,6 +14,32 @@ app-shows-list {
 
 
 
+.circle {
+	width: 25vh;
+	height: 25vh;
+	background: white;
+	border-radius: 50%;
+	margin: 25vh auto;
+}
+mat-spinner,
+button {
+	position: relative;
+	margin: auto;
+  top: 50%;
+	transform: translateY(-50%);
+}
+.retry {
+	display: grid;
+	grid-template-columns: auto;
+	justify-content: center;
+	align-content: center;
+	p {
+		color: red;
+		font-weight: bold;
+	}
+}
+
+
 app-show-form {
 	background: lightgrey;
 	padding: 20px;

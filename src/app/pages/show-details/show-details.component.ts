@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Show } from 'src/app/interfaces/show.model';
+import { Component } from '@angular/core';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { EMPTY, map, switchMap } from 'rxjs';
 import { ShowService } from 'src/app/services/show/show.service';
 
 @Component({
@@ -8,13 +8,33 @@ import { ShowService } from 'src/app/services/show/show.service';
 	templateUrl: './show-details.component.html',
 	styleUrls: ['./show-details.component.scss'],
 })
-export class ShowDetailsComponent implements OnInit {
+export class ShowDetailsComponent {
 	constructor(private showService: ShowService, private route: ActivatedRoute) {}
 
-	show: Show = this.showService.getAllShows()[0];
+	private routeId$ = this.route.paramMap.pipe(
+		map((params: ParamMap) => {
+			return params.get('id');
+		}),
+	);
 
-	ngOnInit() {
-		const id = this.route.snapshot.params['id'];
-		this.show = this.showService.getAllShows()[id - 1];
-	}
+	public show$ = this.routeId$.pipe(
+		switchMap((id: string | null) => {
+			if (!id) {
+				return EMPTY;
+			}
+			return this.showService.getShowById(id);
+		}),
+	);
+
+	public reviews$ = this.routeId$.pipe(
+		switchMap((id: string | null) => {
+			if (!id) {
+				return EMPTY;
+			}
+			return this.showService.getShowById(id);
+		}),
+		map((show) => {
+			return show?.reviews;
+		}),
+	);
 }

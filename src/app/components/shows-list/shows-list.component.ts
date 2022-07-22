@@ -7,5 +7,5 @@ import { Show } from 'src/app/interfaces/show.model';
 	styleUrls: ['./shows-list.component.scss'],
 })
 export class ShowsListComponent {
-	@Input() shows: Array<Show> = [];
+	@Input() shows?: Array<Show> | null;
 }

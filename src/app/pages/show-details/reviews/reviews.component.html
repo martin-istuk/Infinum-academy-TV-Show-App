@@ -1,0 +1,19 @@
+<mat-card *ngIf="reviewsData">
+	<mat-card-header>
+		<mat-card-title>Reviews</mat-card-title>
+	</mat-card-header>
+
+	<div *ngIf="reviewsData.length; else noReviews">
+		<mat-card-content *ngFor="let review of reviewsData">
+			<p>{{ review.comment }}</p>
+			<p>Rating: {{ review.rating }}</p>
+			<app-rating [rating]="review.rating">Rating</app-rating>
+		</mat-card-content>
+	</div>
+
+	<ng-template #noReviews>
+		<mat-card-content>
+			<p>This show doesn't have any reviews yet.</p>
+		</mat-card-content>
+	</ng-template>
+</mat-card>

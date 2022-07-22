@@ -1,1 +1,7 @@
-<app-show-card-details [showData]="show"> </app-show-card-details>
+<app-show-card-details [showData]="show$ | async"></app-show-card-details>
+
+<app-reviews [reviewsData]="reviews$ | async"></app-reviews>
+
+<div *ngIf="(show$ | async) === null" class="circle">
+	<mat-spinner></mat-spinner>
+</div>

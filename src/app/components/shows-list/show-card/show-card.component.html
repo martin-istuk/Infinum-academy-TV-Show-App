@@ -1,11 +1,27 @@
-<mat-card>
+<mat-card *ngIf="showData">
+	<!-- HEADER -->
 	<mat-card-header>
 		<mat-card-title>{{ showData.title }}</mat-card-title>
 	</mat-card-header>
+	<!-- IMAGE -->
 	<img *ngIf="showData.imageUrl" mat-card-image [src]="showData.imageUrl" />
 	<img *ngIf="!showData.imageUrl" mat-card-image src="https://via.placeholder.com/240x300" />
+
 	<mat-card-content>
-		<app-rating [avgRating]="showData.averageRating"></app-rating>
-		<p>{{ randomNumber }}</p>
+		<!-- RATING -->
+		<div *ngIf="showData.averageRating; else noRating" class="rating">
+			<p>Average rating {{ showData.averageRating | number: '1.1-1' }}</p>
+			<app-rating [rating]="showData.averageRating"></app-rating>
+		</div>
+		<ng-template #noRating>
+			<p class="rating">Not rated yet.</p>
+		</ng-template>
+		<!-- REVIEWS -->
+		<div class="reviews">
+			<p *ngIf="showData.reviews.length === 0; else noReviews">No reviews.</p>
+			<ng-template #noReviews>
+				<p>{{ showData.reviews.length }} review(s).</p>
+			</ng-template>
+		</div>
 	</mat-card-content>
 </mat-card>
