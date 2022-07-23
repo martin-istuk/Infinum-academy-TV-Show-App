@@ -1,19 +1,17 @@
-<mat-card *ngIf="reviewsData">
-	<mat-card-header>
-		<mat-card-title>Reviews</mat-card-title>
-	</mat-card-header>
-
-	<div *ngIf="reviewsData.length; else noReviews">
-		<mat-card-content *ngFor="let review of reviewsData">
-			<p>{{ review.comment }}</p>
-			<p>Rating: {{ review.rating }}</p>
-			<app-rating [rating]="review.rating">Rating</app-rating>
-		</mat-card-content>
-	</div>
-
-	<ng-template #noReviews>
-		<mat-card-content>
-			<p>This show doesn't have any reviews yet.</p>
-		</mat-card-content>
-	</ng-template>
+<mat-card *ngIf="reviewsData === null">
+	<mat-card-content>
+		<p>This show doesn't have any reviews yet.</p>
+	</mat-card-content>
 </mat-card>
+
+<div *ngIf="reviewsData !== null">
+	<mat-card *ngFor="let review of reviewsData">
+		<mat-card-content class="review-card">
+			<img class="profile-pic" src="https://bscc.co.uk/wp-content/uploads/2021/10/profile-256.jpg" />
+			<p class="email">Email</p>
+			<p class="comment">{{ review.comment }}</p>
+			<!-- <p class="rating">Rating: {{ review.rating }}</p> -->
+			<app-rating class="rating" [rating]="review.rating">Rating</app-rating>
+		</mat-card-content>
+	</mat-card>
+</div>

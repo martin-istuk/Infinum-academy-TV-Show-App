@@ -1,0 +1,20 @@
+.container {
+	display: grid;
+	grid-template-columns: auto;
+	justify-content: center;
+	align-content: center;
+	p {
+		color: white;
+		font-weight: bold;
+		text-align: center;
+		margin-bottom: 2vh;
+	}
+	.email {
+		font-size: 1.5rem;
+		margin-bottom: 4vh;
+	}
+	.profilePic {
+		height: 40vh;
+	}
+
+}

@@ -5,6 +5,7 @@
 		[routerLink]="link.url"
 		[routerLinkActive]="'active'"
 		[routerLinkActiveOptions]="{ exact: true }"
+		(click)="navLinkToggle()"
 	>
 		{{ link.title }}
 	</button>

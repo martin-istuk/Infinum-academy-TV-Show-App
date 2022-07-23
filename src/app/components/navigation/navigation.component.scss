@@ -1,4 +1,30 @@
+nav {
+	display: grid;
+	justify-items: start;
+	& :last-child {
+		position: absolute;
+		bottom: 2vh;
+	}
+}
+button {
+	display: inline;
+	font-size: 1rem;
+	margin-bottom: 1rem;
+}
 .active {
-	font-weight: bold;
-	text-decoration: underline;
+	border-radius: 999999999px;
+	background: #371687;
+}
+
+
+
+@media only screen and (max-width: 1060px) {
+	nav:first-child {
+		margin-top: 12vh;
+		margin-left: 2vh;
+	}
+	button {
+		font-size: 1.3rem;
+		margin-bottom: 1rem;
+	}
 }

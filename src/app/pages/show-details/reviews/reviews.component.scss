@@ -1,14 +1,28 @@
+:host {
+	width: 800px;
+}
 mat-card {
-	max-width: 600px;
 	border-radius: 24px;
 	height: 95%;
 	margin: 20px auto;
 	padding: 50px;
-	background: lightgrey;
 }
 mat-card-content {
 	margin: 10px;
 	padding: 25px;
 	border-radius: 10px;
-	background: white;
+}
+.review-card {
+	display: grid;
+	grid-template:
+		"profilePic email comment"
+		"profilePic rating comment";
+	.profile-pic {
+		grid-area: profilePic;
+		height: 36px;
+	}
+	.email { grid-area: email; }
+	.comment { grid-area: comment; }
+	.rating { grid-area: rating; }
+	gap: 20px;
 }
