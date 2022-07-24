@@ -1,7 +1,8 @@
-<app-show-card-details [showData]="show$ | async"></app-show-card-details>
-
-<app-reviews [reviewsData]="reviews$ | async"></app-reviews>
-
-<div *ngIf="(show$ | async) === null" class="circle">
+<div *ngIf="(show$ | async) === null; else showDetailsPage" class="circle">
 	<mat-spinner></mat-spinner>
 </div>
+
+<ng-template #showDetailsPage>
+	<app-show-card-details [showData]="show$ | async"></app-show-card-details>
+	<app-reviews></app-reviews>
+</ng-template>

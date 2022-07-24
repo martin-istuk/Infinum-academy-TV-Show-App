@@ -1,17 +1,64 @@
-<mat-card *ngIf="reviewsData === null">
+<mat-card class="reviews-card">
+	<!-- ADD NEW REVIEW -->
+	<mat-card-header>
+		<mat-card-title>Reviews</mat-card-title>
+	</mat-card-header>
+
 	<mat-card-content>
-		<p>This show doesn't have any reviews yet.</p>
+		<ng-container *ngIf="addReviewForm" [formGroup]="addReviewForm">
+			<form>
+				<mat-form-field class="comment" appearance="fill">
+					<mat-label>Comment</mat-label>
+					<textarea formControlName="comment" matInput rows="5" required></textarea>
+					<mat-error *ngIf="addReviewForm.controls.comment.invalid"></mat-error>
+				</mat-form-field>
+
+				<mat-form-field appearance="fill">
+					<mat-label>Rating</mat-label>
+					<mat-select formControlName="rating" required>
+						<mat-option *ngFor="let rating of ratingOptions" [value]="rating">
+							{{ rating }}
+						</mat-option>
+					</mat-select>
+					<mat-error *ngIf="addReviewForm.controls.rating.invalid"></mat-error>
+				</mat-form-field>
+
+				<button
+					[disabled]="addReviewForm.invalid"
+					class="post-btn"
+					(click)="onPost($event)"
+					mat-raised-button
+					color="primary"
+				>
+					<span *ngIf="!loadingInProgress; else loadingSpinner">POST</span>
+					<ng-template #loadingSpinner>
+						<mat-icon class="loading">autorenew</mat-icon>
+					</ng-template>
+				</button>
+			</form>
+		</ng-container>
+
+		<!-- EXISTING REVIEWS -->
+		<div class="existing-reviews">
+			<div *ngIf="(reviews$ | async) !== null; else noReviews">
+				<mat-card *ngFor="let review of reviews$ | async">
+					<mat-card-content class="review-post">
+						<img class="profile-pic" src="https://bscc.co.uk/wp-content/uploads/2021/10/profile-256.jpg" />
+						<p class="email">Email</p>
+						<p class="comment">{{ review.comment }}</p>
+						<!-- <p class="rating">Rating: {{ review.rating }}</p> -->
+						<app-rating class="rating" [rating]="review.rating">Rating</app-rating>
+					</mat-card-content>
+				</mat-card>
+			</div>
+
+			<ng-template #noReviews>
+				<mat-card>
+					<mat-card-content>
+						<p>This show doesn't have any reviews yet.</p>
+					</mat-card-content>
+				</mat-card>
+			</ng-template>
+		</div>
 	</mat-card-content>
 </mat-card>
-
-<div *ngIf="reviewsData !== null">
-	<mat-card *ngFor="let review of reviewsData">
-		<mat-card-content class="review-card">
-			<img class="profile-pic" src="https://bscc.co.uk/wp-content/uploads/2021/10/profile-256.jpg" />
-			<p class="email">Email</p>
-			<p class="comment">{{ review.comment }}</p>
-			<!-- <p class="rating">Rating: {{ review.rating }}</p> -->
-			<app-rating class="rating" [rating]="review.rating">Rating</app-rating>
-		</mat-card-content>
-	</mat-card>
-</div>

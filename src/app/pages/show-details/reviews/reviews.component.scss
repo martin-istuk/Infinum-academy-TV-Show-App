@@ -1,22 +1,63 @@
 :host {
 	width: 800px;
 }
-mat-card {
+.reviews-card {
+	display: grid;
+	grid-template-columns: 20% 80%;
 	border-radius: 24px;
-	height: 95%;
 	margin: 20px auto;
 	padding: 50px;
+	background: #1B004C;
 }
 mat-card-content {
-	margin: 10px;
-	padding: 25px;
-	border-radius: 10px;
+	display: grid;
+	grid-template-columns: auto;
 }
-.review-card {
+form {
+	display: grid;
+	grid-template: "comment comment" " . . ";
+	justify-content: space-between;
+}
+.comment {
+	grid-area: comment;
+}
+.post-btn {
+	&[disabled] {
+		background: grey;
+	}
+	border-radius: 9999px;
+	width: 150px;
+	height: 60px;
+	font-size: 1.1rem;
+	background: white;
+	span, mat-icon {
+		color: #371687;
+	}
+}
+.loading {
+	animation: spin 2s linear infinite;
+	@keyframes spin {
+		from { transform: rotate(0deg);	}
+		to { transform: rotate(360deg);	}
+	}
+}
+.existing-reviews div {
+	display: grid;
+	grid-template-columns: auto;
+	gap: 40px;
+	padding: 40px 0;
+	mat-card {
+		border-radius: 36px;
+		padding: 40px;
+	}
+}
+.review-post {
 	display: grid;
 	grid-template:
 		"profilePic email comment"
 		"profilePic rating comment";
+	align-items: center;
+	gap: 40px;
 	.profile-pic {
 		grid-area: profilePic;
 		height: 36px;
@@ -24,5 +65,4 @@ mat-card-content {
 	.email { grid-area: email; }
 	.comment { grid-area: comment; }
 	.rating { grid-area: rating; }
-	gap: 20px;
 }

@@ -25,16 +25,4 @@ export class ShowDetailsComponent {
 			return this.showService.getShowById(id);
 		}),
 	);
-
-	public reviews$ = this.routeId$.pipe(
-		switchMap((id: string | null) => {
-			if (!id) {
-				return EMPTY;
-			}
-			return this.showService.getShowById(id);
-		}),
-		map((show) => {
-			return show?.reviews;
-		}),
-	);
 }
