@@ -18,9 +18,9 @@
 		</ng-template>
 		<!-- REVIEWS -->
 		<div class="reviews">
-			<p *ngIf="showData.reviews.length === 0; else noReviews">No reviews.</p>
+			<p *ngIf="(reviews$ | async)?.length; else noReviews">No reviews.</p>
 			<ng-template #noReviews>
-				<p>{{ showData.reviews.length }} review(s).</p>
+				<p>{{ (reviews$ | async)?.length }} review(s).</p>
 			</ng-template>
 		</div>
 	</mat-card-content>

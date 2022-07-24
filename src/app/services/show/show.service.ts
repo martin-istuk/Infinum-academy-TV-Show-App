@@ -22,7 +22,6 @@ export class ShowService {
 			average_rating: 4.6,
 			image_url:
 				'https://m.media-amazon.com/images/M/MV5BN2EyZjM3NzUtNWUzMi00MTgxLWI0NTctMzY4M2VlOTdjZWRiXkEyXkFqcGdeQXVyNDUzOTQ5MjY@._V1_FMjpg_UY474_.jpg%20319w',
-			reviews: [],
 		},
 		{
 			id: '1',
@@ -32,20 +31,6 @@ export class ShowService {
 			average_rating: 0,
 			image_url:
 				'https://m.media-amazon.com/images/M/MV5BZGMxZTdjZmYtMmE2Ni00ZTdkLWI5NTgtNjlmMjBiNzU2MmI5XkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_FMjpg_UY497_.jpg',
-			reviews: [
-				{
-					id: '0',
-					comment:
-						'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ac lectus hendrerit, tristique massa nec, iaculis turpis. Ut id diam non arcu molestie facilisis quis at tellus. Vestibulum ante ipsum..',
-					rating: 5,
-				},
-				{
-					id: '1',
-					comment:
-						'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ac lectus hendrerit, tristique massa nec, iaculis turpis. Ut id diam non arcu molestie facilisis quis at tellus. Vestibulum ante ipsum..',
-					rating: 3,
-				},
-			],
 		},
 		{
 			id: '2',
@@ -55,26 +40,6 @@ export class ShowService {
 			average_rating: 5,
 			image_url:
 				'https://m.media-amazon.com/images/M/MV5BNzA5ZDNlZWMtM2NhNS00NDJjLTk4NDItYTRmY2EwMWZlMTY3XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_FMjpg_UY474_.jpg',
-			reviews: [
-				{
-					id: '0',
-					comment:
-						'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ac lectus hendrerit, tristique massa nec, iaculis turpis. Ut id diam non arcu molestie facilisis quis at tellus. Vestibulum ante ipsum..',
-					rating: 5,
-				},
-				{
-					id: '1',
-					comment:
-						'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ac lectus hendrerit, tristique massa nec, iaculis turpis. Ut id diam non arcu molestie facilisis quis at tellus. Vestibulum ante ipsum..',
-					rating: 4,
-				},
-				{
-					id: '2',
-					comment:
-						'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ac lectus hendrerit, tristique massa nec, iaculis turpis. Ut id diam non arcu molestie facilisis quis at tellus. Vestibulum ante ipsum..',
-					rating: 3,
-				},
-			],
 		},
 		{
 			id: '3',
@@ -84,7 +49,6 @@ export class ShowService {
 			average_rating: 2.9,
 			image_url:
 				'https://m.media-amazon.com/images/M/MV5BMjA2NzQ3NjE4M15BMl5BanBnXkFtZTgwNTE5OTcyNDM@._V1_FMjpg_UY469_.jpg',
-			reviews: [],
 		},
 		{
 			id: '4',
@@ -94,7 +58,6 @@ export class ShowService {
 			average_rating: 3.1,
 			image_url:
 				'https://m.media-amazon.com/images/M/MV5BMDAzM2M0Y2UtZjRmZi00MzVlLTg4MjEtOTE3NzU5ZDVlMTU5XkEyXkFqcGdeQXVyNDUyOTg3Njg@._V1_FMjpg_UY484_.jpg',
-			reviews: [],
 		},
 		{
 			id: '5',
@@ -104,7 +67,6 @@ export class ShowService {
 			average_rating: 2.9,
 			image_url:
 				'https://m.media-amazon.com/images/M/MV5BNTc4MTc3NTQ5OF5BMl5BanBnXkFtZTcwOTg0NjI4NA@@._V1_FMjpg_UY426_.jpg',
-			reviews: [],
 		},
 		{
 			id: '6',
@@ -114,7 +76,6 @@ export class ShowService {
 			average_rating: 4.1,
 			image_url:
 				'https://m.media-amazon.com/images/M/MV5BNzg4MjQxNTQtZmI5My00YjMwLWJlMjUtMmJlY2U2ZWFlNzY1XkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_FMjpg_UY478_.jpg',
-			reviews: [],
 		},
 		{
 			id: '7',
@@ -124,7 +85,6 @@ export class ShowService {
 			average_rating: 4.5,
 			image_url:
 				'https://m.media-amazon.com/images/M/MV5BYmU1NDRjNDgtMzhiMi00NjZmLTg5NGItZDNiZjU5NTU4OTE0XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_FMjpg_UY498_.jpg',
-			reviews: [],
 		},
 		{
 			id: '8',
@@ -134,7 +94,6 @@ export class ShowService {
 			average_rating: 3.8,
 			image_url:
 				'https://m.media-amazon.com/images/M/MV5BOWZlMjFiYzgtMTUzNC00Y2IzLTk1NTMtZmNhMTczNTk0ODk1XkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_FMjpg_UY496_.jpg',
-			reviews: [],
 		},
 	].map((show: IShow) => {
 		return new Show(show);
@@ -206,7 +165,6 @@ export class ShowService {
 					description: description,
 					average_rating: null,
 					image_url: null,
-					reviews: [],
 				}),
 			);
 			this.shows$.next(currentShows);
@@ -214,7 +172,8 @@ export class ShowService {
 		}
 	}
 
-	private readonly delayFactor: number = 1000 * (0.5 + Math.random());
+	// private readonly delayFactor: number = 1000 * (0.5 + Math.random());
+	private readonly delayFactor: number = 0.5 + Math.random();
 
 	private readonly errorFactor: number = 0.1;
 }

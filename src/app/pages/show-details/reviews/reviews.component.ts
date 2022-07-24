@@ -1,22 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Params } from '@angular/router';
 
 import { EMPTY, map, Subscription, switchMap } from 'rxjs';
 
-import { ShowService } from 'src/app/services/show/show.service';
+import { ReviewService } from 'src/app/services/review/review.service';
 
 @Component({
 	selector: 'app-reviews',
 	templateUrl: './reviews.component.html',
 	styleUrls: ['./reviews.component.scss'],
 })
-export class ReviewsComponent {
-	constructor(private showService: ShowService, private route: ActivatedRoute) {}
+export class ReviewsComponent implements OnDestroy {
+	constructor(private reviewService: ReviewService, private route: ActivatedRoute) {}
 
-	public ratingOptions: Array<number> = [1, 2, 3, 4, 5];
 	private subscription?: Subscription;
+	public ratingOptions: Array<number> = [1, 2, 3, 4, 5];
 	public loadingInProgress: boolean = false;
+
+	private showId: string = '';
+	private comment: string = '';
+	private rating: number = 0;
 
 	private routeId$ = this.route.paramMap.pipe(
 		map((params: ParamMap) => {
@@ -29,10 +33,7 @@ export class ReviewsComponent {
 			if (!id) {
 				return EMPTY;
 			}
-			return this.showService.getShowById(id);
-		}),
-		map((show) => {
-			return show?.reviews;
+			return this.reviewService.getReviewsByShowId(id);
 		}),
 	);
 
@@ -41,14 +42,28 @@ export class ReviewsComponent {
 		rating: new FormControl('', [Validators.required]),
 	});
 
-	public onPost(event: Event): void {
+	public onPostReview(event: Event): void {
 		event.preventDefault();
-
 		// this.loadingInProgress = true;
 
-		console.log('-----');
-		console.log('Comment: ' + this.addReviewForm.controls.comment.value);
-		console.log('Rating: ' + this.addReviewForm.controls.rating.value);
-		console.log('-----');
+		this.subscription = this.route.params.subscribe((params: Params) => {
+			this.showId = params['id'];
+		});
+
+		if (this.addReviewForm.controls.comment.value) {
+			this.comment = this.addReviewForm.controls.comment.value;
+		}
+
+		if (this.addReviewForm.controls.rating.value) {
+			this.rating = Number(this.addReviewForm.controls.rating.value);
+		}
+
+		this.reviewService.addNewReview(this.showId, this.comment, this.rating);
+	}
+
+	ngOnDestroy(): void {
+		if (this.subscription) {
+			this.subscription.unsubscribe();
+		}
 	}
 }

@@ -6,5 +6,4 @@ export interface IShow {
 	description: string;
 	average_rating: number | null;
 	image_url: string | null;
-	reviews: Array<IReview>;
 }

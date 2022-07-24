@@ -26,7 +26,7 @@
 				<button
 					[disabled]="addReviewForm.invalid"
 					class="post-btn"
-					(click)="onPost($event)"
+					(click)="onPostReview($event)"
 					mat-raised-button
 					color="primary"
 				>
@@ -43,8 +43,11 @@
 			<div *ngIf="(reviews$ | async) !== null; else noReviews">
 				<mat-card *ngFor="let review of reviews$ | async">
 					<mat-card-content class="review-post">
-						<img class="profile-pic" src="https://bscc.co.uk/wp-content/uploads/2021/10/profile-256.jpg" />
-						<p class="email">Email</p>
+						<img
+							class="profile-pic"
+							src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
+						/>
+						<p class="email">email@email.com</p>
 						<p class="comment">{{ review.comment }}</p>
 						<!-- <p class="rating">Rating: {{ review.rating }}</p> -->
 						<app-rating class="rating" [rating]="review.rating">Rating</app-rating>
