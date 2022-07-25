@@ -1,22 +1,11 @@
 <mat-card *ngIf="showData">
-	<!-- HEADER -->
-	<mat-card-header>
-		<mat-card-title>{{ showData.title }}</mat-card-title>
-	</mat-card-header>
-	<!-- IMAGE -->
-	<img *ngIf="showData.imageUrl" mat-card-image [src]="showData.imageUrl" />
-	<img *ngIf="!showData.imageUrl" mat-card-image src="https://via.placeholder.com/240x300" />
+	<div class="image-div" [style.background-image]="'url(' + showData.imageUrl + ')'"></div>
 
-	<mat-card-content>
-		<!-- DESCRIPTION -->
-		<p class="description">{{ showData.description }}</p>
-		<!-- RATING -->
-		<div *ngIf="showData.averageRating; else notRated">
-			<p>Average rating: {{ showData.averageRating }}</p>
-			<app-rating [rating]="showData.averageRating"></app-rating>
+	<div class="show-info">
+		<div class="rating">
+			<h4>{{ showData.title }}</h4>
+			<p><mat-icon>star</mat-icon> {{ showData.averageRating | number: '1.1-1' }}/5</p>
 		</div>
-		<ng-template #notRated>
-			<p>Not rated yet.</p>
-		</ng-template>
-	</mat-card-content>
+		<p class="description">{{ showData.description }}</p>
+	</div>
 </mat-card>

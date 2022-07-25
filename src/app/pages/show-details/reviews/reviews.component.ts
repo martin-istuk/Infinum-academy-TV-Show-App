@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
+
 import { Review } from 'src/app/interfaces/review.model';
+import { ReviewService } from 'src/app/services/review/review.service';
 
 @Component({
 	selector: 'app-reviews',
@@ -7,5 +9,9 @@ import { Review } from 'src/app/interfaces/review.model';
 	styleUrls: ['./reviews.component.scss'],
 })
 export class ReviewsComponent {
-	@Input() reviewsData?: Array<Review> | null;
+	constructor(public reviewService: ReviewService) {}
+
+	@Input() showId?: string;
+
+	@Input() reviewsData: Array<Review> = [];
 }

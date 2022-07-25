@@ -1,17 +1,21 @@
-<mat-card *ngIf="reviewsData === null">
-	<mat-card-content>
-		<p>This show doesn't have any reviews yet.</p>
-	</mat-card-content>
-</mat-card>
-
-<div *ngIf="reviewsData !== null">
+<div *ngIf="reviewsData.length; else noReviews" class="review-post">
 	<mat-card *ngFor="let review of reviewsData">
-		<mat-card-content class="review-card">
-			<img class="profile-pic" src="https://bscc.co.uk/wp-content/uploads/2021/10/profile-256.jpg" />
-			<p class="email">Email</p>
+		<mat-card-content class="review-post-data">
+			<img
+				class="profile-pic"
+				src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
+			/>
+			<p class="email">email@email.com</p>
 			<p class="comment">{{ review.comment }}</p>
-			<!-- <p class="rating">Rating: {{ review.rating }}</p> -->
 			<app-rating class="rating" [rating]="review.rating">Rating</app-rating>
 		</mat-card-content>
 	</mat-card>
 </div>
+
+<ng-template #noReviews>
+	<mat-card>
+		<mat-card-content>
+			<p>This show doesn't have any reviews yet.</p>
+		</mat-card-content>
+	</mat-card>
+</ng-template>

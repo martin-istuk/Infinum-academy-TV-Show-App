@@ -1,6 +1,8 @@
 .root-div {
 	display: grid;
-	grid-template-columns: 15vw auto;
+	grid-template-columns: 19vw auto;
+	max-width: 1440px;
+	margin: 0 auto;
 }
 header {
 	position: sticky;
@@ -12,7 +14,7 @@ header {
 .mainContent {
 	display: grid;
 	grid-template-rows: 0 auto;
-	align-content: center;
+	align-content: stretch;
 	padding: 20px;
 }
 .container {
@@ -53,13 +55,17 @@ header {
 		height: auto;
 		z-index: 10;
 	}
+	.mainContent {
+		padding: 0 20px 20px;
+	}
 	.container {
 		grid-template: 'logo menuBtn';
-		grid-template-columns: 85% 15%;
+		grid-template-columns: 80% 20%;
 		padding: 16px;
 	}
 	.logo {
 		margin-bottom: 0;
+		max-width: 200px;
 	}
 	.side-nav {
 		display: none;
@@ -69,6 +75,7 @@ header {
 	}
 	.menu-btn {
 		display: block;
+		max-width: 80px;
 		grid-area: menuBtn;
 		mat-icon {
 			font-size: 20px;
