@@ -9,24 +9,27 @@
 			<form>
 				<mat-form-field class="comment" appearance="fill">
 					<mat-label>Comment</mat-label>
-					<textarea formControlName="comment" matInput rows="5" required></textarea>
-					<mat-error *ngIf="addReviewForm.controls.comment.invalid"></mat-error>
+					<textarea formControlName="commentInput" matInput rows="5" required></textarea>
+					<mat-error *ngIf="addReviewForm.controls.commentInput.invalid"></mat-error>
 				</mat-form-field>
 
-				<mat-form-field appearance="fill">
-					<mat-label>Rating</mat-label>
-					<mat-select formControlName="rating" required>
-						<mat-option *ngFor="let rating of ratingOptions" [value]="rating">
-							{{ rating }}
-						</mat-option>
-					</mat-select>
-					<mat-error *ngIf="addReviewForm.controls.rating.invalid"></mat-error>
-				</mat-form-field>
+				<div class="stars-container">
+					<label>Rating</label>
+					<div class="star-rating-input">
+						<mat-icon class="star" (click)="setRating(1)">{{ starsArray[0] }}</mat-icon>
+						<mat-icon class="star" (click)="setRating(2)">{{ starsArray[1] }}</mat-icon>
+						<mat-icon class="star" (click)="setRating(3)">{{ starsArray[2] }}</mat-icon>
+						<mat-icon class="star" (click)="setRating(4)">{{ starsArray[3] }}</mat-icon>
+						<mat-icon class="star" (click)="setRating(5)">{{ starsArray[4] }}</mat-icon>
+
+						<input type="hidden" formControlName="ratingInput" class="rating-input" required />
+					</div>
+				</div>
 
 				<button
 					[disabled]="addReviewForm.invalid"
 					class="post-btn"
-					(click)="onPostReview($event)"
+					(click)="onPostNewReview($event)"
 					mat-raised-button
 					color="primary"
 				>

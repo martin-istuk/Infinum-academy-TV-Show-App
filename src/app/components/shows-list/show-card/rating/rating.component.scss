@@ -1,16 +1,15 @@
 :host {
-	height: 20px;
+	height: 24px;
+	* {
+		vertical-align: middle;
+	}
+}
+span {
+	font-size: 1rem;
 }
 .star {
-	width: 20px;
-	font-size: 20px;
+	width: 24px;
+	font-size: 24px;
+	color: white;
 }
-.goldStar {
-	color: hsl(50, 80%, 50%);
-}
-.greyStar {
-	color: hsl(0, 0%, 65%);
-}
-mat-icon {
-	vertical-align: middle;
-}
+

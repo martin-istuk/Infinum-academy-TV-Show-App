@@ -20,7 +20,35 @@ export class ReviewsComponent implements OnDestroy {
 
 	private showId: string = '';
 	private comment: string = '';
-	private rating: number = 0;
+	public rating: number = 0;
+
+	public starsArray: Array<string> = ['star_border', 'star_border', 'star_border', 'star_border', 'star_border'];
+
+	public addReviewForm = new FormGroup({
+		commentInput: new FormControl('', [Validators.required]),
+		ratingInput: new FormControl('', [Validators.required]),
+	});
+
+	setRating(rating: number): void {
+		this.addReviewForm.controls.ratingInput.setValue(String(rating));
+		this.rating = rating;
+		switch (rating) {
+			case 1:
+				this.starsArray = ['star', 'star_border', 'star_border', 'star_border', 'star_border'];
+				break;
+			case 2:
+				this.starsArray = ['star', 'star', 'star_border', 'star_border', 'star_border'];
+				break;
+			case 3:
+				this.starsArray = ['star', 'star', 'star', 'star_border', 'star_border'];
+				break;
+			case 4:
+				this.starsArray = ['star', 'star', 'star', 'star', 'star_border'];
+				break;
+			default:
+				this.starsArray = ['star', 'star', 'star', 'star', 'star'];
+		}
+	}
 
 	private routeId$ = this.route.paramMap.pipe(
 		map((params: ParamMap) => {
@@ -37,12 +65,7 @@ export class ReviewsComponent implements OnDestroy {
 		}),
 	);
 
-	public addReviewForm = new FormGroup({
-		comment: new FormControl('', [Validators.required]),
-		rating: new FormControl('', [Validators.required]),
-	});
-
-	public onPostReview(event: Event): void {
+	public onPostNewReview(event: Event): void {
 		event.preventDefault();
 		// this.loadingInProgress = true;
 
@@ -50,12 +73,12 @@ export class ReviewsComponent implements OnDestroy {
 			this.showId = params['id'];
 		});
 
-		if (this.addReviewForm.controls.comment.value) {
-			this.comment = this.addReviewForm.controls.comment.value;
+		if (this.addReviewForm.controls.commentInput.value) {
+			this.comment = this.addReviewForm.controls.commentInput.value;
 		}
 
-		if (this.addReviewForm.controls.rating.value) {
-			this.rating = Number(this.addReviewForm.controls.rating.value);
+		if (this.addReviewForm.controls.ratingInput.value) {
+			this.rating = Number(this.addReviewForm.controls.ratingInput.value);
 		}
 
 		this.reviewService.addNewReview(this.showId, this.comment, this.rating);

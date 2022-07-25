@@ -21,6 +21,24 @@ form {
 .comment {
 	grid-area: comment;
 }
+.stars-container {
+	display: grid;
+	grid-template-columns: auto auto;
+	* {
+		vertical-align: middle;
+	}
+	label {
+		margin-right: 10px;
+	}
+	.star {
+		width: 24px;
+		font-size: 24px;
+		color: white;
+		&:hover {
+			font-weight: bolder;
+		}
+	}
+}
 .post-btn {
 	&[disabled] {
 		background: grey;
