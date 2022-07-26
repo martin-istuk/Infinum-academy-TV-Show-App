@@ -7,7 +7,7 @@ mat-card {
 	max-width: 500px;
 	background: #371687;
 	border-radius: 24px;
-	* {
+	a {
 		color: white;
 	}
 	p {
@@ -28,49 +28,6 @@ mat-card-content > div {
 mat-form-field {
 	width: 100%;
 	margin-bottom: 10px;
-}
-:host ::ng-deep .mat-form-field-outline-start {
-	border-radius: 9999px 0 0 9999px !important;
-	border-top: 2px solid white !important;
-	border-left: 2px solid white !important;
-	border-bottom: 2px solid white !important;
-}
-:host ::ng-deep .mat-form-field-outline-gap {
-	border-top: 2px solid white !important;
-	border-bottom: 2px solid white !important;
-}
-:host ::ng-deep .mat-form-field-should-float .mat-form-field-outline-gap {
-	border-top: none !important;
-}
-:host ::ng-deep .mat-form-field-outline-end {
-	border-radius:  0 9999px 9999px 0 !important;
-	border-top: 2px solid white !important;
-	border-right: 2px solid white !important;
-	border-bottom: 2px solid white !important;
-}
-:host ::ng-deep .mat-icon {
-	margin-left: 10px;
-}
-:host ::ng-deep .mat-form-field-label {
-	margin-left: 10px;
-}
-:host ::ng-deep input {
-	margin-left: 10px;
-	vertical-align: text-top;
-}
-#submit-form-btn {
-	border-radius: 9999px;
-	width: 150px;
-	height: 60px;
-	font-size: 1.1rem;
-	background: white;
-	span, mat-icon {
-		color: #371687;
-	}
-}
-.passMatchError {
-	color: red;
-	font-weight: bold;
 }
 .loading {
 	animation: spin 2s linear infinite;
