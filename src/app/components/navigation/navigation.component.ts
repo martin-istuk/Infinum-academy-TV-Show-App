@@ -22,7 +22,7 @@ export class NavigationComponent {
 		},
 		{
 			url: 'top-rated',
-			title: 'Top Rated Shows',
+			title: 'Top Rated',
 		},
 		{
 			url: 'my-profile',

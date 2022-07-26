@@ -4,10 +4,11 @@ import { ShowDetailsComponent } from './show-details.component';
 import { ShowCardDetailsModule } from './show-card-details/show-card-details.module';
 import { ReviewsModule } from './reviews/reviews.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { AddReviewModule } from './add-review/add-review.module';
 
 @NgModule({
 	declarations: [ShowDetailsComponent],
-	imports: [CommonModule, ShowCardDetailsModule, ReviewsModule, MatProgressSpinnerModule],
+	imports: [CommonModule, ShowCardDetailsModule, ReviewsModule, MatProgressSpinnerModule, AddReviewModule],
 	exports: [ShowDetailsComponent],
 })
 export class ShowDetailsModule {}

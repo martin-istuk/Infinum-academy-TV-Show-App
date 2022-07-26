@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+
 import { EMPTY, map, switchMap } from 'rxjs';
+
 import { ShowService } from 'src/app/services/show/show.service';
+import { ReviewService } from 'src/app/services/review/review.service';
 
 @Component({
 	selector: 'app-show-details',
@@ -9,7 +12,7 @@ import { ShowService } from 'src/app/services/show/show.service';
 	styleUrls: ['./show-details.component.scss'],
 })
 export class ShowDetailsComponent {
-	constructor(private showService: ShowService, private route: ActivatedRoute) {}
+	constructor(private showService: ShowService, private reviewService: ReviewService, private route: ActivatedRoute) {}
 
 	private routeId$ = this.route.paramMap.pipe(
 		map((params: ParamMap) => {
@@ -23,6 +26,15 @@ export class ShowDetailsComponent {
 				return EMPTY;
 			}
 			return this.showService.getShowById(id);
+		}),
+	);
+
+	public reviews$ = this.routeId$.pipe(
+		switchMap((id: string | null) => {
+			if (!id) {
+				return EMPTY;
+			}
+			return this.reviewService.getReviewsByShowId(id);
 		}),
 	);
 }

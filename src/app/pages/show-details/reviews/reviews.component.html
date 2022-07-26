@@ -1,70 +1,21 @@
-<mat-card class="reviews-card">
-	<!-- ADD NEW REVIEW -->
-	<mat-card-header>
-		<mat-card-title>Reviews</mat-card-title>
-	</mat-card-header>
+<div *ngIf="reviewsData.length; else noReviews" class="review-post">
+	<mat-card *ngFor="let review of reviewsData">
+		<mat-card-content class="review-post-data">
+			<img
+				class="profile-pic"
+				src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
+			/>
+			<p class="email">email@email.com</p>
+			<p class="comment">{{ review.comment }}</p>
+			<app-rating class="rating" [rating]="review.rating">Rating</app-rating>
+		</mat-card-content>
+	</mat-card>
+</div>
 
-	<mat-card-content>
-		<ng-container *ngIf="addReviewForm" [formGroup]="addReviewForm">
-			<form>
-				<mat-form-field class="comment" appearance="fill">
-					<mat-label>Comment</mat-label>
-					<textarea formControlName="commentInput" matInput rows="5" required></textarea>
-					<mat-error *ngIf="addReviewForm.controls.commentInput.invalid"></mat-error>
-				</mat-form-field>
-
-				<div class="stars-container">
-					<label>Rating</label>
-					<div class="star-rating-input">
-						<mat-icon class="star" (click)="setRating(1)">{{ starsArray[0] }}</mat-icon>
-						<mat-icon class="star" (click)="setRating(2)">{{ starsArray[1] }}</mat-icon>
-						<mat-icon class="star" (click)="setRating(3)">{{ starsArray[2] }}</mat-icon>
-						<mat-icon class="star" (click)="setRating(4)">{{ starsArray[3] }}</mat-icon>
-						<mat-icon class="star" (click)="setRating(5)">{{ starsArray[4] }}</mat-icon>
-
-						<input type="hidden" formControlName="ratingInput" class="rating-input" required />
-					</div>
-				</div>
-
-				<button
-					[disabled]="addReviewForm.invalid"
-					class="post-btn"
-					(click)="onPostNewReview($event)"
-					mat-raised-button
-					color="primary"
-				>
-					<span *ngIf="!loadingInProgress; else loadingSpinner">POST</span>
-					<ng-template #loadingSpinner>
-						<mat-icon class="loading">autorenew</mat-icon>
-					</ng-template>
-				</button>
-			</form>
-		</ng-container>
-
-		<!-- EXISTING REVIEWS -->
-		<div class="existing-reviews">
-			<div *ngIf="(reviews$ | async) !== null; else noReviews">
-				<mat-card *ngFor="let review of reviews$ | async">
-					<mat-card-content class="review-post">
-						<img
-							class="profile-pic"
-							src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
-						/>
-						<p class="email">email@email.com</p>
-						<p class="comment">{{ review.comment }}</p>
-						<!-- <p class="rating">Rating: {{ review.rating }}</p> -->
-						<app-rating class="rating" [rating]="review.rating">Rating</app-rating>
-					</mat-card-content>
-				</mat-card>
-			</div>
-
-			<ng-template #noReviews>
-				<mat-card>
-					<mat-card-content>
-						<p>This show doesn't have any reviews yet.</p>
-					</mat-card-content>
-				</mat-card>
-			</ng-template>
-		</div>
-	</mat-card-content>
-</mat-card>
+<ng-template #noReviews>
+	<mat-card>
+		<mat-card-content>
+			<p>This show doesn't have any reviews yet.</p>
+		</mat-card-content>
+	</mat-card>
+</ng-template>
