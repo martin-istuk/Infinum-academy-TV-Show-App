@@ -1,0 +1,34 @@
+<h4>Reviews</h4>
+
+<ng-container *ngIf="addReviewForm" [formGroup]="addReviewForm">
+	<form>
+		<mat-form-field class="comment" appearance="fill">
+			<mat-label>Comment</mat-label>
+			<textarea formControlName="comment" matInput rows="3" required></textarea>
+			<mat-error *ngIf="addReviewForm.controls.comment.invalid"></mat-error>
+		</mat-form-field>
+
+		<mat-form-field class="rating" appearance="fill">
+			<mat-label>Rating</mat-label>
+			<mat-select formControlName="rating" required>
+				<mat-option *ngFor="let rating of ratingOptions" [value]="rating">
+					{{ rating }}
+				</mat-option>
+			</mat-select>
+			<mat-error *ngIf="addReviewForm.controls.rating.invalid"></mat-error>
+		</mat-form-field>
+
+		<button
+			[disabled]="addReviewForm.invalid"
+			class="post-btn"
+			(click)="onPostReview($event)"
+			mat-raised-button
+			color="primary"
+		>
+			<span *ngIf="!loadingInProgress; else loadingSpinner">POST</span>
+			<ng-template #loadingSpinner>
+				<mat-icon class="loading">autorenew</mat-icon>
+			</ng-template>
+		</button>
+	</form>
+</ng-container>

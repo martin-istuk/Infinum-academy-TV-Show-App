@@ -1,8 +1,12 @@
-<div *ngIf="(show$ | async) === null; else showDetailsPage" class="circle">
-	<mat-spinner></mat-spinner>
+<div *ngIf="show$ | async as show; else loading">
+	<app-show-card-details [showData]="show"></app-show-card-details>
+	<app-add-review></app-add-review>
 </div>
 
-<ng-template #showDetailsPage>
-	<app-show-card-details [showData]="show$ | async"></app-show-card-details>
-	<app-reviews></app-reviews>
+<div *ngIf="reviews$ | async as reviews">
+	<app-reviews [reviewsData]="reviews"></app-reviews>
+</div>
+
+<ng-template #loading>
+	<mat-spinner class="circle"></mat-spinner>
 </ng-template>
