@@ -11,9 +11,13 @@ form {
 	display: grid;
 	grid-template: "comment comment" " . . ";
 	justify-content: space-between;
+	align-items: center;
 }
 .comment {
 	grid-area: comment;
+}
+.rating {
+	color: white;
 }
 :host ::ng-deep {
 	.mat-form-field-flex {

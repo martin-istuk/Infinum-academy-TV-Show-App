@@ -8,15 +8,7 @@
 			<mat-error *ngIf="addReviewForm.controls.comment.invalid"></mat-error>
 		</mat-form-field>
 
-		<mat-form-field class="rating" appearance="fill">
-			<mat-label>Rating</mat-label>
-			<mat-select formControlName="rating" required>
-				<mat-option *ngFor="let rating of ratingOptions" [value]="rating">
-					{{ rating }}
-				</mat-option>
-			</mat-select>
-			<mat-error *ngIf="addReviewForm.controls.rating.invalid"></mat-error>
-		</mat-form-field>
+		<app-rating-input class="rating" formControlName="rating" required> </app-rating-input>
 
 		<button
 			[disabled]="addReviewForm.invalid"

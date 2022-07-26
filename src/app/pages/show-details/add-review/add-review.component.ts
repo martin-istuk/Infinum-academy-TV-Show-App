@@ -29,7 +29,8 @@ export class AddReviewComponent implements OnDestroy {
 
 	public onPostReview(event: Event): void {
 		event.preventDefault();
-		// this.loadingInProgress = true;
+
+		this.loadingInProgress = true;
 
 		this.subscription = this.route.params.subscribe((params: Params) => {
 			this.showId = params['id'];
@@ -44,6 +45,10 @@ export class AddReviewComponent implements OnDestroy {
 		}
 
 		this.reviewService.addNewReview(this.showId, this.comment, this.rating);
+
+		setTimeout(() => {
+			this.loadingInProgress = false;
+		}, 250);
 	}
 
 	ngOnDestroy(): void {
