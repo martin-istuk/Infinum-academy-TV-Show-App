@@ -22,3 +22,18 @@ button {
 		font-weight: bold;
 	}
 }
+
+
+
+.print-test {
+	margin-top: 100px;
+	color: white;
+}
+.print {
+	display: none;
+}
+@media print {
+	.print {
+		display: block;
+	}
+}

@@ -8,11 +8,11 @@ import { Component, Input } from '@angular/core';
 export class RatingComponent {
 	@Input() rating: number | null = 0;
 
-	public get goldStars() {
+	public get filledStar() {
 		return Math.round(Number(this.rating));
 	}
 
-	public get greyStars() {
+	public get outlinedStar() {
 		return 5 - Math.round(Number(this.rating));
 	}
 }
