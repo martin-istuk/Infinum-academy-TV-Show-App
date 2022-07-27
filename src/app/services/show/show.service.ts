@@ -128,32 +128,21 @@ export class ShowService {
 
 	public getAllShows(): Observable<Array<Show>> {
 		// this.storageService.saveToLocalStorage(SHOW_KEY, this.shows$.value);
-		return this.shows$.pipe(
-			map((shows) => {
-				return shows.filter((show: Show) => {
-					return show.averageRating !== null && show.averageRating >= 4.5;
-				});
-			}),
+
+		return this.http.get<Array<Show>>(
+			'https://tv-shows.infinum.academy/api/v1/docs/index.html#tag/Tv-Shows/paths/~1shows/get',
 		);
 	}
 
 	public getTopRatedShows(): Observable<Array<Show>> {
-		return this.shows$.pipe(
-			map((shows) => {
-				return shows.filter((show: Show) => {
-					return show.averageRating !== null && show.averageRating >= 4.5;
-				});
-			}),
+		return this.http.get<Array<Show>>(
+			'https://tv-shows.infinum.academy/api/v1/docs/index.html#tag/Tv-Shows/paths/~1shows~1top_rated/get',
 		);
 	}
 
 	public getShowById(id: string): Observable<Show | undefined> {
-		return of(this.shows).pipe(
-			map((shows) => {
-				return shows.find((show) => {
-					return show.id === id;
-				});
-			}),
+		return this.http.get<Show>(
+			'https://tv-shows.infinum.academy/api/v1/docs/index.html#tag/Tv-Shows/paths/~1shows~1' + id + '/get',
 		);
 	}
 

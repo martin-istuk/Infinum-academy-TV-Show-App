@@ -28,16 +28,14 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 			provide: APP_INITIALIZER,
 			multi: true,
 			useFactory: (authService: AuthService) => {
-				return () => {
-					authService.init();
-				};
+				return () => authService.init();
 			},
 			deps: [AuthService],
 		},
 		{
 			provide: HTTP_INTERCEPTORS,
-			useClass: AuthInterceptor,
 			multi: true,
+			useClass: AuthInterceptor,
 		},
 	],
 	bootstrap: [AppComponent],
