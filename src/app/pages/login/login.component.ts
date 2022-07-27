@@ -54,7 +54,6 @@ export class LoginComponent implements OnDestroy {
 			} as ILoginFormData)
 			.subscribe({
 				next: (response) => {
-					console.log(response);
 					this.loadingInProgress = false;
 					this.router.navigate(['']);
 				},

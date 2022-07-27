@@ -1,3 +1,5 @@
+<button *ngIf="user$ | async as user" mat-raised-button color="primary">{{ user.email }}</button>
+
 <nav>
 	<button
 		*ngFor="let link of navigationLinks"
@@ -11,3 +13,5 @@
 		{{ link.title }}
 	</button>
 </nav>
+
+<button mat-button class="logout" (click)="logout()">-Log out</button>

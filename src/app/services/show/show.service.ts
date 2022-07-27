@@ -1,9 +1,10 @@
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, delay, map, Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, of, take, exhaustMap } from 'rxjs';
 
 import { IShow } from 'src/app/interfaces/show.interface';
 import { Show } from 'src/app/interfaces/show.model';
-import { StorageService } from '../storage/storage.service';
+import { AuthService } from '../auth/auth.service';
 
 const SHOW_KEY = 'myShows';
 
@@ -11,7 +12,7 @@ const SHOW_KEY = 'myShows';
 	providedIn: 'root',
 })
 export class ShowService {
-	constructor(private storageService: StorageService) {}
+	constructor(private authService: AuthService, private readonly http: HttpClient) {}
 
 	private shows: Array<Show> = [
 		{
@@ -120,48 +121,30 @@ export class ShowService {
 	});
 
 	private createShowsBehaviorSubject(): BehaviorSubject<Array<Show>> {
-		return new BehaviorSubject<Array<Show>>(this.storageService.loadLocalStorage<Array<Show>>(SHOW_KEY) || this.shows);
+		return new BehaviorSubject<Array<Show>>(this.shows);
 	}
 
 	private shows$ = this.createShowsBehaviorSubject();
 
 	public getAllShows(): Observable<Array<Show>> {
 		// this.storageService.saveToLocalStorage(SHOW_KEY, this.shows$.value);
-
-		if (Math.random() > this.errorFactor) {
-			// NO ERROR
-			return this.shows$.pipe(delay(this.delayFactor));
-		} else {
-			// SIMULATE ERROR
-			return this.shows$.pipe(
-				delay(this.delayFactor),
-				tap(() => {
-					throw new Error('Error getting shows data.');
-				}),
-			);
-		}
+		return this.shows$.pipe(
+			map((shows) => {
+				return shows.filter((show: Show) => {
+					return show.averageRating !== null && show.averageRating >= 4.5;
+				});
+			}),
+		);
 	}
 
 	public getTopRatedShows(): Observable<Array<Show>> {
-		if (Math.random() > this.errorFactor) {
-			// NO ERROR
-			return this.shows$.pipe(
-				map((shows) => {
-					return shows.filter((show: Show) => {
-						return show.averageRating !== null && show.averageRating >= 4.5;
-					});
-				}),
-				delay(this.delayFactor),
-			);
-		} else {
-			// SIMULATE ERROR
-			return this.shows$.pipe(
-				delay(this.delayFactor),
-				tap(() => {
-					throw new Error('Error getting shows data.');
-				}),
-			);
-		}
+		return this.shows$.pipe(
+			map((shows) => {
+				return shows.filter((show: Show) => {
+					return show.averageRating !== null && show.averageRating >= 4.5;
+				});
+			}),
+		);
 	}
 
 	public getShowById(id: string): Observable<Show | undefined> {
@@ -171,7 +154,6 @@ export class ShowService {
 					return show.id === id;
 				});
 			}),
-			delay(this.delayFactor),
 		);
 	}
 
@@ -193,8 +175,6 @@ export class ShowService {
 	}
 
 	// private readonly delayFactor: number = 1000 * (0.5 + Math.random());
-	private readonly delayFactor: number = 250 * Math.random();
 
 	// private readonly errorFactor: number = 0.1;
-	private readonly errorFactor: number = 0;
 }
