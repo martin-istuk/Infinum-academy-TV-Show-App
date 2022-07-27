@@ -2,9 +2,11 @@
 	<button
 		*ngFor="let link of navigationLinks"
 		mat-button
+		class="nav-button"
 		[routerLink]="link.url"
 		[routerLinkActive]="'active'"
 		[routerLinkActiveOptions]="{ exact: true }"
+		(click)="navLinkToggle()"
 	>
 		{{ link.title }}
 	</button>

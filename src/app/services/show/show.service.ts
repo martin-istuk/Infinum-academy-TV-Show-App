@@ -16,125 +16,104 @@ export class ShowService {
 	private shows: Array<Show> = [
 		{
 			id: '0',
-			title: 'The Lord of the Rings: The Fellowship of the Ring',
+			title: 'Game of Thrones',
 			description:
-				'A meek Hobbit from the Shire and eight companions set out on a journey to destroy the powerful One Ring and save Middle-earth from the Dark Lord Sauron.',
-			average_rating: 4.6,
+				'Nine noble families fight for control over the lands of Westeros, while an ancient enemy returns after being dormant for millennia.',
+			average_rating: 4.2,
 			image_url:
-				'https://m.media-amazon.com/images/M/MV5BN2EyZjM3NzUtNWUzMi00MTgxLWI0NTctMzY4M2VlOTdjZWRiXkEyXkFqcGdeQXVyNDUzOTQ5MjY@._V1_FMjpg_UY474_.jpg%20319w',
-			reviews: [],
+				'https://m.media-amazon.com/images/M/MV5BNTY3ZDZiNGItOGQwMi00MTEzLTg1YzYtODE3OGUxMTg5MjA4XkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_FMjpg_UY711_.jpg',
 		},
 		{
 			id: '1',
-			title: 'The Lord of the Rings: The Two Towers',
+			title: 'Chernobyl',
 			description:
-				"While Frodo and Sam edge closer to Mordor with the help of the shifty Gollum, the divided fellowship makes a stand against Sauron's new ally, Saruman, and his hordes of Isengard.",
-			average_rating: 0,
+				"In April 1986, an explosion at the Chernobyl nuclear power plant in the Union of Soviet Socialist Republics becomes one of the world's worst man-made catastrophes.",
+			average_rating: 4.7,
 			image_url:
-				'https://m.media-amazon.com/images/M/MV5BZGMxZTdjZmYtMmE2Ni00ZTdkLWI5NTgtNjlmMjBiNzU2MmI5XkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_FMjpg_UY497_.jpg',
-			reviews: [
-				{
-					id: '0',
-					comment:
-						'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ac lectus hendrerit, tristique massa nec, iaculis turpis. Ut id diam non arcu molestie facilisis quis at tellus. Vestibulum ante ipsum..',
-					rating: 5,
-				},
-				{
-					id: '1',
-					comment:
-						'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ac lectus hendrerit, tristique massa nec, iaculis turpis. Ut id diam non arcu molestie facilisis quis at tellus. Vestibulum ante ipsum..',
-					rating: 3,
-				},
-			],
+				'https://m.media-amazon.com/images/M/MV5BMmI2OTMxZTUtMTM5OS00MGNiLWFhNGMtYzJiODUwYjRmODA5XkEyXkFqcGdeQXVyMTM0NTc2NDgw._V1_.jpg',
 		},
 		{
 			id: '2',
-			title: 'The Lord of the Rings: The Return of the King',
+			title: 'The Mandalorian',
 			description:
-				"Gandalf and Aragorn lead the World of Men against Sauron's army to draw his gaze from Frodo and Sam as they approach Mount Doom with the One Ring.",
-			average_rating: 5,
-			image_url:
-				'https://m.media-amazon.com/images/M/MV5BNzA5ZDNlZWMtM2NhNS00NDJjLTk4NDItYTRmY2EwMWZlMTY3XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_FMjpg_UY474_.jpg',
-			reviews: [
-				{
-					id: '0',
-					comment:
-						'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ac lectus hendrerit, tristique massa nec, iaculis turpis. Ut id diam non arcu molestie facilisis quis at tellus. Vestibulum ante ipsum..',
-					rating: 5,
-				},
-				{
-					id: '1',
-					comment:
-						'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ac lectus hendrerit, tristique massa nec, iaculis turpis. Ut id diam non arcu molestie facilisis quis at tellus. Vestibulum ante ipsum..',
-					rating: 4,
-				},
-				{
-					id: '2',
-					comment:
-						'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ac lectus hendrerit, tristique massa nec, iaculis turpis. Ut id diam non arcu molestie facilisis quis at tellus. Vestibulum ante ipsum..',
-					rating: 3,
-				},
-			],
+				'The travels of a lone bounty hunter in the outer reaches of the galaxy, far from the authority of the New Republic.',
+			average_rating: 4.6,
+			image_url: 'https://lumiere-a.akamaihd.net/v1/images/p_fyc_themandalorian_19097_de619ea9.jpeg',
 		},
 		{
 			id: '3',
-			title: 'Star Wars: Episode I - The Phantom Menace',
+			title: 'Vikings',
 			description:
-				'Two Jedi escape a hostile blockade to find allies and come across a young boy who may bring balance to the Force, but the long dormant Sith resurface to claim their original glory.',
-			average_rating: 2.9,
+				'Vikings transports us to the brutal and mysterious world of Ragnar Lothbrok, a Viking warrior and farmer who yearns to explore--and raid--the distant shores across the ocean.',
+			average_rating: 4.0,
 			image_url:
-				'https://m.media-amazon.com/images/M/MV5BMjA2NzQ3NjE4M15BMl5BanBnXkFtZTgwNTE5OTcyNDM@._V1_FMjpg_UY469_.jpg',
-			reviews: [],
+				'https://m.media-amazon.com/images/M/MV5BODk4ZjU0NDUtYjdlOS00OTljLTgwZTUtYjkyZjk1NzExZGIzXkEyXkFqcGdeQXVyMDM2NDM2MQ@@._V1_.jpg',
 		},
 		{
 			id: '4',
-			title: 'Star Wars: Episode II - Attack of the Clones',
+			title: 'Stranger Things',
 			description:
-				'Ten years after initially meeting, Anakin Skywalker shares a forbidden romance with Padmé Amidala, while Obi-Wan Kenobi investigates an assassination attempt on the senator and discovers a secret clone army crafted for the Jedi.',
+				'When a young boy disappears, his mother, a police chief and his friends must confront terrifying supernatural forces in order to get him back.',
 			average_rating: 3.1,
-			image_url:
-				'https://m.media-amazon.com/images/M/MV5BMDAzM2M0Y2UtZjRmZi00MzVlLTg4MjEtOTE3NzU5ZDVlMTU5XkEyXkFqcGdeQXVyNDUyOTg3Njg@._V1_FMjpg_UY484_.jpg',
-			reviews: [],
+			image_url: 'https://m.media-amazon.com/images/I/81la9iMuIiL._AC_SY679_.jpg',
 		},
 		{
 			id: '5',
-			title: 'Star Wars: Episode III - Revenge of the Sith',
+			title: 'Modern Family',
 			description:
-				'Three years into the Clone Wars, the Jedi rescue Palpatine from Count Dooku. As Obi-Wan pursues a new threat, Anakin acts as a double agent between the Jedi Council and Palpatine and is lured into a sinister plan to rule the galaxy.',
+				'Three different but related families face trials and tribulations in their own uniquely comedic ways.',
 			average_rating: 2.9,
 			image_url:
-				'https://m.media-amazon.com/images/M/MV5BNTc4MTc3NTQ5OF5BMl5BanBnXkFtZTcwOTg0NjI4NA@@._V1_FMjpg_UY426_.jpg',
-			reviews: [],
+				'https://cdn1.edgedatg.com/aws/v2/abc/ModernFamily/showimages/63c138af2d70973bf297ae3e1f97712b/588x783-Q80_63c138af2d70973bf297ae3e1f97712b.jpg',
 		},
 		{
 			id: '6',
-			title: 'Star Wars: Episode IV',
+			title: 'MythBusters',
 			description:
-				"Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a Wookiee and two droids to save the galaxy from the Empire's world-destroying battle station, while also attempting to rescue Princess Leia from the mysterious Darth Vader.",
-			average_rating: 4.1,
-			image_url:
-				'https://m.media-amazon.com/images/M/MV5BNzg4MjQxNTQtZmI5My00YjMwLWJlMjUtMmJlY2U2ZWFlNzY1XkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_FMjpg_UY478_.jpg',
-			reviews: [],
+				'A weekly documentary in which two Hollywood special effects experts attempt to debunk urban legends by directly testing them.',
+			average_rating: 4.0,
+			image_url: 'https://d30a6s96kk7rhm.cloudfront.net/original/readings/931/850/005/9318500051288.jpg',
 		},
 		{
 			id: '7',
-			title: 'Star Wars: Episode V - The Empire Strikes Back',
+			title: 'House of Cards',
 			description:
-				'After the Rebels are brutally overpowered by the Empire on the ice planet Hoth, Luke Skywalker begins Jedi training with Yoda, while his friends are pursued across the galaxy by Darth Vader and bounty hunter Boba Fett.',
-			average_rating: 4.5,
+				'A Congressman works with his equally conniving wife to exact revenge on the people who betrayed him.',
+			average_rating: 4.1,
 			image_url:
-				'https://m.media-amazon.com/images/M/MV5BYmU1NDRjNDgtMzhiMi00NjZmLTg5NGItZDNiZjU5NTU4OTE0XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_FMjpg_UY498_.jpg',
-			reviews: [],
+				'https://i.pinimg.com/736x/5b/14/dc/5b14dcc90ede2f37c33854442274570b--house-of-cards-guilty-pleasure.jpg',
 		},
 		{
 			id: '8',
-			title: 'Star Wars: Episode VI - Return of the Jedi',
+			title: 'Planet Earth',
 			description:
-				"After a daring mission to rescue Han Solo from Jabba the Hutt, the Rebels dispatch to Endor to destroy the second Death Star. Meanwhile, Luke struggles to help Darth Vader back from the dark side without falling into the Emperor's trap.",
-			average_rating: 3.8,
-			image_url:
-				'https://m.media-amazon.com/images/M/MV5BOWZlMjFiYzgtMTUzNC00Y2IzLTk1NTMtZmNhMTczNTk0ODk1XkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_FMjpg_UY496_.jpg',
-			reviews: [],
+				'Emmy Award-winning, 11 episodes, five years in the making, the most expensive nature documentary series ever commissioned by the BBC, and the first to be filmed in high definition.',
+			average_rating: 5,
+			image_url: 'https://flxt.tmsimg.com/assets/p8431669_b_v8_aa.jpg',
+		},
+		{
+			id: '9',
+			title: 'Planet Earth II',
+			description:
+				'David Attenborough returns with a new wildlife documentary that shows life in a variety of habitats.',
+			average_rating: 4.4,
+			image_url: 'https://www.themoviedb.org/t/p/w500/tUKomxy50suT4MyxjYfOJDkZUq3.jpg',
+		},
+		{
+			id: '10',
+			title: 'The Blue Planet',
+			description:
+				'Mammoth series, five years in the making, taking a look at the rich tapestry of life in the worlds oceans.',
+			average_rating: 4.9,
+			image_url: 'https://www.themoviedb.org/t/p/original/n6Nj3WMrwFdA5x6FasE4vLCoQAs.jpg',
+		},
+		{
+			id: '11',
+			title: 'Blue Planet II',
+			description:
+				'David Attenborough returns to the worlds oceans in this sequel to the acclaimed documentary filming rare and unusual creatures of the deep, as well as documenting the problems our oceans face.',
+			average_rating: 4.4,
+			image_url: 'https://m.media-amazon.com/images/I/81HgqrFSmqL._SY550_.jpg',
 		},
 	].map((show: IShow) => {
 		return new Show(show);
@@ -206,7 +185,6 @@ export class ShowService {
 					description: description,
 					average_rating: null,
 					image_url: null,
-					reviews: [],
 				}),
 			);
 			this.shows$.next(currentShows);
@@ -214,7 +192,9 @@ export class ShowService {
 		}
 	}
 
-	private readonly delayFactor: number = 1000 * (0.5 + Math.random());
+	// private readonly delayFactor: number = 1000 * (0.5 + Math.random());
+	private readonly delayFactor: number = 250 * Math.random();
 
-	private readonly errorFactor: number = 0.1;
+	// private readonly errorFactor: number = 0.1;
+	private readonly errorFactor: number = 0;
 }

@@ -2,12 +2,14 @@ import { IReview } from './review.interface';
 
 export class Review {
 	public id: string;
+	public showId: string;
 	public comment: string;
 	public rating: number;
 
-	constructor(show: IReview) {
-		this.id = show.id;
-		this.comment = show.comment;
-		this.rating = show.rating;
+	constructor(review: IReview) {
+		this.id = review.id;
+		this.showId = review.showId;
+		this.comment = review.comment;
+		this.rating = review.rating;
 	}
 }
