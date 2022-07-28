@@ -24,9 +24,9 @@ export class ReviewService {
 
 	public addNewReview(showId: number, comment: string, rating: number): Observable<Array<Review> | undefined> {
 		const reviewData = {
-			show_id: showId,
 			comment: comment,
 			rating: rating,
+			show_id: showId,
 		};
 		return this.http.post<{ review: IReview }>('https://tv-shows.infinum.academy/reviews', reviewData).pipe(
 			switchMap(() => {

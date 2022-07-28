@@ -14,13 +14,16 @@ import { ReviewService } from 'src/app/services/review/review.service';
 export class AddReviewComponent implements OnDestroy {
 	constructor(private reviewService: ReviewService, private route: ActivatedRoute) {}
 
-	private subscription?: Subscription;
 	public ratingOptions: Array<number> = [1, 2, 3, 4, 5];
 	public loadingInProgress: boolean = false;
 
 	private showId: number = 0;
 	private comment: string = '';
 	private rating: number = 0;
+
+	private subscription: Subscription = this.route.params.subscribe((params: Params) => {
+		this.showId = Number(params['id']);
+	});
 
 	public addReviewForm = new FormGroup({
 		comment: new FormControl('', [Validators.required]),
@@ -31,10 +34,6 @@ export class AddReviewComponent implements OnDestroy {
 		event.preventDefault();
 
 		this.loadingInProgress = true;
-
-		this.subscription = this.route.params.subscribe((params: Params) => {
-			this.showId = Number(params['id']);
-		});
 
 		if (this.addReviewForm.controls.comment.value) {
 			this.comment = this.addReviewForm.controls.comment.value;
@@ -50,8 +49,6 @@ export class AddReviewComponent implements OnDestroy {
 	}
 
 	ngOnDestroy(): void {
-		if (this.subscription) {
-			this.subscription.unsubscribe();
-		}
+		this.subscription.unsubscribe();
 	}
 }
