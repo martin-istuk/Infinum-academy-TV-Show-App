@@ -32,7 +32,7 @@ export class ShowService {
 		);
 	}
 
-	public getShowById(id: string): Observable<Show | undefined> {
+	public getShowById(id: number): Observable<Show | undefined> {
 		return this.http.get<{ show: IShow }>('https://tv-shows.infinum.academy/shows/' + id).pipe(
 			map((data) => {
 				return new Show(data.show);

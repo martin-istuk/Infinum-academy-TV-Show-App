@@ -16,12 +16,12 @@ export class ShowDetailsComponent {
 
 	private routeId$ = this.route.paramMap.pipe(
 		map((params: ParamMap) => {
-			return params.get('id');
+			return Number(params.get('id'));
 		}),
 	);
 
 	public show$ = this.routeId$.pipe(
-		switchMap((id: string | null) => {
+		switchMap((id: number | null) => {
 			if (!id) {
 				return EMPTY;
 			}
@@ -30,7 +30,7 @@ export class ShowDetailsComponent {
 	);
 
 	public reviews$ = this.routeId$.pipe(
-		switchMap((id: string | null) => {
+		switchMap((id: number | null) => {
 			if (!id) {
 				return EMPTY;
 			}

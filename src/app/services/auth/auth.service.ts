@@ -60,11 +60,6 @@ export class AuthService {
 			.post<User>('https://tv-shows.infinum.academy/users/sign_in', userData, { observe: 'response' })
 			.pipe(
 				map((response) => {
-					console.log('---------------------');
-					console.log('response');
-					console.log(response);
-					console.log('---------------------');
-
 					const token = response.headers.get('access-token') || '';
 					const client = response.headers.get('client') || '';
 					const uid = response.headers.get('uid') || '';
@@ -76,10 +71,6 @@ export class AuthService {
 					return response.body as User;
 				}),
 				tap((user) => {
-					console.log('---------------------');
-					console.log('user');
-					console.log(user);
-					console.log('---------------------');
 					this._user$.next(user);
 				}),
 			);

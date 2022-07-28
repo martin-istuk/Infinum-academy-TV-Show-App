@@ -8,7 +8,7 @@ export class Review {
 
 	constructor(review: IReview) {
 		this.id = review.id;
-		this.showId = review.showId;
+		this.showId = review.show_id;
 		this.comment = review.comment;
 		this.rating = review.rating;
 	}

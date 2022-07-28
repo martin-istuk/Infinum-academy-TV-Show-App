@@ -18,7 +18,7 @@ export class AddReviewComponent implements OnDestroy {
 	public ratingOptions: Array<number> = [1, 2, 3, 4, 5];
 	public loadingInProgress: boolean = false;
 
-	private showId: string = '';
+	private showId: number = 0;
 	private comment: string = '';
 	private rating: number = 0;
 
@@ -33,7 +33,7 @@ export class AddReviewComponent implements OnDestroy {
 		this.loadingInProgress = true;
 
 		this.subscription = this.route.params.subscribe((params: Params) => {
-			this.showId = params['id'];
+			this.showId = Number(params['id']);
 		});
 
 		if (this.addReviewForm.controls.comment.value) {
@@ -44,11 +44,9 @@ export class AddReviewComponent implements OnDestroy {
 			this.rating = Number(this.addReviewForm.controls.rating.value);
 		}
 
-		// this.reviewService.addNewReview(this.showId, this.comment, this.rating);
+		this.reviewService.addNewReview(this.showId, this.comment, this.rating);
 
-		setTimeout(() => {
-			this.loadingInProgress = false;
-		}, 250);
+		this.loadingInProgress = false;
 	}
 
 	ngOnDestroy(): void {

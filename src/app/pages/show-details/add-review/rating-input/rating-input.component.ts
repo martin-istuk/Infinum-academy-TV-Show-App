@@ -39,11 +39,9 @@ export class RatingInputComponent implements ControlValueAccessor {
 
 	onHover(index: number): void {
 		this.hoverIndex = index;
-		console.log(this.hoverIndex);
 	}
 
 	stopHover(): void {
 		this.hoverIndex = 0;
-		console.log(this.hoverIndex);
 	}
 }
