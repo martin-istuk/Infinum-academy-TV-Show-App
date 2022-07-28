@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+
+import { Observable } from 'rxjs';
 
 import { INavigationLink } from 'src/app/interfaces/navigation-link.interface';
+import { User } from 'src/app/interfaces/user.model';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { UiService } from 'src/app/services/ui/ui.service';
 
@@ -13,7 +15,7 @@ import { UiService } from 'src/app/services/ui/ui.service';
 export class NavigationComponent {
 	constructor(private authService: AuthService, private uiService: UiService) {}
 
-	public user$ = this.authService.user$;
+	public user$: Observable<User | null> = this.authService.user$;
 
 	public navLinkToggle(): void {
 		this.uiService.menuStatusSubject$.next(false);

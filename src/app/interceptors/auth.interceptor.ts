@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpParams } from '@angular/common/http';
+import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpParams, HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
@@ -10,15 +10,16 @@ export class AuthInterceptor implements HttpInterceptor {
 			return next.handle(request);
 		}
 
-		const uid = localStorage.getItem('uid');
-		const accessToken = localStorage.getItem('access-token');
-		const client = localStorage.getItem('client');
+		const uid = localStorage.getItem('uid') || '';
+		const accessToken = localStorage.getItem('access-token') || '';
+		const client = localStorage.getItem('client') || '';
 
 		const modifiedRequest = request.clone({
-			headers: request.headers
-				.set('uid', uid as string)
-				.set('access-token', accessToken as string)
-				.set('client', client as string),
+			headers: new HttpHeaders({
+				uid: uid,
+				'access-token': accessToken,
+				client: client,
+			}),
 		});
 
 		return next.handle(modifiedRequest);

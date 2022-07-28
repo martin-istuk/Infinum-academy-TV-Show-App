@@ -1,18 +1,18 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable, of, take, exhaustMap } from 'rxjs';
+
+import { BehaviorSubject, map, tap, Observable } from 'rxjs';
 
 import { IShow } from 'src/app/interfaces/show.interface';
 import { Show } from 'src/app/interfaces/show.model';
-import { AuthService } from '../auth/auth.service';
 
-const SHOW_KEY = 'myShows';
+// const SHOW_KEY = 'myShows';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class ShowService {
-	constructor(private authService: AuthService, private readonly http: HttpClient) {}
+	constructor(private readonly http: HttpClient) {}
 
 	private shows: Array<Show> = [
 		{
@@ -116,8 +116,8 @@ export class ShowService {
 			average_rating: 4.4,
 			image_url: 'https://m.media-amazon.com/images/I/81HgqrFSmqL._SY550_.jpg',
 		},
-	].map((show: IShow) => {
-		return new Show(show);
+	].map((ishow: IShow) => {
+		return new Show(ishow);
 	});
 
 	private createShowsBehaviorSubject(): BehaviorSubject<Array<Show>> {
@@ -127,22 +127,30 @@ export class ShowService {
 	private shows$ = this.createShowsBehaviorSubject();
 
 	public getAllShows(): Observable<Array<Show>> {
-		// this.storageService.saveToLocalStorage(SHOW_KEY, this.shows$.value);
-
-		return this.http.get<Array<Show>>(
-			'https://tv-shows.infinum.academy/api/v1/docs/index.html#tag/Tv-Shows/paths/~1shows/get',
+		return this.http.get<{ shows: Array<IShow> }>('https://tv-shows.infinum.academy/shows').pipe(
+			map((show) => {
+				return show.shows.map((ishow) => {
+					return new Show(ishow);
+				});
+			}),
 		);
 	}
 
 	public getTopRatedShows(): Observable<Array<Show>> {
-		return this.http.get<Array<Show>>(
-			'https://tv-shows.infinum.academy/api/v1/docs/index.html#tag/Tv-Shows/paths/~1shows~1top_rated/get',
+		return this.http.get<{ shows: Array<IShow> }>('https://tv-shows.infinum.academy/shows/top_rated').pipe(
+			map((show) => {
+				return show.shows.map((ishow) => {
+					return new Show(ishow);
+				});
+			}),
 		);
 	}
 
 	public getShowById(id: string): Observable<Show | undefined> {
-		return this.http.get<Show>(
-			'https://tv-shows.infinum.academy/api/v1/docs/index.html#tag/Tv-Shows/paths/~1shows~1' + id + '/get',
+		return this.http.get<IShow>('https://tv-shows.infinum.academy/shows/' + id).pipe(
+			map((ishow) => {
+				return new Show(ishow);
+			}),
 		);
 	}
 
