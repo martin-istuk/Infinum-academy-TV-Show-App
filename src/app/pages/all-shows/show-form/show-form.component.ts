@@ -13,7 +13,7 @@ export class ShowFormComponent {
 	titleFormControl = new FormControl('', [Validators.required]);
 	descriptionFormControl = new FormControl('', [Validators.required]);
 
-	onAddNewShow(title: string, description: string) {
-		this.showService.addNewShow(title, description);
-	}
+	// onAddNewShow(title: string, description: string) {
+	// 	this.showService.addNewShow(title, description);
+	// }
 }

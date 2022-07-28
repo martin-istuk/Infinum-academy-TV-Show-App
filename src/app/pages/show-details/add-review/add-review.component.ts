@@ -44,7 +44,7 @@ export class AddReviewComponent implements OnDestroy {
 			this.rating = Number(this.addReviewForm.controls.rating.value);
 		}
 
-		this.reviewService.addNewReview(this.showId, this.comment, this.rating);
+		// this.reviewService.addNewReview(this.showId, this.comment, this.rating);
 
 		setTimeout(() => {
 			this.loadingInProgress = false;

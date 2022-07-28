@@ -15,8 +15,6 @@ import { UiService } from 'src/app/services/ui/ui.service';
 export class NavigationComponent {
 	constructor(private authService: AuthService, private uiService: UiService) {}
 
-	public user$: Observable<User | null> = this.authService.user$;
-
 	public navLinkToggle(): void {
 		this.uiService.menuStatusSubject$.next(false);
 	}

@@ -26,11 +26,11 @@ export class AuthService {
 	public init(): Observable<User> {
 		return this.http.get<User>('https://tv-shows.infinum.academy/users/me').pipe(
 			catchError(() => {
-				console.log('init failed');
+				console.log('login status initialization fail');
 				return EMPTY;
 			}),
 			tap((user) => {
-				console.log('init success');
+				console.log('login status initialization success');
 				this._user$.next(user);
 			}),
 		);

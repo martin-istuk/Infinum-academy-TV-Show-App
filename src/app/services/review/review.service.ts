@@ -1,91 +1,34 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, of } from 'rxjs';
 
-import { Review } from 'src/app/interfaces/review.model';
+import { map, Observable } from 'rxjs';
+
 import { IReview } from 'src/app/interfaces/review.interface';
+import { Review } from 'src/app/interfaces/review.model';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class ReviewService {
-	private reviews: Array<Review> = [
-		{
-			id: '0',
-			showId: '0',
-			comment: 'I am a Review for Game of Thrones.',
-			rating: 4,
-		},
-		{
-			id: '1',
-			showId: '0',
-			comment: 'I am a Review for Game of Thrones.',
-			rating: 5,
-		},
-		{
-			id: '2',
-			showId: '1',
-			comment: 'I am a Review for Chernobyl.',
-			rating: 4,
-		},
-		{
-			id: '3',
-			showId: '1',
-			comment: 'I am a Review for Chernobyl.',
-			rating: 2,
-		},
-		{
-			id: '4',
-			showId: '1',
-			comment: 'I am a Review for Chernobyl.',
-			rating: 5,
-		},
-		{
-			id: '5',
-			showId: '2',
-			comment: 'I am a Review for Mandalorian.',
-			rating: 3,
-		},
-		{
-			id: '6',
-			showId: '3',
-			comment: 'I am a Review for Vikings.',
-			rating: 3,
-		},
-		{
-			id: '7',
-			showId: '3',
-			comment: 'I am a Review for Vikings.',
-			rating: 2,
-		},
-		{
-			id: '7',
-			showId: '3',
-			comment: 'I am a Review for Vikings.',
-			rating: 5,
-		},
-	].map((review: IReview) => {
-		return new Review(review);
-	});
+	constructor(private readonly http: HttpClient) {}
 
-	public getReviewsByShowId(showId: string): Observable<Array<Review>> {
-		return of(this.reviews).pipe(
-			map((reviews) => {
-				return reviews.filter((review) => {
-					return review.showId === showId;
+	public getReviewsByShowId(id: string): Observable<Array<Review> | undefined> {
+		return this.http.get<{ reviews: Array<IReview> }>('https://tv-shows.infinum.academy/shows/' + id + '/reviews').pipe(
+			map((data) => {
+				return data.reviews.map((ireview) => {
+					return new Review(ireview);
 				});
 			}),
 		);
 	}
 
-	public addNewReview(showId: string, comment: string, rating: number): void {
-		const newReviewId = String(this.reviews.length);
-		console.log('-------------------------------');
-		console.log('ID: ' + newReviewId);
-		console.log('Show ID: ' + showId);
-		console.log('Comment: ' + comment);
-		console.log('Rating: ' + rating);
-		console.log('-------------------------------');
-	}
-
-	private readonly delayFactor: number = 1000 * (0.5 + Math.random());
+	// public addNewReview(showId: string, comment: string, rating: number): void {
+	// 	const newReviewId = String(this.reviews.length);
+	// 	console.log('-------------------------------');
+	// 	console.log('ID: ' + newReviewId);
+	// 	console.log('Show ID: ' + showId);
+	// 	console.log('Comment: ' + comment);
+	// 	console.log('Rating: ' + rating);
+	// 	console.log('-------------------------------');
+	// }
 }
