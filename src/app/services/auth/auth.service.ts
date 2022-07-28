@@ -50,9 +50,6 @@ export class AuthService {
 
 				return response.body as IUser;
 			}),
-			map((user: IUser) => {
-				return new User(user);
-			}),
 			tap((user) => {
 				this._user$.next(user);
 			}),
@@ -78,13 +75,6 @@ export class AuthService {
 					this.storageService.saveToLocalStorage('uid', uid);
 
 					return response.body as IUser;
-				}),
-				map((user: IUser) => {
-					console.log('---------------------');
-					console.log('user');
-					console.log(user);
-					console.log('---------------------');
-					return new User(user);
 				}),
 				tap((user) => {
 					console.log('---------------------');
