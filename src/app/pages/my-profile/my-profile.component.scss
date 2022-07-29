@@ -2,6 +2,11 @@
 	display: grid;
 	align-content: center;
 	justify-items: center;
+	div {
+		display: grid;
+		align-content: center;
+		justify-items: center;
+	}
 }
 p {
 	color: white;
@@ -22,7 +27,7 @@ p {
 	height: 40vh;
 	border-radius: 9999px;
 	margin-bottom: 30px;
-	background: #111111 url(https://i1.sndcdn.com/artworks-1kK2LeUMqtUH5SIx-IIYPDA-t500x500.jpg) center/cover no-repeat;
+	background: #111111 url(https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png) center/cover no-repeat;
 }
 #upload-btn {
 	border-radius: 9999px;
