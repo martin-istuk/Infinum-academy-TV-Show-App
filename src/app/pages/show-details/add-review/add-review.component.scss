@@ -1,0 +1,74 @@
+:host {
+	display: grid;
+	grid-template-columns: 20% 80%;
+	margin-bottom: 60px;
+}
+h4 {
+	color: white;
+	font-size: 24px;
+}
+form {
+	display: grid;
+	grid-template: "comment comment" " . . ";
+	justify-content: space-between;
+	align-items: center;
+}
+.comment {
+	grid-area: comment;
+}
+.rating {
+	color: white;
+}
+:host ::ng-deep {
+	.mat-form-field-flex {
+		border-radius: 24px !important;
+		font-size: 20px;
+		color: #8D5CE5;
+		background: white;
+	}
+	.mat-form-field-label mat-label {
+		color: #8D5CE5;
+	}
+	.mat-form-field-underline {
+		width: 0;
+	}
+	.mat-select-arrow {
+		color: #8D5CE5;
+	}
+}
+.post-btn {
+	&[disabled] {
+		background: grey;
+		cursor: not-allowed;
+	}
+	cursor: pointer;
+	border-radius: 9999px;
+	width: 144px;
+	height: 52px;
+	font-size: 14px;
+	font-weight: bold;
+	background: white;
+	span, mat-icon {
+		color: #371687;
+	}
+}
+.loading {
+	animation: spin 2s linear infinite;
+	@keyframes spin {
+		from { transform: rotate(0deg);	}
+		to { transform: rotate(360deg);	}
+	}
+}
+
+
+
+@media only screen and (max-width: 1060px) {
+	:host {
+		margin-top: 40px;
+		grid-template-columns: auto;
+		margin-bottom: 32px;
+	}
+	h4 {
+		font-size: 20px;
+	}
+}

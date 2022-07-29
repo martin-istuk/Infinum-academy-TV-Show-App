@@ -1,7 +1,7 @@
 <div>
 	<span>{{ rating }}/5 </span>
 
-	<mat-icon *ngFor="let n of [].constructor(goldStars)" class="star goldStar">star</mat-icon>
+	<mat-icon *ngFor="let n of [].constructor(filledStar)" class="star">star</mat-icon>
 
-	<mat-icon *ngFor="let n of [].constructor(greyStars)" class="star greyStar">star</mat-icon>
+	<mat-icon *ngFor="let n of [].constructor(outlinedStar)" class="star">star_border</mat-icon>
 </div>

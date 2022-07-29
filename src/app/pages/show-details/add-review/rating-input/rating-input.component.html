@@ -1,0 +1,15 @@
+<span>Rating </span>
+
+<span *ngFor="let star of [].constructor(rating); let i = index" (click)="writeValue(i + 1)">
+	<mat-icon class="filled">star </mat-icon>
+</span>
+
+<span *ngFor="let star of [].constructor(5 - rating); let i = index" (click)="writeValue(rating + i + 1)">
+	<mat-icon
+		class="outlined"
+		(mouseenter)="onHover(rating + i + 1)"
+		[ngClass]="{ hovered: hoverIndex - rating > i }"
+		(mouseleave)="stopHover()"
+		>star_border
+	</mat-icon>
+</span>
