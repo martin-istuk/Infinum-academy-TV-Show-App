@@ -12,7 +12,7 @@ import { Review } from 'src/app/interfaces/review.model';
 export class ReviewService {
 	constructor(private readonly http: HttpClient) {}
 
-	public getReviewsByShowId(id: number): Observable<Array<Review> | undefined> {
+	public getReviewsByShowId(id: string): Observable<Array<Review> | undefined> {
 		return this.http.get<{ reviews: Array<IReview> }>('https://tv-shows.infinum.academy/shows/' + id + '/reviews').pipe(
 			map((data) => {
 				return data.reviews.map((ireview) => {
@@ -22,7 +22,7 @@ export class ReviewService {
 		);
 	}
 
-	public addNewReview(showId: number, comment: string, rating: number): Observable<Array<Review> | undefined> {
+	public addNewReview(showId: string, comment: string, rating: number): Observable<Array<Review> | undefined> {
 		const reviewData = {
 			comment: comment,
 			rating: rating,

@@ -15,9 +15,7 @@ export class ShowService {
 	public getAllShows(): Observable<Array<Show>> {
 		return this.http.get<{ shows: Array<IShow> }>('https://tv-shows.infinum.academy/shows').pipe(
 			map((data) => {
-				return data.shows.map((ishow) => {
-					return new Show(ishow);
-				});
+				return data.shows.map((ishow) => new Show(ishow));
 			}),
 		);
 	}
@@ -25,18 +23,14 @@ export class ShowService {
 	public getTopRatedShows(): Observable<Array<Show>> {
 		return this.http.get<{ shows: Array<IShow> }>('https://tv-shows.infinum.academy/shows/top_rated').pipe(
 			map((data) => {
-				return data.shows.map((ishow) => {
-					return new Show(ishow);
-				});
+				return data.shows.map((ishow) => new Show(ishow));
 			}),
 		);
 	}
 
-	public getShowById(id: number): Observable<Show | undefined> {
-		return this.http.get<{ show: IShow }>('https://tv-shows.infinum.academy/shows/' + id).pipe(
-			map((data) => {
-				return new Show(data.show);
-			}),
-		);
+	public getShowById(id: string): Observable<Show | undefined> {
+		return this.http
+			.get<{ show: IShow }>('https://tv-shows.infinum.academy/shows/' + id)
+			.pipe(map((data) => new Show(data.show)));
 	}
 }

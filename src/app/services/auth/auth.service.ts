@@ -14,50 +14,27 @@ import { User } from 'src/app/interfaces/user.model';
 	providedIn: 'root',
 })
 export class AuthService {
-	constructor(
-		private readonly http: HttpClient,
-		private storageService: StorageService,
-		private readonly router: Router,
-	) {}
+	constructor(private readonly http: HttpClient, private readonly router: Router) {}
 
 	private _user$ = new BehaviorSubject<User | null>(null);
 	public user$ = this._user$.asObservable();
 
 	public init(): Observable<User> {
-		return this.http.get<User>('https://tv-shows.infinum.academy/users/me').pipe(
+		return this.http.get<{ user: IUser }>('https://tv-shows.infinum.academy/users/me').pipe(
 			catchError(() => {
 				console.log('login status initialization fail');
 				return EMPTY;
 			}),
-			tap((user) => {
-				console.log('login status initialization success');
-				this._user$.next(user);
+			map((data) => {
+				return new User(data.user);
 			}),
+			tap((user) => this._user$.next(user)),
 		);
 	}
 
-	public registerUser(userData: IRegisterFormData): Observable<User> {
-		return this.http.post<User>('https://tv-shows.infinum.academy/users', userData, { observe: 'response' }).pipe(
-			map((response) => {
-				const token = response.headers.get('access-token') || '';
-				const client = response.headers.get('client') || '';
-				const uid = response.headers.get('uid') || '';
-
-				localStorage.setItem('access-token', token);
-				localStorage.setItem('client', client);
-				localStorage.setItem('uid', uid);
-
-				return response.body as User;
-			}),
-			tap((user) => {
-				this._user$.next(user);
-			}),
-		);
-	}
-
-	public loginUser(userData: ILoginFormData): Observable<User> {
+	public registerUser(userData: IRegisterFormData): Observable<User | null> {
 		return this.http
-			.post<User>('https://tv-shows.infinum.academy/users/sign_in', userData, { observe: 'response' })
+			.post<{ user: IUser }>('https://tv-shows.infinum.academy/users', userData, { observe: 'response' })
 			.pipe(
 				map((response) => {
 					const token = response.headers.get('access-token') || '';
@@ -68,11 +45,40 @@ export class AuthService {
 					localStorage.setItem('client', client);
 					localStorage.setItem('uid', uid);
 
-					return response.body as User;
+					return response.body;
 				}),
-				tap((user) => {
-					this._user$.next(user);
+				map((body) => {
+					if (body) {
+						return new User(body.user);
+					}
+					return null;
 				}),
+				tap((user) => this._user$.next(user)),
+			);
+	}
+
+	public loginUser(userData: ILoginFormData): Observable<User | null> {
+		return this.http
+			.post<{ user: IUser }>('https://tv-shows.infinum.academy/users/sign_in', userData, { observe: 'response' })
+			.pipe(
+				map((response) => {
+					const token = response.headers.get('access-token') || '';
+					const client = response.headers.get('client') || '';
+					const uid = response.headers.get('uid') || '';
+
+					localStorage.setItem('access-token', token);
+					localStorage.setItem('client', client);
+					localStorage.setItem('uid', uid);
+
+					return response.body;
+				}),
+				map((body) => {
+					if (body) {
+						return new User(body.user);
+					}
+					return null;
+				}),
+				tap((user) => this._user$.next(user)),
 			);
 	}
 

@@ -1,8 +1,6 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Params } from '@angular/router';
-
-import { Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 import { ReviewService } from 'src/app/services/review/review.service';
 
@@ -11,19 +9,15 @@ import { ReviewService } from 'src/app/services/review/review.service';
 	templateUrl: './add-review.component.html',
 	styleUrls: ['./add-review.component.scss'],
 })
-export class AddReviewComponent implements OnDestroy {
+export class AddReviewComponent {
 	constructor(private reviewService: ReviewService, private route: ActivatedRoute) {}
 
 	public ratingOptions: Array<number> = [1, 2, 3, 4, 5];
 	public loadingInProgress: boolean = false;
 
-	private showId: number = 0;
+	@Input() showId: string = '';
 	private comment: string = '';
 	private rating: number = 0;
-
-	private subscription: Subscription = this.route.params.subscribe((params: Params) => {
-		this.showId = Number(params['id']);
-	});
 
 	public addReviewForm = new FormGroup({
 		comment: new FormControl('', [Validators.required]),
@@ -46,9 +40,5 @@ export class AddReviewComponent implements OnDestroy {
 		this.reviewService.addNewReview(this.showId, this.comment, this.rating);
 
 		this.loadingInProgress = false;
-	}
-
-	ngOnDestroy(): void {
-		this.subscription.unsubscribe();
 	}
 }
