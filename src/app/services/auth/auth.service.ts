@@ -7,7 +7,6 @@ import { Observable, map, tap, BehaviorSubject, EMPTY, catchError } from 'rxjs';
 import { IRegisterFormData } from 'src/app/interfaces/register-form-data.interface';
 import { ILoginFormData } from 'src/app/interfaces/login-form-data.interface';
 import { IUser } from 'src/app/interfaces/user.interface';
-import { StorageService } from '../storage/storage.service';
 import { User } from 'src/app/interfaces/user.model';
 
 @Injectable({

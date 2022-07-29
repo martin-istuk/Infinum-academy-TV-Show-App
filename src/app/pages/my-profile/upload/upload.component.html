@@ -1,0 +1,20 @@
+<div class="input-container" mat-dialog-content #previewDiv>
+	<label
+		for="file"
+		(drop)="onFileDrop($event)"
+		(dragover)="onDragOver($event)"
+		(dragleave)="onDragLeave($event)"
+		[ngClass]="{ hoverClass: hoverEffect }"
+		[ngStyle]="{ 'background-image': previewImgUrl }"
+		>{{ hoverLabelContent }}
+	</label>
+	<input type="file" name="file" id="file" #fileInput (change)="onFileInputChange($event)" accept=".jpg, .jpeg, .png" />
+</div>
+
+<div mat-dialog-actions>
+	<button mat-raised-button color="primary" (click)="onCancel()">Cancel</button>
+
+	<button mat-raised-button color="primary" cdkFocusInitial [disabled]="!uploadBtnEnabled" (click)="onUploadImg()">
+		Upload
+	</button>
+</div>
