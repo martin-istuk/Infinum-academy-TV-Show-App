@@ -1,7 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
+import { IReview } from 'src/app/interfaces/review.interface';
+import { Review } from 'src/app/interfaces/review.model';
 import { ReviewService } from 'src/app/services/review/review.service';
 
 @Component({
@@ -13,11 +15,10 @@ export class AddReviewComponent {
 	constructor(private reviewService: ReviewService, private route: ActivatedRoute) {}
 
 	public ratingOptions: Array<number> = [1, 2, 3, 4, 5];
-	public loadingInProgress: boolean = false;
-
 	@Input() showId: string = '';
 	private comment: string = '';
 	private rating: number = 0;
+	@Output() postReviewEmitter = new EventEmitter<IReview>();
 
 	public addReviewForm = new FormGroup({
 		comment: new FormControl('', [Validators.required]),
@@ -27,8 +28,6 @@ export class AddReviewComponent {
 	public onPostReview(event: Event): void {
 		event.preventDefault();
 
-		this.loadingInProgress = true;
-
 		if (this.addReviewForm.controls.comment.value) {
 			this.comment = this.addReviewForm.controls.comment.value;
 		}
@@ -37,8 +36,12 @@ export class AddReviewComponent {
 			this.rating = Number(this.addReviewForm.controls.rating.value);
 		}
 
-		this.reviewService.addNewReview(this.showId, this.comment, this.rating);
+		const reviewData = {
+			rating: this.rating,
+			comment: this.comment,
+			show_id: this.showId,
+		};
 
-		this.loadingInProgress = false;
+		this.postReviewEmitter.emit(reviewData);
 	}
 }

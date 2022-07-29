@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
-import { EMPTY, map, switchMap } from 'rxjs';
+import { EMPTY, map, Observable, switchMap } from 'rxjs';
 
 import { ShowService } from 'src/app/services/show/show.service';
 import { ReviewService } from 'src/app/services/review/review.service';
+import { IReview } from 'src/app/interfaces/review.interface';
+import { Review } from 'src/app/interfaces/review.model';
 
 @Component({
 	selector: 'app-show-details',
@@ -37,4 +39,8 @@ export class ShowDetailsComponent {
 			return this.reviewService.getReviewsByShowId(id);
 		}),
 	);
+
+	public addReview(reviewData: IReview): Observable<Array<Review> | undefined> {
+		return this.reviewService.addNewReview(reviewData);
+	}
 }
