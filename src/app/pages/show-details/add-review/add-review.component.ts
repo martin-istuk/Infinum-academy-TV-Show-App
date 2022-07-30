@@ -18,7 +18,7 @@ export class AddReviewComponent {
 	@Input() showId: string = '';
 	private comment: string = '';
 	private rating: number = 0;
-	@Output() postReviewEmitter = new EventEmitter<IReview>();
+	@Output() postReviewEmitter = new EventEmitter<any>();
 
 	public addReviewForm = new FormGroup({
 		comment: new FormControl('', [Validators.required]),
@@ -43,5 +43,7 @@ export class AddReviewComponent {
 		};
 
 		this.postReviewEmitter.emit(reviewData);
+
+		this.addReviewForm.reset();
 	}
 }

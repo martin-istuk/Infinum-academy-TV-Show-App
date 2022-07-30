@@ -36,7 +36,30 @@
 			display: none;
 		}
 	}
-	button {
-		margin: 0 20px;
+	.action-btns {
+		button {
+			margin: 0 20px;
+		}
+	}
+}
+
+
+
+@media only screen and (max-width: 1060px) {
+	:host {
+		padding: 0px;
+		.input-container {
+			label {
+				width: calc(100vw - 140px);
+				height: calc(100vw - 140px);
+				padding: 12px;
+				font-size: 16px;
+				line-height: 1.5;
+			}
+		}
+		.action-btns {
+			display: grid;
+			gap: 20px;
+		}
 	}
 }

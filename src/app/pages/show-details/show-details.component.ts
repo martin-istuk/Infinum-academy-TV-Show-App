@@ -6,6 +6,7 @@ import { EMPTY, map, tap, BehaviorSubject, switchMap } from 'rxjs';
 import { ShowService } from 'src/app/services/show/show.service';
 import { ReviewService } from 'src/app/services/review/review.service';
 import { IReview } from 'src/app/interfaces/review.interface';
+import { Review } from 'src/app/interfaces/review.model';
 
 @Component({
 	selector: 'app-show-details',
@@ -42,9 +43,15 @@ export class ShowDetailsComponent {
 		}),
 	);
 
-	public addReview(reviewData: IReview): void {
+	public addReview(reviewData: any): void {
 		this.reviewService.addNewReview(reviewData).subscribe({
 			next: () => this.trigger$.next(reviewData.show_id),
+		});
+	}
+
+	public requestDeleteReview(review: Review): void {
+		this.reviewService.deleteReview(review).subscribe({
+			next: () => this.trigger$.next(review.showId),
 		});
 	}
 }

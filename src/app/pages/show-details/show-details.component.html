@@ -4,7 +4,7 @@
 </div>
 
 <div *ngIf="reviews$ | async as reviews">
-	<app-reviews [reviewsData]="reviews"></app-reviews>
+	<app-reviews [reviewsData]="reviews" (deleteReviewEmitter)="requestDeleteReview($event)"></app-reviews>
 </div>
 
 <ng-template #loading>

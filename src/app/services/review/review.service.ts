@@ -27,4 +27,10 @@ export class ReviewService {
 			.post<IReview>('https://tv-shows.infinum.academy/reviews', reviewData)
 			.pipe(switchMap(() => this.getReviewsByShowId(reviewData.show_id)));
 	}
+
+	public deleteReview(review: Review): Observable<Array<Review> | undefined> {
+		return this.http
+			.delete<string>('https://tv-shows.infinum.academy/reviews/' + review.id)
+			.pipe(switchMap(() => this.getReviewsByShowId(review.showId)));
+	}
 }

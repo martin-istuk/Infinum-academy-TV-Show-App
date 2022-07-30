@@ -11,7 +11,7 @@
 	<input type="file" name="file" id="file" #fileInput (change)="onFileInputChange($event)" accept=".jpg, .jpeg, .png" />
 </div>
 
-<div mat-dialog-actions>
+<div mat-dialog-actions class="action-btns">
 	<button mat-raised-button color="primary" (click)="onCancel()">Cancel</button>
 
 	<button mat-raised-button color="primary" cdkFocusInitial [disabled]="!uploadBtnEnabled" (click)="onUploadImg()">

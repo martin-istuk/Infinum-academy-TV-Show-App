@@ -12,9 +12,9 @@
 		.review-post-data {
 			display: grid;
 			grid-template:
-				"profilePic email comment"
-				"profilePic rating comment";
-			grid-template-columns: 10% 30% 60%;
+				"profilePic email comment delete-btn"
+				"profilePic rating comment delete-btn";
+			grid-template-columns: 10% 30% 53% 7%;
 			align-items: center;
 			.profile-pic {
 				grid-area: profilePic;
@@ -25,6 +25,14 @@
 			.email { grid-area: email; }
 			.comment { grid-area: comment; }
 			.rating { grid-area: rating; }
+			.delete-btn {
+				grid-area: delete-btn;
+				display: grid;
+				justify-content: right;
+				button {
+					color:white;
+				}
+			}
 		}
 	}
 }
@@ -48,7 +56,8 @@
 				grid-template:
 					"profilePic rating"
 					"profilePic email"
-					"comment comment";
+					"comment comment"
+					"delete-btn delete-btn";
 				grid-template-columns: 30% 70%;
 				align-items: center;
 				.profile-pic {
