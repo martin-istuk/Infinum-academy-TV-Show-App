@@ -22,15 +22,11 @@ export class ReviewService {
 		);
 	}
 
-	public addNewReview(reviewData: IReview): Observable<Array<Review> | undefined> {
-		return this.http
-			.post<IReview>('https://tv-shows.infinum.academy/reviews', reviewData)
-			.pipe(switchMap(() => this.getReviewsByShowId(reviewData.show_id)));
+	public addNewReview(reviewData: IReview): Observable<IReview> {
+		return this.http.post<IReview>('https://tv-shows.infinum.academy/reviews', reviewData);
 	}
 
-	public deleteReview(review: Review): Observable<Array<Review> | undefined> {
-		return this.http
-			.delete<string>('https://tv-shows.infinum.academy/reviews/' + review.id)
-			.pipe(switchMap(() => this.getReviewsByShowId(review.showId)));
+	public deleteReview(review: Review): Observable<string> {
+		return this.http.delete<string>('https://tv-shows.infinum.academy/reviews/' + review.id);
 	}
 }

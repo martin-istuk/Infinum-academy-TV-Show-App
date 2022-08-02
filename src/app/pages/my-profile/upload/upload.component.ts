@@ -59,11 +59,10 @@ export class UploadComponent {
 	}
 
 	public onUploadImg(): void {
-		this.fileUploadService.upload(this.file).subscribe();
+		this.fileUploadService.upload(this.file).subscribe({
+			complete: () => window.location.reload(),
+		});
 		this.onCancel();
-		setTimeout(() => {
-			window.location.reload();
-		}, 300);
 	}
 
 	onCancel(): void {
