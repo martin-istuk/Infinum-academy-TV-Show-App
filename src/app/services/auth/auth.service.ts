@@ -35,7 +35,7 @@ export class AuthService {
 		return this.http
 			.post<{ user: IUser }>('https://tv-shows.infinum.academy/users', userData, { observe: 'response' })
 			.pipe(
-				map((response) => {
+				tap((response) => {
 					const token = response.headers.get('access-token') || '';
 					const client = response.headers.get('client') || '';
 					const uid = response.headers.get('uid') || '';
@@ -43,16 +43,13 @@ export class AuthService {
 					localStorage.setItem('access-token', token);
 					localStorage.setItem('client', client);
 					localStorage.setItem('uid', uid);
-
-					return response.body;
 				}),
-				map((body) => {
-					if (body) {
-						return new User(body.user);
+				map((response) => {
+					if (response.body) {
+						this._user$.next(new User(response.body.user));
 					}
 					return null;
 				}),
-				tap((user) => this._user$.next(user)),
 			);
 	}
 
@@ -60,7 +57,7 @@ export class AuthService {
 		return this.http
 			.post<{ user: IUser }>('https://tv-shows.infinum.academy/users/sign_in', userData, { observe: 'response' })
 			.pipe(
-				map((response) => {
+				tap((response) => {
 					const token = response.headers.get('access-token') || '';
 					const client = response.headers.get('client') || '';
 					const uid = response.headers.get('uid') || '';
@@ -68,16 +65,13 @@ export class AuthService {
 					localStorage.setItem('access-token', token);
 					localStorage.setItem('client', client);
 					localStorage.setItem('uid', uid);
-
-					return response.body;
 				}),
-				map((body) => {
-					if (body) {
-						return new User(body.user);
+				map((response) => {
+					if (response.body) {
+						this._user$.next(new User(response.body.user));
 					}
 					return null;
 				}),
-				tap((user) => this._user$.next(user)),
 			);
 	}
 
