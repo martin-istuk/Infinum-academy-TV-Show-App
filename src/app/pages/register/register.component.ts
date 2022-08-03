@@ -82,7 +82,6 @@ export class RegisterComponent implements OnDestroy {
 			} as IRegisterFormData)
 			.subscribe({
 				next: (response) => {
-					console.log(response);
 					this.loadingInProgress = false;
 					this.router.navigate(['']);
 				},

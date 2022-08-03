@@ -14,7 +14,7 @@ export class StorageService {
 		return JSON.parse(data);
 	}
 
-	public saveToLocalStorage(key: string, data: unknown) {
-		return localStorage.setItem(key, JSON.stringify(data));
+	public saveToLocalStorage(key: string, data: string) {
+		return localStorage.setItem(key, data);
 	}
 }
