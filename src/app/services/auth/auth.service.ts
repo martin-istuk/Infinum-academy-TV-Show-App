@@ -31,20 +31,22 @@ export class AuthService {
 		);
 	}
 
+	private storeUserToLocal(response: any): void {
+		const token = response.headers.get('access-token') || '';
+		const client = response.headers.get('client') || '';
+		const uid = response.headers.get('uid') || '';
+
+		localStorage.setItem('access-token', token);
+		localStorage.setItem('client', client);
+		localStorage.setItem('uid', uid);
+	}
+
 	public registerUser(userData: IRegisterFormData): Observable<User | null> {
 		return this.http
 			.post<{ user: IUser }>('https://tv-shows.infinum.academy/users', userData, { observe: 'response' })
 			.pipe(
-				tap((response) => {
-					const token = response.headers.get('access-token') || '';
-					const client = response.headers.get('client') || '';
-					const uid = response.headers.get('uid') || '';
-
-					localStorage.setItem('access-token', token);
-					localStorage.setItem('client', client);
-					localStorage.setItem('uid', uid);
-				}),
 				map((response) => {
+					this.storeUserToLocal(response);
 					if (response.body) {
 						this._user$.next(new User(response.body.user));
 					}
@@ -57,16 +59,8 @@ export class AuthService {
 		return this.http
 			.post<{ user: IUser }>('https://tv-shows.infinum.academy/users/sign_in', userData, { observe: 'response' })
 			.pipe(
-				tap((response) => {
-					const token = response.headers.get('access-token') || '';
-					const client = response.headers.get('client') || '';
-					const uid = response.headers.get('uid') || '';
-
-					localStorage.setItem('access-token', token);
-					localStorage.setItem('client', client);
-					localStorage.setItem('uid', uid);
-				}),
 				map((response) => {
+					this.storeUserToLocal(response);
 					if (response.body) {
 						this._user$.next(new User(response.body.user));
 					}
