@@ -10,6 +10,7 @@ import { NavigationModule } from './components/navigation/navigation.module';
 import { AuthLayoutModule } from './layouts/auth-layout/auth-layout.module';
 import { AuthService } from './services/auth/auth.service';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { CustomTitleCaseModule } from './pipes/custom-title-case.module';
 
 @NgModule({
 	declarations: [AppComponent],
@@ -22,6 +23,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 		MainLayoutModule,
 		AuthLayoutModule,
 		NavigationModule,
+		CustomTitleCaseModule,
 	],
 	providers: [
 		{

@@ -7,7 +7,6 @@ import { Observable, map, tap, BehaviorSubject, EMPTY, catchError } from 'rxjs';
 import { IRegisterFormData } from 'src/app/interfaces/register-form-data.interface';
 import { ILoginFormData } from 'src/app/interfaces/login-form-data.interface';
 import { IUser } from 'src/app/interfaces/user.interface';
-import { StorageService } from '../storage/storage.service';
 import { User } from 'src/app/interfaces/user.model';
 
 @Injectable({
@@ -32,28 +31,27 @@ export class AuthService {
 		);
 	}
 
+	private storeUserToLocal(response: any): void {
+		const token = response.headers.get('access-token') || '';
+		const client = response.headers.get('client') || '';
+		const uid = response.headers.get('uid') || '';
+
+		localStorage.setItem('access-token', token);
+		localStorage.setItem('client', client);
+		localStorage.setItem('uid', uid);
+	}
+
 	public registerUser(userData: IRegisterFormData): Observable<User | null> {
 		return this.http
 			.post<{ user: IUser }>('https://tv-shows.infinum.academy/users', userData, { observe: 'response' })
 			.pipe(
 				map((response) => {
-					const token = response.headers.get('access-token') || '';
-					const client = response.headers.get('client') || '';
-					const uid = response.headers.get('uid') || '';
-
-					localStorage.setItem('access-token', token);
-					localStorage.setItem('client', client);
-					localStorage.setItem('uid', uid);
-
-					return response.body;
-				}),
-				map((body) => {
-					if (body) {
-						return new User(body.user);
+					this.storeUserToLocal(response);
+					if (response.body) {
+						this._user$.next(new User(response.body.user));
 					}
 					return null;
 				}),
-				tap((user) => this._user$.next(user)),
 			);
 	}
 
@@ -62,19 +60,9 @@ export class AuthService {
 			.post<{ user: IUser }>('https://tv-shows.infinum.academy/users/sign_in', userData, { observe: 'response' })
 			.pipe(
 				map((response) => {
-					const token = response.headers.get('access-token') || '';
-					const client = response.headers.get('client') || '';
-					const uid = response.headers.get('uid') || '';
-
-					localStorage.setItem('access-token', token);
-					localStorage.setItem('client', client);
-					localStorage.setItem('uid', uid);
-
-					return response.body;
-				}),
-				map((body) => {
-					if (body) {
-						return new User(body.user);
+					this.storeUserToLocal(response);
+					if (response.body) {
+						this._user$.next(new User(response.body.user));
 					}
 					return null;
 				}),

@@ -6,6 +6,6 @@
 			<h4>{{ showData.title }}</h4>
 			<p><mat-icon>star</mat-icon> {{ showData.averageRating | number: '1.1-1' }}/5</p>
 		</div>
-		<p class="description">{{ showData.description }}</p>
+		<p class="description">{{ showData.description | customTitleCase }}</p>
 	</div>
 </mat-card>

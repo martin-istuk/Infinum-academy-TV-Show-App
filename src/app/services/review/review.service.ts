@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { map, Observable } from 'rxjs';
+import { Observable, map, switchMap } from 'rxjs';
 
 import { IReview } from 'src/app/interfaces/review.interface';
 import { Review } from 'src/app/interfaces/review.model';
@@ -22,13 +22,11 @@ export class ReviewService {
 		);
 	}
 
-	// public addNewReview(showId: string, comment: string, rating: number): void {
-	// 	const newReviewId = String(this.reviews.length);
-	// 	console.log('-------------------------------');
-	// 	console.log('ID: ' + newReviewId);
-	// 	console.log('Show ID: ' + showId);
-	// 	console.log('Comment: ' + comment);
-	// 	console.log('Rating: ' + rating);
-	// 	console.log('-------------------------------');
-	// }
+	public addNewReview(reviewData: IReview): Observable<IReview> {
+		return this.http.post<IReview>('https://tv-shows.infinum.academy/reviews', reviewData);
+	}
+
+	public deleteReview(review: Review): Observable<string> {
+		return this.http.delete<string>('https://tv-shows.infinum.academy/reviews/' + review.id);
+	}
 }

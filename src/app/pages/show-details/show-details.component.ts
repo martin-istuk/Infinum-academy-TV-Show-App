@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
-import { EMPTY, map, switchMap } from 'rxjs';
+import { EMPTY, map, tap, BehaviorSubject, switchMap } from 'rxjs';
 
 import { ShowService } from 'src/app/services/show/show.service';
 import { ReviewService } from 'src/app/services/review/review.service';
+import { IReview } from 'src/app/interfaces/review.interface';
+import { Review } from 'src/app/interfaces/review.model';
 
 @Component({
 	selector: 'app-show-details',
@@ -18,6 +20,7 @@ export class ShowDetailsComponent {
 		map((params: ParamMap) => {
 			return params.get('id');
 		}),
+		tap((id) => this.trigger$.next(id)),
 	);
 
 	public show$ = this.routeId$.pipe(
@@ -29,12 +32,26 @@ export class ShowDetailsComponent {
 		}),
 	);
 
-	public reviews$ = this.routeId$.pipe(
-		switchMap((id: string | null) => {
+	public trigger$ = new BehaviorSubject<string | undefined | null>(undefined);
+
+	public reviews$ = this.trigger$.pipe(
+		switchMap((id: string | undefined | null) => {
 			if (!id) {
 				return EMPTY;
 			}
 			return this.reviewService.getReviewsByShowId(id);
 		}),
 	);
+
+	public addReview(reviewData: any): void {
+		this.reviewService.addNewReview(reviewData).subscribe({
+			next: () => this.trigger$.next(reviewData.show_id),
+		});
+	}
+
+	public requestDeleteReview(review: Review): void {
+		this.reviewService.deleteReview(review).subscribe({
+			next: () => this.trigger$.next(review.showId),
+		});
+	}
 }

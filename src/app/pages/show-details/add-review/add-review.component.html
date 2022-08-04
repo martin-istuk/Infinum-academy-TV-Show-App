@@ -17,10 +17,7 @@
 			mat-raised-button
 			color="primary"
 		>
-			<span *ngIf="!loadingInProgress; else loadingSpinner">POST</span>
-			<ng-template #loadingSpinner>
-				<mat-icon class="loading">autorenew</mat-icon>
-			</ng-template>
+			POST
 		</button>
 	</form>
 </ng-container>
