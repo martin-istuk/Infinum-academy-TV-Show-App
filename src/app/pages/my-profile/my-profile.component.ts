@@ -18,4 +18,5 @@ export class MyProfileComponent {
 	public openDialog(): void {
 		const dialogRef = this.dialog.open(UploadComponent);
 	}
+
 }

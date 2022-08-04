@@ -66,6 +66,7 @@ export class AuthService {
 					}
 					return null;
 				}),
+				tap((user) => this._user$.next(user)),
 			);
 	}
 

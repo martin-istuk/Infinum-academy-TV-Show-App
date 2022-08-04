@@ -1,5 +1,3 @@
-import { IReview } from './review.interface';
-
 export interface IShow {
 	id: string;
 	title: string;
