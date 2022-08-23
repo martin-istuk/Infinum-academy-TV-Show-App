@@ -18,6 +18,8 @@ export class AuthService {
 	private _user$ = new BehaviorSubject<User | null>(null);
 	public user$ = this._user$.asObservable();
 
+	// AuthInterceptor handles appending user uid, token etc. to every http request
+
 	public init(): Observable<User> {
 		return this.http.get<{ user: IUser }>('https://tv-shows.infinum.academy/users/me').pipe(
 			catchError(() => {

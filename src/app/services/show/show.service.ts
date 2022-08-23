@@ -12,6 +12,8 @@ import { Show } from 'src/app/interfaces/show.model';
 export class ShowService {
 	constructor(private readonly http: HttpClient) {}
 
+	// AuthInterceptor handles appending user uid, token etc. to every http request
+
 	public getAllShows(): Observable<Array<Show>> {
 		return this.http.get<{ shows: Array<IShow> }>('https://tv-shows.infinum.academy/shows').pipe(
 			map((data) => {

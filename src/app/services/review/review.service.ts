@@ -12,6 +12,8 @@ import { Review } from 'src/app/interfaces/review.model';
 export class ReviewService {
 	constructor(private readonly http: HttpClient) {}
 
+	// AuthInterceptor handles appending user uid, token etc. to every http request
+
 	public getReviewsByShowId(id: string): Observable<Array<Review> | undefined> {
 		return this.http.get<{ reviews: Array<IReview> }>('https://tv-shows.infinum.academy/shows/' + id + '/reviews').pipe(
 			map((data) => {

@@ -9,6 +9,8 @@ import { EMPTY, Observable } from 'rxjs';
 export class FileUploadService {
 	constructor(private readonly http: HttpClient) {}
 
+	// AuthInterceptor handles appending user uid, token etc. to every http request
+
 	public upload(file?: File): Observable<any> {
 		if (file) {
 			const formData = new FormData();
