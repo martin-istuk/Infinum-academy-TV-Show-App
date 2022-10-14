@@ -40,6 +40,7 @@
 		<button
 			[disabled]="loginForm.invalid"
 			mat-raised-button
+			[ngClass]="{ fixMatIconPadding: loadingInProgress }"
 			color="primary"
 			(click)="onFormSubmit($event)"
 			id="submit-form-btn"

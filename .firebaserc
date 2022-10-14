@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "tv-show-app-a17a3": {
+      "hosting": {
+        "infinum-academy-app": [
+          "tv-show-app-a17a3"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "tv-show-app-a17a3"
+  }
+}

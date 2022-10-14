@@ -96,6 +96,16 @@
 					"options": {
 						"lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
 					}
+				},
+				"deploy": {
+					"builder": "@angular/fire:deploy",
+					"options": {
+						"prerender": false,
+						"ssr": false,
+						"browserTarget": "infinum-academy-app:build:production",
+						"firebaseProject": "tv-show-app-a17a3",
+						"firebaseHostingSite": "tv-show-app-a17a3"
+					}
 				}
 			}
 		}
