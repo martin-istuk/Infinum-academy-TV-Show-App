@@ -1,40 +1,49 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from "@angular/core";
+import { Router } from "@angular/router";
 
-import { Observable } from 'rxjs';
+import { Subscription } from "rxjs";
 
-import { INavigationLink } from 'src/app/interfaces/navigation-link.interface';
-import { User } from 'src/app/interfaces/user.model';
-import { AuthService } from 'src/app/services/auth/auth.service';
-import { UiService } from 'src/app/services/ui/ui.service';
+import { INavigationLink } from "src/app/interfaces/navigation-link.interface";
+import { AuthService } from "src/app/services/auth/auth.service";
+import { UiService } from "src/app/services/ui/ui.service";
 
 @Component({
-	selector: 'app-navigation',
-	templateUrl: './navigation.component.html',
-	styleUrls: ['./navigation.component.scss'],
+	selector: "app-navigation",
+	templateUrl: "./navigation.component.html",
+	styleUrls: ["./navigation.component.scss"]
 })
-export class NavigationComponent {
-	constructor(private authService: AuthService, private uiService: UiService) {}
+export class NavigationComponent implements OnDestroy {
+	constructor(private authService: AuthService, private uiService: UiService, private router: Router) {}
+
+	private subscription?: Subscription;
+
+	public readonly navigationLinks: Array<INavigationLink> = [
+		{
+			url: "",
+			title: "All Shows"
+		},
+		{
+			url: "top-rated",
+			title: "Top Rated"
+		},
+		{
+			url: "my-profile",
+			title: "My Profile"
+		}
+	];
 
 	public navLinkToggle(): void {
 		this.uiService.menuStatusSubject$.next(false);
 	}
 
 	public logout(): void {
-		this.authService.logoutUser();
+		this.subscription = this.authService.logoutUser().subscribe({
+			next: () => this.router.navigate([""]),
+			error: (error) => window.alert(error)
+		});
 	}
 
-	public readonly navigationLinks: Array<INavigationLink> = [
-		{
-			url: '',
-			title: 'All Shows',
-		},
-		{
-			url: 'top-rated',
-			title: 'Top Rated',
-		},
-		{
-			url: 'my-profile',
-			title: 'My Profile',
-		},
-	];
+	ngOnDestroy(): void {
+		this.subscription?.unsubscribe();
+	}
 }

@@ -1,40 +1,40 @@
-import { Component, OnDestroy } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Component, OnDestroy } from "@angular/core";
+import { FormBuilder, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
 
-import { Subscription } from 'rxjs';
+import { Subscription } from "rxjs";
 
-import { AuthService } from 'src/app/services/auth/auth.service';
+import { AuthService } from "src/app/services/auth/auth.service";
 
 @Component({
-	selector: 'app-login',
-	templateUrl: './login.component.html',
-	styleUrls: ['./login.component.scss'],
+	selector: "app-login",
+	templateUrl: "./login.component.html",
+	styleUrls: ["./login.component.scss"]
 })
 export class LoginComponent implements OnDestroy {
 	constructor(
 		private readonly authService: AuthService,
 		private readonly router: Router,
-		private readonly formBuilder: FormBuilder,
+		private readonly formBuilder: FormBuilder
 	) {}
 
 	private subscription?: Subscription;
 	public loadingInProgress: boolean = false;
 
 	public loginForm = this.formBuilder.group({
-		email: ['', [Validators.required, Validators.email]],
-		password: ['', [Validators.required, Validators.minLength(8)]],
+		email: ["", [Validators.required, Validators.email]],
+		password: ["", [Validators.required, Validators.minLength(8)]]
 	});
 
 	public getErrMsgEmail() {
-		if (this.loginForm.controls.email.hasError('required')) {
-			return 'You must enter a value';
+		if (this.loginForm.controls.email.hasError("required")) {
+			return "You must enter a value";
 		}
-		return this.loginForm.controls.email.hasError('email') ? 'Not a valid email' : '';
+		return this.loginForm.controls.email.hasError("email") ? "Not a valid email" : "";
 	}
 
 	public getErrMsgPass() {
-		return this.loginForm.controls.password.hasError('required') ? 'You must enter a value' : '';
+		return this.loginForm.controls.password.hasError("required") ? "You must enter a value" : "";
 	}
 
 	public onFormSubmit(event: Event): void {
@@ -45,12 +45,12 @@ export class LoginComponent implements OnDestroy {
 		this.subscription = this.authService.loginUser(email, password).subscribe({
 			next: () => {
 				this.loadingInProgress = false;
-				this.router.navigate(['']);
+				this.router.navigate([""]);
 			},
 			error: (error) => {
 				this.loadingInProgress = false;
 				window.alert(error);
-			},
+			}
 		});
 	}
 

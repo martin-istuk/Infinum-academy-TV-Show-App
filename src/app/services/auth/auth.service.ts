@@ -1,18 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
-import { BehaviorSubject, Observable, from, map } from 'rxjs';
-import {
-	Auth,
-	createUserWithEmailAndPassword,
-	signInWithEmailAndPassword,
-	signOut,
-	UserCredential,
-} from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "@angular/fire/auth";
+import { BehaviorSubject, from, map, Observable } from "rxjs";
 
-import { User } from 'src/app/interfaces/user.model';
+import { User } from "src/app/interfaces/user.model";
 
 @Injectable({
-	providedIn: 'root',
+	providedIn: "root"
 })
 export class AuthService {
 	constructor(private fbAuth: Auth) {}
@@ -34,7 +28,7 @@ export class AuthService {
 			map((userCredential) => {
 				this.authSuccessful(email, userCredential.user.uid);
 				return null;
-			}),
+			})
 		);
 	}
 
@@ -43,17 +37,16 @@ export class AuthService {
 			map((userCredential) => {
 				this.authSuccessful(email, userCredential.user.uid);
 				return null;
-			}),
+			})
 		);
 	}
 
-	public logoutUser(): Observable<void> {
-		return from(signOut(this.fbAuth));
-
-		// INFINUM ACADEMY:
-		// localStorage.removeItem("access-token");
-		// localStorage.removeItem("client");
-		// localStorage.removeItem("uid");
-		// this.router.navigate(["auth", "login"]);
+	public logoutUser(): Observable<null> {
+		return from(signOut(this.fbAuth)).pipe(
+			map(() => {
+				this._user$.next(null);
+				return null;
+			})
+		);
 	}
 }

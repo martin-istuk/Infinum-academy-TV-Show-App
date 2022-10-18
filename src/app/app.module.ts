@@ -1,23 +1,21 @@
-import { APP_INITIALIZER, NgModule } from '@angular/core';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from "@angular/common/http";
+import { NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
 
-import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
-import { provideAuth, getAuth } from '@angular/fire/auth';
-import { provideDatabase, getDatabase } from '@angular/fire/database';
-import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { initializeApp, provideFirebaseApp } from "@angular/fire/app";
+import { getAuth, provideAuth } from "@angular/fire/auth";
+import { getDatabase, provideDatabase } from "@angular/fire/database";
+import { getFirestore, provideFirestore } from "@angular/fire/firestore";
 
-import { environment } from '../environments/environment';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterModule } from '@angular/router';
-import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
-import { AuthService } from './services/auth/auth.service';
-import { AuthInterceptor } from './interceptors/auth.interceptor';
-import { MainLayoutModule } from './layouts/main-layout/main-layout.module';
-import { NavigationModule } from './components/navigation/navigation.module';
-import { AuthLayoutModule } from './layouts/auth-layout/auth-layout.module';
-import { CustomTitleCaseModule } from './pipes/custom-title-case.module';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { RouterModule } from "@angular/router";
+import { environment } from "../environments/environment";
+import { AppRoutingModule } from "./app-routing.module";
+import { AppComponent } from "./app.component";
+import { NavigationModule } from "./components/navigation/navigation.module";
+import { AuthLayoutModule } from "./layouts/auth-layout/auth-layout.module";
+import { MainLayoutModule } from "./layouts/main-layout/main-layout.module";
+import { CustomTitleCaseModule } from "./pipes/custom-title-case.module";
 
 @NgModule({
 	declarations: [AppComponent],
@@ -34,7 +32,7 @@ import { CustomTitleCaseModule } from './pipes/custom-title-case.module';
 		provideFirebaseApp(() => initializeApp(environment.firebase)),
 		provideAuth(() => getAuth()),
 		provideDatabase(() => getDatabase()),
-		provideFirestore(() => getFirestore()),
+		provideFirestore(() => getFirestore())
 	],
 	providers: [
 		// {
@@ -51,6 +49,6 @@ import { CustomTitleCaseModule } from './pipes/custom-title-case.module';
 		// 	useClass: AuthInterceptor,
 		// },
 	],
-	bootstrap: [AppComponent],
+	bootstrap: [AppComponent]
 })
 export class AppModule {}
