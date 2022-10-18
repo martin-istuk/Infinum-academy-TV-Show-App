@@ -28,7 +28,10 @@ export class RegisterComponent implements OnDestroy {
 			password: ['', [Validators.required, Validators.minLength(8)]],
 			passwordConfirmation: ['', [Validators.required, Validators.minLength(8)]],
 		},
-		[passMatchValidator('password', 'passwordConfirmation')],
+		{
+			validators: [passMatchValidator('password', 'passwordConfirmation')],
+			updateOn: 'blur',
+		},
 	);
 
 	public getErrMsgEmail() {
@@ -66,21 +69,23 @@ export class RegisterComponent implements OnDestroy {
 
 	public onFormSubmit(event: Event): void {
 		event.preventDefault();
-
-		if (this.registerForm.controls['password'].value !== this.registerForm.controls['passwordConfirmation'].value) {
+		const email = this.registerForm.controls['email'].value as string;
+		const password = this.registerForm.controls['password'].value as string;
+		const passwordConfirmation = this.registerForm.controls['passwordConfirmation'].value as string;
+		if (password !== passwordConfirmation) {
 			window.alert('\nPASSWORD ERROR\nPasswords do not match!');
 		} else {
 			this.loadingInProgress = true;
-
-			this.subscription = this.authService
-				.registerUser(
-					this.registerForm.controls['email'].value as string,
-					this.registerForm.controls['password'].value as string,
-				)
-				.subscribe({
-					next: () => (this.loadingInProgress = false),
-					error: () => (this.loadingInProgress = false),
-				});
+			this.subscription = this.authService.registerUser(email, password).subscribe({
+				next: () => {
+					this.loadingInProgress = false;
+					this.router.navigate(['']);
+				},
+				error: (error) => {
+					this.loadingInProgress = false;
+					window.alert(error);
+				},
+			});
 		}
 	}
 

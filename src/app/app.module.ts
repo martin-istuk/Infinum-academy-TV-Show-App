@@ -2,9 +2,10 @@ import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { provideDatabase, getDatabase } from '@angular/fire/database';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -18,10 +19,6 @@ import { NavigationModule } from './components/navigation/navigation.module';
 import { AuthLayoutModule } from './layouts/auth-layout/auth-layout.module';
 import { CustomTitleCaseModule } from './pipes/custom-title-case.module';
 
-export const fbApp = initializeApp(environment.firebase);
-export const fbAuth = getAuth(fbApp);
-export const fbFirestore = getFirestore(fbApp);
-
 @NgModule({
 	declarations: [AppComponent],
 	imports: [
@@ -34,21 +31,25 @@ export const fbFirestore = getFirestore(fbApp);
 		AuthLayoutModule,
 		NavigationModule,
 		CustomTitleCaseModule,
+		provideFirebaseApp(() => initializeApp(environment.firebase)),
+		provideAuth(() => getAuth()),
+		provideDatabase(() => getDatabase()),
+		provideFirestore(() => getFirestore()),
 	],
 	providers: [
-		{
-			provide: APP_INITIALIZER,
-			multi: true,
-			useFactory: (authService: AuthService) => {
-				return () => authService.init();
-			},
-			deps: [AuthService],
-		},
-		{
-			provide: HTTP_INTERCEPTORS,
-			multi: true,
-			useClass: AuthInterceptor,
-		},
+		// {
+		// 	provide: APP_INITIALIZER,
+		// 	multi: true,
+		// 	useFactory: (authService: AuthService) => {
+		// 		return () => authService.init();
+		// 	},
+		// 	deps: [AuthService],
+		// },
+		// {
+		// 	provide: HTTP_INTERCEPTORS,
+		// 	multi: true,
+		// 	useClass: AuthInterceptor,
+		// },
 	],
 	bootstrap: [AppComponent],
 })

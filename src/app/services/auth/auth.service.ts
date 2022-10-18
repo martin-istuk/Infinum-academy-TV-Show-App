@@ -1,81 +1,55 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 
-import { BehaviorSubject, Observable, from } from 'rxjs';
+import { BehaviorSubject, Observable, from, map } from 'rxjs';
 import {
+	Auth,
 	createUserWithEmailAndPassword,
 	signInWithEmailAndPassword,
-	setPersistence,
-	browserLocalPersistence,
-} from 'firebase/auth';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+	signOut,
+	UserCredential,
+} from '@angular/fire/auth';
 
-import { fbAuth, fbFirestore } from '../../app.module'; // local Firebase app instance
-import { IUser } from 'src/app/interfaces/user.interface';
 import { User } from 'src/app/interfaces/user.model';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class AuthService {
-	constructor(private readonly router: Router) {}
+	constructor(private fbAuth: Auth) {}
 
 	private _user$ = new BehaviorSubject<User | null>(null);
 	public user$ = this._user$.asObservable();
-
-	// AuthInterceptor handles appending user uid, token etc. to every http request
 
 	public async init(): Promise<void> {
 		// await setPersistence(fbAuth, browserLocalPersistence);
 	}
 
-	public registerUser(email: string, password: string): Observable<User | null> {
-		let user: User | null = null;
-		const observable$ = from(
-			createUserWithEmailAndPassword(fbAuth, email, password)
-				.then(async (userCredential) => {
-					const uid: string | undefined = userCredential.user.uid;
-					user = {
-						id: uid as string,
-						email: email,
-						imageUrl: null,
-					};
-					await setDoc(doc(fbFirestore, 'Users', uid as string), user);
-					// localStorage.setItem('uid', uid as string);
-					this._user$.next(user);
-					this.router.navigate(['']);
-					return user;
-				})
-				.catch((error) => {
-					window.alert(error);
-					return null;
-				}),
-		);
-		return observable$;
+	private authSuccessful(email: string, uid: string): void {
+		const user: User = { id: uid, email: email, imageUrl: null };
+		this._user$.next(user);
 	}
 
-	public loginUser(email: string, password: string): Observable<User | null> {
-		let user: User | null = null;
-		const observable$ = from(
-			signInWithEmailAndPassword(fbAuth, email, password)
-				.then(async (userCredential) => {
-					const uid: string | undefined = userCredential.user.uid;
-					user = new User((await getDoc(doc(fbFirestore, 'Users', uid as string))).data() as IUser);
-					user.id = uid as string;
-					// localStorage.setItem('uid', uid as string);
-					this._user$.next(user);
-					this.router.navigate(['']);
-					return user;
-				})
-				.catch((error) => {
-					window.alert(error);
-					return null;
-				}),
+	public registerUser(email: string, password: string): Observable<null> {
+		return from(createUserWithEmailAndPassword(this.fbAuth, email, password)).pipe(
+			map((userCredential) => {
+				this.authSuccessful(email, userCredential.user.uid);
+				return null;
+			}),
 		);
-		return observable$;
 	}
 
-	public logoutUser(): void {
+	public loginUser(email: string, password: string): Observable<null> {
+		return from(signInWithEmailAndPassword(this.fbAuth, email, password)).pipe(
+			map((userCredential) => {
+				this.authSuccessful(email, userCredential.user.uid);
+				return null;
+			}),
+		);
+	}
+
+	public logoutUser(): Observable<void> {
+		return from(signOut(this.fbAuth));
+
 		// INFINUM ACADEMY:
 		// localStorage.removeItem("access-token");
 		// localStorage.removeItem("client");

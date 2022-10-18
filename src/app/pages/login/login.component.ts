@@ -39,15 +39,19 @@ export class LoginComponent implements OnDestroy {
 
 	public onFormSubmit(event: Event): void {
 		event.preventDefault();
-
+		const email = this.loginForm.controls.email.value as string;
+		const password = this.loginForm.controls.password.value as string;
 		this.loadingInProgress = true;
-
-		this.subscription = this.authService
-			.loginUser(this.loginForm.controls.email.value as string, this.loginForm.controls.password.value as string)
-			.subscribe({
-				next: () => (this.loadingInProgress = false),
-				error: () => (this.loadingInProgress = false),
-			});
+		this.subscription = this.authService.loginUser(email, password).subscribe({
+			next: () => {
+				this.loadingInProgress = false;
+				this.router.navigate(['']);
+			},
+			error: (error) => {
+				this.loadingInProgress = false;
+				window.alert(error);
+			},
+		});
 	}
 
 	ngOnDestroy(): void {
