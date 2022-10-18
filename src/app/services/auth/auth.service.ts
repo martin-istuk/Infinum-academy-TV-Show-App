@@ -27,33 +27,21 @@ export class AuthService {
 
 	public async init(): Promise<void> {
 		// await setPersistence(fbAuth, browserLocalPersistence);
-		// if (fbAuth.currentUser) {
-		// 	const uid: string | undefined = fbAuth.currentUser?.uid;
-		// 	const user = new User(
-		// 		(await getDoc(doc(fbFirestore, "Users", uid as string))).data() as IUser
-		// 	);
-		// 	user.id = uid as string;
-		// 	localStorage.setItem("uid", uid as string);
-		// 	this._user$.next(user);
-		// 	this.router.navigate( [ "" ] );
-		// } else {
-		// 	window.alert("eeee");
-		// }
 	}
 
 	public registerUser(email: string, password: string): Observable<User | null> {
 		let user: User | null = null;
 		const observable$ = from(
 			createUserWithEmailAndPassword(fbAuth, email, password)
-				.then(async () => {
-					const uid: string | undefined = fbAuth.currentUser?.uid;
+				.then(async (userCredential) => {
+					const uid: string | undefined = userCredential.user.uid;
 					user = {
 						id: uid as string,
 						email: email,
 						imageUrl: null,
 					};
 					await setDoc(doc(fbFirestore, 'Users', uid as string), user);
-					localStorage.setItem('uid', uid as string);
+					// localStorage.setItem('uid', uid as string);
 					this._user$.next(user);
 					this.router.navigate(['']);
 					return user;
@@ -70,11 +58,11 @@ export class AuthService {
 		let user: User | null = null;
 		const observable$ = from(
 			signInWithEmailAndPassword(fbAuth, email, password)
-				.then(async () => {
-					const uid: string | undefined = fbAuth.currentUser?.uid;
+				.then(async (userCredential) => {
+					const uid: string | undefined = userCredential.user.uid;
 					user = new User((await getDoc(doc(fbFirestore, 'Users', uid as string))).data() as IUser);
 					user.id = uid as string;
-					localStorage.setItem('uid', uid as string);
+					// localStorage.setItem('uid', uid as string);
 					this._user$.next(user);
 					this.router.navigate(['']);
 					return user;

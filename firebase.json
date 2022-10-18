@@ -2,7 +2,7 @@
 	"hosting": {
 		"target": "infinum-academy-app",
 		"public": "dist/infinum-academy-app",
-		"ignore": ["**/.*"],
+		"ignore": ["**/.*", "**/src/**", "**/node_modules/**"],
 		"headers": [
 			{
 				"source": "*.[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f].+(css|js)",
