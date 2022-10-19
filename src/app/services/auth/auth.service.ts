@@ -1,21 +1,34 @@
 import { Injectable } from "@angular/core";
 
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "@angular/fire/auth";
+import {
+	Auth,
+	createUserWithEmailAndPassword,
+	signInWithEmailAndPassword,
+	signOut,
+	onAuthStateChanged
+} from "@angular/fire/auth";
+import { Router } from "@angular/router";
 import { BehaviorSubject, from, map, Observable } from "rxjs";
 
 import { User } from "src/app/interfaces/user.model";
 
-@Injectable({
-	providedIn: "root"
-})
+@Injectable({ providedIn: "root" })
 export class AuthService {
-	constructor(private fbAuth: Auth) {}
+	constructor(private fbAuth: Auth, private router: Router) {}
 
 	private _user$ = new BehaviorSubject<User | null>(null);
 	public user$ = this._user$.asObservable();
 
-	public async init(): Promise<void> {
-		// await setPersistence(fbAuth, browserLocalPersistence);
+	public init(): void {
+		onAuthStateChanged(this.fbAuth, (user) => {
+			if (user && user.email && user.uid) {
+				console.log(user);
+				this.authSuccessful(user.email, user.uid);
+				this.router.navigate([""]);
+			} else {
+				console.log("no user");
+			}
+		});
 	}
 
 	private authSuccessful(email: string, uid: string): void {
@@ -41,12 +54,9 @@ export class AuthService {
 		);
 	}
 
-	public logoutUser(): Observable<null> {
-		return from(signOut(this.fbAuth)).pipe(
-			map(() => {
-				this._user$.next(null);
-				return null;
-			})
-		);
+	public logoutUser(): void {
+		this.fbAuth.signOut();
+		this._user$.next(null);
+		this.router.navigate(["auth", "login"]);
 	}
 }

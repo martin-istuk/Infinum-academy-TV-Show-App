@@ -1,5 +1,5 @@
-import { HttpClientModule } from "@angular/common/http";
-import { NgModule } from "@angular/core";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { APP_INITIALIZER, NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 
 import { initializeApp, provideFirebaseApp } from "@angular/fire/app";
@@ -9,6 +9,8 @@ import { getFirestore, provideFirestore } from "@angular/fire/firestore";
 
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule } from "@angular/router";
+import { AuthService } from "./services/auth/auth.service";
+import { AuthInterceptor } from "./interceptors/auth.interceptor";
 import { environment } from "../environments/environment";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -35,19 +37,19 @@ import { CustomTitleCaseModule } from "./pipes/custom-title-case.module";
 		provideFirestore(() => getFirestore())
 	],
 	providers: [
-		// {
-		// 	provide: APP_INITIALIZER,
-		// 	multi: true,
-		// 	useFactory: (authService: AuthService) => {
-		// 		return () => authService.init();
-		// 	},
-		// 	deps: [AuthService],
-		// },
-		// {
-		// 	provide: HTTP_INTERCEPTORS,
-		// 	multi: true,
-		// 	useClass: AuthInterceptor,
-		// },
+		{
+			provide: APP_INITIALIZER,
+			multi: true,
+			useFactory: (authService: AuthService) => {
+				return () => authService.init();
+			},
+			deps: [AuthService]
+		},
+		{
+			provide: HTTP_INTERCEPTORS,
+			multi: true,
+			useClass: AuthInterceptor
+		}
 	],
 	bootstrap: [AppComponent]
 })

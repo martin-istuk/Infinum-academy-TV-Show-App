@@ -1,7 +1,4 @@
-import { Component, OnDestroy } from "@angular/core";
-import { Router } from "@angular/router";
-
-import { Subscription } from "rxjs";
+import { Component } from "@angular/core";
 
 import { INavigationLink } from "src/app/interfaces/navigation-link.interface";
 import { AuthService } from "src/app/services/auth/auth.service";
@@ -12,10 +9,8 @@ import { UiService } from "src/app/services/ui/ui.service";
 	templateUrl: "./navigation.component.html",
 	styleUrls: ["./navigation.component.scss"]
 })
-export class NavigationComponent implements OnDestroy {
-	constructor(private authService: AuthService, private uiService: UiService, private router: Router) {}
-
-	private subscription?: Subscription;
+export class NavigationComponent {
+	constructor(private authService: AuthService, private uiService: UiService) {}
 
 	public readonly navigationLinks: Array<INavigationLink> = [
 		{
@@ -37,13 +32,6 @@ export class NavigationComponent implements OnDestroy {
 	}
 
 	public logout(): void {
-		this.subscription = this.authService.logoutUser().subscribe({
-			next: () => this.router.navigate([""]),
-			error: (error) => window.alert(error)
-		});
-	}
-
-	ngOnDestroy(): void {
-		this.subscription?.unsubscribe();
+		this.authService.logoutUser();
 	}
 }
