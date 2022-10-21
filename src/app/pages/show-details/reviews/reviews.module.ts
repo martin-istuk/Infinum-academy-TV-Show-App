@@ -5,7 +5,7 @@ import { MatCardModule } from "@angular/material/card";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
 
-import { RatingModule } from "src/app/components/shows-list/show-card/rating/rating.module";
+import { RatingModule } from "../../shows-list/show-card/rating/rating.module";
 import { ReviewsComponent } from "./reviews.component";
 
 @NgModule({

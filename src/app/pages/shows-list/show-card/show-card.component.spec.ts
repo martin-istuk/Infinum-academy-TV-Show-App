@@ -1,14 +1,14 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { ShowCardComponent } from './show-card.component';
+import { ShowCardComponent } from "./show-card.component";
 
-describe('ShowCardComponent', () => {
+describe("ShowCardComponent", () => {
 	let component: ShowCardComponent;
 	let fixture: ComponentFixture<ShowCardComponent>;
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [ShowCardComponent],
+			declarations: [ShowCardComponent]
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(ShowCardComponent);
@@ -16,7 +16,7 @@ describe('ShowCardComponent', () => {
 		fixture.detectChanges();
 	});
 
-	it('should create', () => {
+	it("should create", () => {
 		expect(component).toBeTruthy();
 	});
 });

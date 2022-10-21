@@ -13,7 +13,7 @@ import { AuthService } from "./services/auth/auth.service";
 import { environment } from "../environments/environment";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
-import { NavigationModule } from "./components/navigation/navigation.module";
+import { NavigationModule } from "./pages/navigation/navigation.module";
 import { AuthLayoutModule } from "./layouts/auth-layout/auth-layout.module";
 import { MainLayoutModule } from "./layouts/main-layout/main-layout.module";
 import { CustomTitleCaseModule } from "./pipes/custom-title-case.module";
