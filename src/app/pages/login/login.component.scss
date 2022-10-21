@@ -35,8 +35,12 @@ mat-card-actions button.fixMatIconPadding {
 .loading {
 	animation: spin 2s linear infinite;
 	@keyframes spin {
-		from { transform: rotate(0deg);	}
-		to { transform: rotate(360deg);	}
+		from {
+			transform: rotate(0deg);
+		}
+		to {
+			transform: rotate(360deg);
+		}
 	}
 }
 a:link,
@@ -46,8 +50,6 @@ a:active {
 	text-decoration: none;
 	font-weight: bold;
 }
-
-
 
 @media only screen and (max-width: 1060px) {
 	mat-card {

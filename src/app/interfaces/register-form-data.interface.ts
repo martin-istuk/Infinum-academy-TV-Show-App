@@ -1,4 +1,4 @@
-import { ILoginFormData } from './login-form-data.interface';
+import { ILoginFormData } from "./login-form-data.interface";
 
 export interface IRegisterFormData extends ILoginFormData {
 	passwordConfirmation: string;

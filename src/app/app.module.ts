@@ -1,4 +1,4 @@
-import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { HttpClientModule } from "@angular/common/http";
 import { APP_INITIALIZER, NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 
@@ -10,7 +10,6 @@ import { getFirestore, provideFirestore } from "@angular/fire/firestore";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule } from "@angular/router";
 import { AuthService } from "./services/auth/auth.service";
-import { AuthInterceptor } from "./interceptors/auth.interceptor";
 import { environment } from "../environments/environment";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -44,11 +43,6 @@ import { CustomTitleCaseModule } from "./pipes/custom-title-case.module";
 				return () => authService.init();
 			},
 			deps: [AuthService]
-		},
-		{
-			provide: HTTP_INTERCEPTORS,
-			multi: true,
-			useClass: AuthInterceptor
 		}
 	],
 	bootstrap: [AppComponent]

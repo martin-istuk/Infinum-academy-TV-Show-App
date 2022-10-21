@@ -22,14 +22,14 @@
 			box-shadow: inset 0 0 0px white;
 			transition: 0.25s ease-out;
 			transition-property: border, border-radius, box-shadow, background-size;
-			&:hover{
+			&:hover {
 				cursor: pointer;
 			}
 			&.hoverClass {
-				border: 1px solid #FF2498;
+				border: 1px solid #ff2498;
 				border-radius: 24px;
-				box-shadow: inset 0 0 48px #FF2498;
-				background-size: 0%
+				box-shadow: inset 0 0 48px #ff2498;
+				background-size: 0%;
 			}
 		}
 		input {
@@ -42,8 +42,6 @@
 		}
 	}
 }
-
-
 
 @media only screen and (max-width: 1060px) {
 	:host {

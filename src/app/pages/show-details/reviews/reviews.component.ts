@@ -1,16 +1,15 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 
-import { Review } from 'src/app/interfaces/review.model';
-import { AuthService } from 'src/app/services/auth/auth.service';
-import { ReviewService } from 'src/app/services/review/review.service';
+import { AuthService } from "src/app/services/auth/auth.service";
+import { Review } from "src/app/interfaces/review.model";
 
 @Component({
-	selector: 'app-reviews',
-	templateUrl: './reviews.component.html',
-	styleUrls: ['./reviews.component.scss'],
+	selector: "app-reviews",
+	templateUrl: "./reviews.component.html",
+	styleUrls: ["./reviews.component.scss"]
 })
 export class ReviewsComponent {
-	constructor(public reviewService: ReviewService, private authService: AuthService) {}
+	constructor(private authService: AuthService) {}
 
 	@Input() showId?: string;
 

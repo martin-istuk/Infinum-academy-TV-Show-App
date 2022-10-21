@@ -1,19 +1,21 @@
-import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component } from "@angular/core";
 
-import { UiService } from 'src/app/services/ui/ui.service';
+import { Observable, of } from "rxjs";
+
+import { UiService } from "src/app/services/ui/ui.service";
 
 @Component({
-	selector: 'app-main-layout',
-	templateUrl: './main-layout.component.html',
-	styleUrls: ['./main-layout.component.scss'],
+	selector: "app-main-layout",
+	templateUrl: "./main-layout.component.html",
+	styleUrls: ["./main-layout.component.scss"]
 })
 export class MainLayoutComponent {
 	constructor(public uiService: UiService) {}
 
-	public menuOpened$: Observable<boolean> | null = this.uiService.menuStatusSubject$;
+	public menuOpened$: Observable<boolean> = of(false);
 
 	public openMenu(): void {
+		this.menuOpened$ = this.uiService.menuStatusSubject$.asObservable();
 		this.uiService.menuStatusSubject$.next(true);
 	}
 	public closeMenu(): void {

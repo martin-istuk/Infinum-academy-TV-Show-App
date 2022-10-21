@@ -1,38 +1,34 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
-import { Observable, map } from 'rxjs';
+import { Firestore, getDocs, collection, QuerySnapshot, QueryDocumentSnapshot } from "@angular/fire/firestore";
+import { BehaviorSubject, from, map, Observable, tap } from "rxjs";
 
-import { IShow } from 'src/app/interfaces/show.interface';
-import { Show } from 'src/app/interfaces/show.model';
+import { Show } from "src/app/interfaces/show.model";
 
-@Injectable({
-	providedIn: 'root',
-})
+@Injectable({ providedIn: "root" })
 export class ShowService {
-	constructor(private readonly http: HttpClient) {}
+	constructor(private firestore: Firestore) {}
 
-	// AuthInterceptor handles appending user uid, token etc. to every http request
+	private _shows$ = new BehaviorSubject<Array<Show>>([]);
+	public shows$: Observable<Array<Show>> = this._shows$.asObservable();
 
-	public getAllShows(): Observable<Array<Show>> {
-		return this.http.get<{ shows: Array<IShow> }>('https://tv-shows.infinum.academy/shows').pipe(
-			map((data) => {
-				return data.shows.map((ishow) => new Show(ishow));
-			}),
+	public topRatedShows$: Observable<Array<Show>> = this.shows$.pipe(
+		map((showsArray: Array<Show>) => {
+			return showsArray.filter((show: Show) => {
+				show.rating !== null && show.rating >= 8;
+			});
+		})
+	);
+
+	public getAllShows(): void {
+		from(getDocs(collection(this.firestore, "Shows"))).pipe(
+			tap((querySnapshot: QuerySnapshot) => {
+				const shows: Array<Show> = [];
+				querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
+					shows.push(doc.data() as Show);
+				});
+				this._shows$.next(shows);
+			})
 		);
-	}
-
-	public getTopRatedShows(): Observable<Array<Show>> {
-		return this.http.get<{ shows: Array<IShow> }>('https://tv-shows.infinum.academy/shows/top_rated').pipe(
-			map((data) => {
-				return data.shows.map((ishow) => new Show(ishow));
-			}),
-		);
-	}
-
-	public getShowById(id: string): Observable<Show | undefined> {
-		return this.http
-			.get<{ show: IShow }>('https://tv-shows.infinum.academy/shows/' + id)
-			.pipe(map((data) => new Show(data.show)));
 	}
 }

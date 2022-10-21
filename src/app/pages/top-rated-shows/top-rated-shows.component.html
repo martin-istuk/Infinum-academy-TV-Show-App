@@ -1,4 +1,4 @@
-<app-shows-list [shows]="shows$ | async"></app-shows-list>
+<app-shows-list [shows]="topRatedShows$ | async"></app-shows-list>
 
 <mat-spinner *ngIf="loadingInProgress && !errorOnGetShows" class="circle"></mat-spinner>
 

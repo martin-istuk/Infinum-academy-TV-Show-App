@@ -1,7 +1,10 @@
+import { IReview } from "./review.interface";
+
 export interface IShow {
-	id: string;
 	title: string;
+	urlTitle: string;
 	description: string;
-	average_rating: number | null;
-	image_url: string | null;
+	imageUrl: string | null;
+	rating: number | null;
+	reviews: Array<IReview>;
 }

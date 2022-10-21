@@ -17,7 +17,8 @@ mat-card {
 		grid-template-columns: 50% 50%;
 		align-items: center;
 		padding: 40px;
-		h4, p {
+		h4,
+		p {
 			color: #371687;
 		}
 		.rating {
@@ -55,7 +56,8 @@ mat-card {
 			padding: 24px;
 			.rating {
 				display: block;
-				h4, p {
+				h4,
+				p {
 					display: block;
 					margin: 0 0 10px 0;
 				}

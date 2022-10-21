@@ -1,9 +1,8 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable } from "@angular/core";
 
-@Injectable({
-	providedIn: 'root',
-})
+import { BehaviorSubject } from "rxjs";
+
+@Injectable({ providedIn: "root" })
 export class UiService {
 	public menuStatusSubject$ = new BehaviorSubject<boolean>(false);
 }

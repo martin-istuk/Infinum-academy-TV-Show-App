@@ -1,17 +1,21 @@
-import { IShow } from './show.interface';
+import { IReview } from "./review.interface";
+import { Review } from "./review.model";
+import { IShow } from "./show.interface";
 
 export class Show {
-	public id: string;
 	public title: string;
+	public urlTitle: string;
 	public description: string;
-	public averageRating: number | null;
 	public imageUrl: string | null;
+	public rating: number | null;
+	public reviews: Array<Review>;
 
 	constructor(show: IShow) {
-		this.id = show.id;
 		this.title = show.title;
+		this.urlTitle = show.title.replaceAll(" ", "_");
 		this.description = show.description;
-		this.averageRating = show.average_rating;
-		this.imageUrl = show.image_url;
+		this.imageUrl = show.imageUrl;
+		this.rating = show.rating;
+		this.reviews = show.reviews.map((review: IReview) => new Review(review));
 	}
 }

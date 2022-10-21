@@ -1,28 +1,27 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { ActivatedRoute } from "@angular/router";
 
-import { IReview } from 'src/app/interfaces/review.interface';
-import { Review } from 'src/app/interfaces/review.model';
-import { ReviewService } from 'src/app/services/review/review.service';
+import { IReview } from "src/app/interfaces/review.interface";
+import { Review } from "src/app/interfaces/review.model";
 
 @Component({
-	selector: 'app-add-review',
-	templateUrl: './add-review.component.html',
-	styleUrls: ['./add-review.component.scss'],
+	selector: "app-add-review",
+	templateUrl: "./add-review.component.html",
+	styleUrls: ["./add-review.component.scss"]
 })
 export class AddReviewComponent {
-	constructor(private reviewService: ReviewService, private route: ActivatedRoute) {}
+	constructor(private route: ActivatedRoute) {}
 
 	public ratingOptions: Array<number> = [1, 2, 3, 4, 5];
-	@Input() showId: string = '';
-	private comment: string = '';
+	@Input() showId: string = "";
+	private comment: string = "";
 	private rating: number = 0;
 	@Output() postReviewEmitter = new EventEmitter<any>();
 
 	public addReviewForm = new FormGroup({
-		comment: new FormControl('', [Validators.required]),
-		rating: new FormControl('', [Validators.required]),
+		comment: new FormControl("", [Validators.required]),
+		rating: new FormControl("", [Validators.required])
 	});
 
 	public onPostReview(event: Event): void {
@@ -39,7 +38,7 @@ export class AddReviewComponent {
 		const reviewData = {
 			rating: this.rating,
 			comment: this.comment,
-			show_id: this.showId,
+			show_id: this.showId
 		};
 
 		this.postReviewEmitter.emit(reviewData);

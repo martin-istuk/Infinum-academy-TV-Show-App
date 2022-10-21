@@ -1,17 +1,17 @@
-import { Component, forwardRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, forwardRef } from "@angular/core";
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 
 @Component({
-	selector: 'app-rating-input',
-	templateUrl: './rating-input.component.html',
-	styleUrls: ['./rating-input.component.scss'],
+	selector: "app-rating-input",
+	templateUrl: "./rating-input.component.html",
+	styleUrls: ["./rating-input.component.scss"],
 	providers: [
 		{
 			provide: NG_VALUE_ACCESSOR,
 			useExisting: forwardRef(() => RatingInputComponent),
-			multi: true,
-		},
-	],
+			multi: true
+		}
+	]
 })
 export class RatingInputComponent implements ControlValueAccessor {
 	public rating: number = 0;

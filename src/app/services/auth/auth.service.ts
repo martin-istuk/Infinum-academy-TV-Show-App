@@ -1,13 +1,12 @@
 import { Injectable } from "@angular/core";
+import { Router } from "@angular/router";
 
 import {
 	Auth,
 	createUserWithEmailAndPassword,
 	signInWithEmailAndPassword,
-	signOut,
 	onAuthStateChanged
 } from "@angular/fire/auth";
-import { Router } from "@angular/router";
 import { BehaviorSubject, from, map, Observable } from "rxjs";
 
 import { User } from "src/app/interfaces/user.model";
@@ -22,11 +21,8 @@ export class AuthService {
 	public init(): void {
 		onAuthStateChanged(this.fbAuth, (user) => {
 			if (user && user.email && user.uid) {
-				console.log(user);
 				this.authSuccessful(user.email, user.uid);
 				this.router.navigate([""]);
-			} else {
-				console.log("no user");
 			}
 		});
 	}
@@ -57,6 +53,6 @@ export class AuthService {
 	public logoutUser(): void {
 		this.fbAuth.signOut();
 		this._user$.next(null);
-		this.router.navigate(["auth", "login"]);
+		this.router.navigate(["/auth", "login"]);
 	}
 }

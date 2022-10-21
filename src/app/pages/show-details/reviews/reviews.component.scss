@@ -22,22 +22,26 @@
 				height: 50px;
 				border-radius: 50%;
 			}
-			.email { grid-area: email; }
-			.comment { grid-area: comment; }
-			.rating { grid-area: rating; }
+			.email {
+				grid-area: email;
+			}
+			.comment {
+				grid-area: comment;
+			}
+			.rating {
+				grid-area: rating;
+			}
 			.delete-btn {
 				grid-area: delete-btn;
 				display: grid;
 				justify-content: right;
 				button {
-					color:white;
+					color: white;
 				}
 			}
 		}
 	}
 }
-
-
 
 @media only screen and (max-width: 1060px) {
 	:host {

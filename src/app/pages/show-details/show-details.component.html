@@ -1,10 +1,10 @@
 <div *ngIf="show$ | async as show; else loading">
 	<app-show-card-details [showData]="show"></app-show-card-details>
-	<app-add-review [showId]="show.id" (postReviewEmitter)="addReview($event)"></app-add-review>
+	<!-- <app-add-review (postReviewEmitter)="addReview($event)"></app-add-review> -->
 </div>
 
 <div *ngIf="reviews$ | async as reviews">
-	<app-reviews [reviewsData]="reviews" (deleteReviewEmitter)="requestDeleteReview($event)"></app-reviews>
+	<!-- <app-reviews [reviewsData]="reviews" (deleteReviewEmitter)="requestDeleteReview($event)"></app-reviews> -->
 </div>
 
 <ng-template #loading>

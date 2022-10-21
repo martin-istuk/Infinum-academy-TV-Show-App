@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from "@angular/core";
-import { FormBuilder, Validators } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 
 import { Subscription } from "rxjs";
@@ -22,17 +22,29 @@ export class RegisterComponent implements OnDestroy {
 	private subscription?: Subscription;
 	public loadingInProgress: boolean = false;
 
-	public registerForm = this.formBuilder.group(
+	public registerForm = new FormGroup(
 		{
-			email: ["", [Validators.required, Validators.email]],
-			password: ["", [Validators.required, Validators.minLength(8)]],
-			passwordConfirmation: ["", [Validators.required, Validators.minLength(8)]]
+			email: new FormControl("", [Validators.required, Validators.email]),
+			password: new FormControl("", [Validators.required, Validators.minLength(8)]),
+			passwordConfirmation: new FormControl("", [Validators.required, Validators.minLength(8)])
 		},
 		{
-			validators: [passMatchValidator("password", "passwordConfirmation")],
-			updateOn: "blur"
+			updateOn: "blur",
+			validators: [passMatchValidator("password", "passwordConfirmation")]
 		}
 	);
+
+	// public registerForm: FormGroup = this.formBuilder.group(
+	// 	{
+	// 		email: ["", [Validators.required, Validators.email]],
+	// 		password: ["", [Validators.required, Validators.minLength(8)]],
+	// 		passwordConfirmation: ["", [Validators.required, Validators.minLength(8)]]
+	// 	},
+	// 	{
+	// 		updateOn: "blur",
+	// 		validators: [passMatchValidator("password", "passwordConfirmation")]
+	// 	}
+	// );
 
 	public getErrMsgEmail() {
 		if (this.registerForm.controls["email"].hasError("required")) {
@@ -71,8 +83,8 @@ export class RegisterComponent implements OnDestroy {
 		event.preventDefault();
 		const email = this.registerForm.controls["email"].value as string;
 		const password = this.registerForm.controls["password"].value as string;
-		const passwordConfirmation = this.registerForm.controls["passwordConfirmation"].value as string;
-		if (password !== passwordConfirmation) {
+		const passConf = this.registerForm.controls["passwordConfirmation"].value as string;
+		if (password !== passConf) {
 			window.alert("\nPASSWORD ERROR\nPasswords do not match!");
 		} else {
 			this.loadingInProgress = true;
