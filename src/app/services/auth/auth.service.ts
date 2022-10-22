@@ -10,6 +10,7 @@ import {
 import { BehaviorSubject, from, map, Observable } from "rxjs";
 
 import { User } from "src/app/interfaces/user.model";
+import { IUser } from "src/app/interfaces/user.interface";
 
 @Injectable({ providedIn: "root" })
 export class AuthService {
@@ -28,7 +29,11 @@ export class AuthService {
 	}
 
 	private authSuccessful(email: string, uid: string): void {
-		const user: User = { id: uid, email: email, imageUrl: null };
+		const user: User = new User({
+			id: uid,
+			email: email,
+			imageUrl: null
+		} as IUser);
 		this._user$.next(user);
 	}
 
