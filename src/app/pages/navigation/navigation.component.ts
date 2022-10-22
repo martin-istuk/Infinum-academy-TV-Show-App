@@ -1,8 +1,7 @@
-import { Component } from "@angular/core";
+import { Component, Output, EventEmitter } from "@angular/core";
 
 import { INavigationLink } from "src/app/interfaces/navigation-link.interface";
 import { AuthService } from "src/app/services/auth/auth.service";
-import { UiService } from "src/app/services/ui/ui.service";
 
 @Component({
 	selector: "app-navigation",
@@ -10,7 +9,7 @@ import { UiService } from "src/app/services/ui/ui.service";
 	styleUrls: ["./navigation.component.scss"]
 })
 export class NavigationComponent {
-	constructor(private authService: AuthService, private uiService: UiService) {}
+	constructor(private authService: AuthService) {}
 
 	public readonly navigationLinks: Array<INavigationLink> = [
 		{
@@ -27,8 +26,10 @@ export class NavigationComponent {
 		}
 	];
 
+	@Output() toggleMobileMenu = new EventEmitter<boolean>();
+
 	public navLinkToggle(): void {
-		this.uiService.menuStatusSubject$.next(false);
+		this.toggleMobileMenu.emit(true);
 	}
 
 	public logout(): void {

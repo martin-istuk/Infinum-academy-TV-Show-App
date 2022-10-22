@@ -2,6 +2,7 @@ import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
+import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 
@@ -22,6 +23,7 @@ import { MainLayoutComponent } from "./main-layout.component";
 		TopRatedShowsModule,
 		ShowDetailsModule,
 		MyProfileModule,
+		MatSidenavModule,
 		MatButtonModule,
 		MatIconModule
 	]

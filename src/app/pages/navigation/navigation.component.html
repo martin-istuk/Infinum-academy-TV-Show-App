@@ -2,7 +2,6 @@
 	<button
 		*ngFor="let link of navigationLinks"
 		mat-button
-		class="nav-button"
 		[routerLink]="link.url"
 		[routerLinkActive]="'active'"
 		[routerLinkActiveOptions]="{ exact: true }"
@@ -12,4 +11,4 @@
 	</button>
 </nav>
 
-<button mat-button class="logout" (click)="logout()">Log out</button>
+<button mat-button (click)="logout()">Log out</button>

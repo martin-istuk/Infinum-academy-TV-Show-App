@@ -1,33 +1,23 @@
-nav {
+:host {
+	height: 100%;
 	display: grid;
-	justify-items: start;
-}
-button {
-	display: inline;
-	font-size: 24px;
-	margin-bottom: 1rem;
-	border-radius: 999999999px;
-	&:hover {
-		background: hsla(258, 72%, 31%, 0.5);
-	}
-}
-.active {
-	background: #371687;
-}
-.logout {
-	position: absolute;
-	bottom: 2vh;
-}
-
-
-
-@media only screen and (max-width: 1060px) {
-	nav:first-child {
-		margin-top: 12vh;
-		margin-left: 2vh;
+	grid-template-rows: auto auto;
+	align-content: space-between;
+	justify-content: start;
+	nav {
+		display: grid;
+		justify-items: start;
 	}
 	button {
-		font-size: 1.3rem;
+		display: inline;
+		font-size: 24px;
 		margin-bottom: 1rem;
+		border-radius: 999999999px;
+		&:hover {
+			background: hsla(258, 72%, 31%, 0.5);
+		}
+	}
+	.active {
+		background: #371687;
 	}
 }
