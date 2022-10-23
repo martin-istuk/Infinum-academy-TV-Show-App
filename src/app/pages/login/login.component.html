@@ -18,7 +18,7 @@
 				<mat-form-field appearance="outline">
 					<mat-label>Email</mat-label>
 					<input type="email" formControlName="email" matInput placeholder="Type in Your email adress..." required />
-					<mat-error *ngIf="loginForm.controls.email.invalid">
+					<mat-error *ngIf="loginForm.controls['email'].invalid">
 						{{ getErrMsgEmail() }}
 					</mat-error>
 					<mat-icon matPrefix>person</mat-icon>
@@ -27,7 +27,7 @@
 				<mat-form-field appearance="outline">
 					<mat-label>Password</mat-label>
 					<input type="password" formControlName="password" matInput placeholder="Type in Your password..." required />
-					<mat-error *ngIf="loginForm.controls.password.invalid">
+					<mat-error *ngIf="loginForm.controls['password'].invalid">
 						{{ getErrMsgPass() }}
 					</mat-error>
 					<mat-icon matPrefix>lock</mat-icon>
@@ -38,7 +38,7 @@
 
 	<mat-card-actions>
 		<button
-			[disabled]="loginForm.invalid"
+			[disabled]="loginForm?.invalid"
 			mat-raised-button
 			[ngClass]="{ fixMatIconPadding: loadingInProgress }"
 			color="primary"

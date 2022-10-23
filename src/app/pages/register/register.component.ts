@@ -1,5 +1,5 @@
-import { Component, OnDestroy } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { Component, OnInit, OnDestroy } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 
 import { Subscription } from "rxjs";
@@ -12,51 +12,40 @@ import { passMatchValidator } from "src/app/validators/pass-match-validator.dire
 	templateUrl: "./register.component.html",
 	styleUrls: ["./register.component.scss"]
 })
-export class RegisterComponent implements OnDestroy {
+export class RegisterComponent implements OnInit, OnDestroy {
 	constructor(
 		private readonly authService: AuthService,
 		private readonly router: Router,
 		private readonly formBuilder: FormBuilder
 	) {}
 
-	private subscription?: Subscription;
-	public loadingInProgress: boolean = false;
+	public registerForm?: FormGroup;
 
-	public registerForm = new FormGroup(
-		{
-			email: new FormControl("", [Validators.required, Validators.email]),
-			password: new FormControl("", [Validators.required, Validators.minLength(8)]),
-			passwordConfirmation: new FormControl("", [Validators.required, Validators.minLength(8)])
-		},
-		{
-			updateOn: "blur",
-			validators: [passMatchValidator("password", "passwordConfirmation")]
-		}
-	);
-
-	// public registerForm: FormGroup = this.formBuilder.group(
-	// 	{
-	// 		email: ["", [Validators.required, Validators.email]],
-	// 		password: ["", [Validators.required, Validators.minLength(8)]],
-	// 		passwordConfirmation: ["", [Validators.required, Validators.minLength(8)]]
-	// 	},
-	// 	{
-	// 		updateOn: "blur",
-	// 		validators: [passMatchValidator("password", "passwordConfirmation")]
-	// 	}
-	// );
+	ngOnInit() {
+		this.registerForm = this.formBuilder.group(
+			{
+				email: ["", [Validators.required, Validators.email]],
+				password: ["", [Validators.required, Validators.minLength(8)]],
+				passwordConfirmation: ["", [Validators.required, Validators.minLength(8)]]
+			},
+			{
+				updateOn: "change",
+				validators: [passMatchValidator("password", "passwordConfirmation")]
+			}
+		);
+	}
 
 	public getErrMsgEmail() {
-		if (this.registerForm.controls["email"].hasError("required")) {
+		if (this.registerForm?.controls["email"].hasError("required")) {
 			return "You must enter a value";
 		}
-		return this.registerForm.controls["email"].hasError("email") ? "Not a valid email" : "";
+		return this.registerForm?.controls["email"].hasError("email") ? "Not a valid email" : "";
 	}
 
 	public getErrMsgPass() {
-		const passwordInput = this.registerForm.controls["password"];
-		if (passwordInput.value !== null) {
-			if (passwordInput.hasError("required") || passwordInput.value.length < 8) {
+		const passwordInput = this.registerForm?.controls["password"];
+		if (passwordInput?.value !== null) {
+			if (passwordInput?.hasError("required") || passwordInput?.value.length < 8) {
 				return "You must enter a value at least 8 characters long";
 			}
 			return "";
@@ -65,9 +54,9 @@ export class RegisterComponent implements OnDestroy {
 	}
 
 	public getErrMsgPassConf() {
-		const passConfInput = this.registerForm.controls["email"];
-		if (passConfInput.value !== null) {
-			if (passConfInput.hasError("required") || passConfInput.value.length < 8) {
+		const passConfInput = this.registerForm?.controls["email"];
+		if (passConfInput?.value !== null) {
+			if (passConfInput?.hasError("required") || passConfInput?.value.length < 8) {
 				return "You must enter a value at least 8 characters long";
 			}
 			return "";
@@ -76,14 +65,17 @@ export class RegisterComponent implements OnDestroy {
 	}
 
 	public passwordMatchError() {
-		return this.registerForm.getError("mismatch") && this.registerForm.get("passwordConfirmation")?.touched;
+		return this.registerForm?.getError("mismatch") && this.registerForm.get("passwordConfirmation")?.touched;
 	}
+
+	private subscription?: Subscription;
+	public loadingInProgress: boolean = false;
 
 	public onFormSubmit(event: Event): void {
 		event.preventDefault();
-		const email = this.registerForm.controls["email"].value as string;
-		const password = this.registerForm.controls["password"].value as string;
-		const passConf = this.registerForm.controls["passwordConfirmation"].value as string;
+		const email = this.registerForm?.controls["email"].value as string;
+		const password = this.registerForm?.controls["password"].value as string;
+		const passConf = this.registerForm?.controls["passwordConfirmation"].value as string;
 		if (password !== passConf) {
 			window.alert("\nPASSWORD ERROR\nPasswords do not match!");
 		} else {
