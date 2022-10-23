@@ -23,7 +23,6 @@ export class AuthService {
 		onAuthStateChanged(this.fbAuth, (user) => {
 			if (user && user.email && user.uid) {
 				this.authSuccessful(user.email, user.uid);
-				this.router.navigate([""]);
 			}
 		});
 	}
@@ -58,6 +57,6 @@ export class AuthService {
 	public logoutUser(): void {
 		this.fbAuth.signOut();
 		this._user$.next(null);
-		this.router.navigate(["/auth", "login"]);
+		this.router.navigate(["auth", "login"]);
 	}
 }
