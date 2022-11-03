@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, ParamMap } from "@angular/router";
 
 import { EMPTY, map, tap, BehaviorSubject, switchMap, Observable } from "rxjs";
@@ -12,32 +12,28 @@ import { Review } from "src/app/interfaces/review.model";
 	templateUrl: "./show-details.component.html",
 	styleUrls: ["./show-details.component.scss"]
 })
-export class ShowDetailsComponent {
+export class ShowDetailsComponent implements OnInit {
 	constructor(private showService: ShowService, private route: ActivatedRoute) {}
 
 	public trigger$ = new BehaviorSubject<string | null>(null);
 
-	private routeId$: Observable<string | null> = this.route.paramMap.pipe(
-		map((params: ParamMap) => {
-			return params.get("id");
-		}),
-		tap((id) => this.trigger$.next(id))
-	);
+	private routeId$?: Observable<string | null>;
 
-	public show$: Observable<Show> = this.routeId$.pipe(
-		switchMap((id: string | null) => {
-			if (!id) {
-				return EMPTY;
-			}
-			return this.showService.shows$.pipe(
-				map((allShows: Array<Show>) => {
-					return allShows.filter((show: Show) => {
-						show.urlTitle === id;
-					})[0];
-				})
-			);
-		})
-	);
+	public show$?: Observable<Show>;
+
+	ngOnInit(): void {
+		this.routeId$ = this.route.paramMap.pipe(
+			map((params: ParamMap) => {
+				return params.get("id") as string;
+			}),
+			tap((id: string) => this.trigger$.next(id))
+		);
+		this.show$ = this.routeId$.pipe(
+			switchMap((id: string | null) => {
+				return !id ? EMPTY : this.showService.getShowById(id);
+			})
+		);
+	}
 
 	public reviews$ = this.trigger$.pipe(
 		switchMap((id: string | null) => {

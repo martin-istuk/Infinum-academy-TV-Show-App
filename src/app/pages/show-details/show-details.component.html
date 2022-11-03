@@ -3,8 +3,8 @@
 	<!-- <app-add-review (postReviewEmitter)="addReview($event)"></app-add-review> -->
 </div>
 
-<div *ngIf="reviews$ | async as reviews">
-	<!-- <app-reviews [reviewsData]="reviews" (deleteReviewEmitter)="requestDeleteReview($event)"></app-reviews> -->
+<div *ngIf="show$ | async as show">
+	<app-reviews [reviewsData]="show.reviews" (deleteReviewEmitter)="requestDeleteReview($event)"></app-reviews>
 </div>
 
 <ng-template #loading>

@@ -1,13 +1,13 @@
 import { IUser } from "./user.interface";
 
 export class User {
-	public id: string;
+	public uid: string;
 	public email: string;
-	public imageUrl: string | null;
+	public photoURL: string;
 
 	constructor(user: IUser) {
-		this.id = user.id;
+		this.uid = user.uid;
 		this.email = user.email;
-		this.imageUrl = user.imageUrl;
+		this.photoURL = user.photoURL;
 	}
 }

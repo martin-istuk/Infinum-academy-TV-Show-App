@@ -3,9 +3,9 @@
 <div *ngIf="user$ | async as user">
 	<p class="email">{{ user.email }}</p>
 	<div
-		*ngIf="user.imageUrl; else placeholderPic"
+		*ngIf="user.photoURL; else placeholderPic"
 		class="profilePic"
-		[ngStyle]="{ 'background-image': 'url(' + user.imageUrl + ')' }"
+		[ngStyle]="{ 'background-image': 'url(' + user.photoURL + ')' }"
 	></div>
 	<ng-template #placeholderPic>
 		<div class="profilePic placeholderPic"></div>

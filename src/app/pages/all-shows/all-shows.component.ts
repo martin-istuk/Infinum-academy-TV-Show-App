@@ -18,11 +18,10 @@ export class AllShowsComponent implements OnInit {
 
 	// private trigger$ = new BehaviorSubject(undefined);
 
-	public shows$: Observable<Array<Show>> | null = null;
+	public shows$?: Observable<Array<Show>>;
 
 	ngOnInit(): void {
-		this.showService.getAllShows();
-		this.shows$ = this.showService.shows$;
+		this.shows$ = this.showService.getAllShows();
 	}
 
 	// public shows$ = this.trigger$.asObservable().pipe(

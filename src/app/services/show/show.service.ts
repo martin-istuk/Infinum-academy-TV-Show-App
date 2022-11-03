@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 
 import { Firestore, getDocs, collection, QuerySnapshot, QueryDocumentSnapshot } from "@angular/fire/firestore";
-import { BehaviorSubject, from, map, Observable, tap } from "rxjs";
+import { BehaviorSubject, from, map, Observable } from "rxjs";
 
 import { Show } from "src/app/interfaces/show.model";
 
@@ -20,14 +20,35 @@ export class ShowService {
 		})
 	);
 
-	public getAllShows(): void {
-		from(getDocs(collection(this.firestore, "Shows"))).pipe(
-			tap((querySnapshot: QuerySnapshot) => {
+	public getAllShows(): Observable<Array<Show>> {
+		return from(getDocs(collection(this.firestore, "Shows"))).pipe(
+			map((querySnapshot: QuerySnapshot) => {
 				const shows: Array<Show> = [];
 				querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
 					shows.push(doc.data() as Show);
 				});
 				this._shows$.next(shows);
+				return shows;
+			})
+		);
+	}
+
+	public getTopRatedShows(): Observable<Array<Show>> {
+		return this.getAllShows().pipe(
+			map((showsArray: Array<Show>) => {
+				return showsArray.filter((show: Show) => {
+					return show.rating !== null && show.rating >= 4;
+				});
+			})
+		);
+	}
+
+	public getShowById(id: string): Observable<Show> {
+		return this.getAllShows().pipe(
+			map((showsArray: Array<Show>) => {
+				return showsArray.filter((show: Show) => {
+					return show.title === id.replaceAll("_", " ");
+				})[0];
 			})
 		);
 	}

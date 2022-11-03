@@ -83,6 +83,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 			this.subscription = this.authService.registerUser(email, password).subscribe({
 				next: () => {
 					this.loadingInProgress = false;
+					this.router.navigate([""]);
 				},
 				error: (error) => {
 					this.loadingInProgress = false;

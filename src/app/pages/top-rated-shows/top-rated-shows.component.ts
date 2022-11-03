@@ -18,10 +18,10 @@ export class TopRatedShowsComponent implements OnInit {
 
 	// private trigger$ = new BehaviorSubject(undefined);
 
-	public topRatedShows$: Observable<Array<Show>> | null = null;
+	public topRatedShows$?: Observable<Array<Show>>;
 
 	ngOnInit(): void {
-		this.topRatedShows$ = this.showService.topRatedShows$;
+		this.topRatedShows$ = this.showService.getTopRatedShows();
 	}
 
 	// public shows$ = this.trigger$.asObservable().pipe(

@@ -32,8 +32,8 @@ import { CustomTitleCaseModule } from "./pipes/custom-title-case.module";
 		CustomTitleCaseModule,
 		provideFirebaseApp(() => initializeApp(environment.firebase)),
 		provideAuth(() => getAuth()),
-		provideDatabase(() => getDatabase()),
-		provideFirestore(() => getFirestore())
+		provideFirestore(() => getFirestore()),
+		provideDatabase(() => getDatabase())
 	],
 	providers: [
 		{
