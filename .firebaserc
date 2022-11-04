@@ -2,7 +2,7 @@
   "targets": {
     "tv-show-app-a17a3": {
       "hosting": {
-        "infinum-academy-app": [
+        "tv-show-app": [
           "tv-show-app-a17a3"
         ]
       }

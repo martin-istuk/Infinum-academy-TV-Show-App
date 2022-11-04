@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 
 import { Firestore, getDocs, collection, QuerySnapshot, QueryDocumentSnapshot } from "@angular/fire/firestore";
-import { BehaviorSubject, EMPTY, from, map, Observable, of } from "rxjs";
-import { IShow } from "src/app/interfaces/show.interface";
+import { BehaviorSubject, from, map, Observable } from "rxjs";
 
+import { IShow } from "src/app/interfaces/show.interface";
 import { Show } from "src/app/interfaces/show.model";
 
 @Injectable({ providedIn: "root" })
@@ -48,7 +48,7 @@ export class ShowService {
 		return this.getAllShows().pipe(
 			map((showsArray: Array<Show>) => {
 				return showsArray.filter((show: Show) => {
-					return show.title === id.replaceAll("_", " ");
+					return show.urlTitle === id;
 				})[0];
 			})
 		);

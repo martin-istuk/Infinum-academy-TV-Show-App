@@ -1,5 +1,5 @@
 {
-  "name": "infinum-academy-app",
+  "name": "tv-show-app",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -44,7 +44,6 @@
     "eslint": "^8.18.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "husky": "^8.0.0",
     "jasmine-core": "~4.1.0",
     "karma": "~6.3.0",
     "karma-chrome-launcher": "~3.1.0",

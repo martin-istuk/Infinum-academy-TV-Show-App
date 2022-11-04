@@ -3,7 +3,7 @@
 	"version": 1,
 	"newProjectRoot": "projects",
 	"projects": {
-		"infinum-academy-app": {
+		"tv-show-app": {
 			"projectType": "application",
 			"schematics": {
 				"@schematics/angular:component": {
@@ -17,7 +17,7 @@
 				"build": {
 					"builder": "@angular-devkit/build-angular:browser",
 					"options": {
-						"outputPath": "dist/infinum-academy-app",
+						"outputPath": "dist/tv-show-app",
 						"index": "src/index.html",
 						"main": "src/main.ts",
 						"polyfills": "src/polyfills.ts",
@@ -64,10 +64,10 @@
 					"builder": "@angular-devkit/build-angular:dev-server",
 					"configurations": {
 						"production": {
-							"browserTarget": "infinum-academy-app:build:production"
+							"browserTarget": "tv-show-app:build:production"
 						},
 						"development": {
-							"browserTarget": "infinum-academy-app:build:development"
+							"browserTarget": "tv-show-app:build:development"
 						}
 					},
 					"defaultConfiguration": "development"
@@ -75,7 +75,7 @@
 				"extract-i18n": {
 					"builder": "@angular-devkit/build-angular:extract-i18n",
 					"options": {
-						"browserTarget": "infinum-academy-app:build"
+						"browserTarget": "tv-show-app:build"
 					}
 				},
 				"test": {
@@ -102,7 +102,7 @@
 					"options": {
 						"prerender": false,
 						"ssr": false,
-						"browserTarget": "infinum-academy-app:build:production",
+						"browserTarget": "tv-show-app:build:production",
 						"firebaseProject": "tv-show-app-a17a3",
 						"firebaseHostingSite": "tv-show-app-a17a3"
 					}

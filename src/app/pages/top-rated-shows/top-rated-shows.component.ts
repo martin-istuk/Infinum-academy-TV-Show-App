@@ -24,26 +24,6 @@ export class TopRatedShowsComponent implements OnInit {
 		this.topRatedShows$ = this.showService.getTopRatedShows();
 	}
 
-	// public shows$ = this.trigger$.asObservable().pipe(
-	// 	tap(() => {
-	// 		this.loadingInProgress = true;
-	// 		this.errorOnGetShows = false;
-	// 	}),
-	// 	switchMap(() => {
-	// 		return this.showService.getTopRatedShows().pipe(
-	// 			tap(() => {
-	// 				this.loadingInProgress = false;
-	// 				this.errorOnGetShows = false;
-	// 			}),
-	// 			catchError(() => {
-	// 				this.loadingInProgress = false;
-	// 				this.errorOnGetShows = true;
-	// 				return EMPTY;
-	// 			}),
-	// 		);
-	// 	}),
-	// );
-
 	public onRetryClick() {
 		this.topRatedShows$ = this.showService.topRatedShows$;
 	}

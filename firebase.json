@@ -1,8 +1,8 @@
 {
 	"hosting": [
 		{
-			"target": "infinum-academy-app",
-			"public": "dist/infinum-academy-app",
+			"target": "tv-show-app",
+			"public": "dist/tv-show-app",
 			"ignore": ["**/.*", "**/src/**", "**/node_modules/**"],
 			"headers": [
 				{
@@ -32,8 +32,8 @@
 			]
 		},
 		{
-			"target": "infinum-academy-app",
-			"public": "dist/infinum-academy-app",
+			"target": "tv-show-app",
+			"public": "dist/tv-show-app",
 			"ignore": ["**/.*"],
 			"headers": [
 				{

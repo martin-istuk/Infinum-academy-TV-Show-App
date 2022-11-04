@@ -12,7 +12,7 @@ export class FileUploadService {
 			const formData = new FormData();
 			formData.append("image", file);
 
-			return this.http.put("https://tv-shows.infinum.academy/users", formData);
+			// return this.http.put("https://tv-shows.academy/users", formData);
 		}
 		return EMPTY;
 	}
