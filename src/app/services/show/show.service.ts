@@ -1,7 +1,8 @@
 import { Injectable } from "@angular/core";
 
 import { Firestore, getDocs, collection, QuerySnapshot, QueryDocumentSnapshot } from "@angular/fire/firestore";
-import { BehaviorSubject, from, map, Observable } from "rxjs";
+import { BehaviorSubject, EMPTY, from, map, Observable, of } from "rxjs";
+import { IShow } from "src/app/interfaces/show.interface";
 
 import { Show } from "src/app/interfaces/show.model";
 
@@ -25,7 +26,7 @@ export class ShowService {
 			map((querySnapshot: QuerySnapshot) => {
 				const shows: Array<Show> = [];
 				querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
-					shows.push(doc.data() as Show);
+					shows.push(new Show(doc.data() as IShow));
 				});
 				this._shows$.next(shows);
 				return shows;

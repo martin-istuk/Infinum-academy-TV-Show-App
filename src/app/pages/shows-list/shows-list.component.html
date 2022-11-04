@@ -1,3 +1,3 @@
-<a *ngFor="let show of shows" [routerLink]="'/details/' + show.title.replaceAll(' ', '_')">
+<a *ngFor="let show of shows" [routerLink]="'/details/' + show.urlTitle">
 	<app-show-card [showData]="show"></app-show-card>
 </a>
