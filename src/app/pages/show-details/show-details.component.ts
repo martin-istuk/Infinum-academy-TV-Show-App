@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { ActivatedRoute, ParamMap } from "@angular/router";
 
 import { EMPTY, map, tap, BehaviorSubject, switchMap, Observable } from "rxjs";
@@ -12,16 +12,12 @@ import { Review } from "src/app/interfaces/review.model";
 	templateUrl: "./show-details.component.html",
 	styleUrls: ["./show-details.component.scss"]
 })
-export class ShowDetailsComponent implements OnInit {
-	constructor(private showService: ShowService, private route: ActivatedRoute) {}
+export class ShowDetailsComponent {
+	private trigger$ = new BehaviorSubject<string | null>(null);
+	private routeId$: Observable<string | null>;
+	public show$: Observable<Show>;
 
-	public trigger$ = new BehaviorSubject<string | null>(null);
-
-	private routeId$?: Observable<string | null>;
-
-	public show$?: Observable<Show>;
-
-	ngOnInit(): void {
+	constructor(private showService: ShowService, private route: ActivatedRoute) {
 		this.routeId$ = this.route.paramMap.pipe(
 			map((params: ParamMap) => {
 				return params.get("id") as string;

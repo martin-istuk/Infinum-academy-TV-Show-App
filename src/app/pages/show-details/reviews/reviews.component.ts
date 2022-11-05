@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 
 import { Observable } from "rxjs";
 
@@ -11,20 +11,15 @@ import { Review } from "src/app/interfaces/review.model";
 	templateUrl: "./reviews.component.html",
 	styleUrls: ["./reviews.component.scss"]
 })
-export class ReviewsComponent implements OnInit {
-	constructor(private authService: AuthService) {}
-
+export class ReviewsComponent {
 	@Input() showId?: string;
-
 	@Input() reviewsData: Array<Review> = [];
+	@Output() deleteReviewEmitter = new EventEmitter<any>();
+	public user$: Observable<User | null>;
 
-	public user$?: Observable<User | null>;
-
-	ngOnInit(): void {
+	constructor(private authService: AuthService) {
 		this.user$ = this.authService.user$;
 	}
-
-	@Output() deleteReviewEmitter = new EventEmitter<any>();
 
 	public onDeleteReview(event: Event, review: Review): void {
 		event.preventDefault();
