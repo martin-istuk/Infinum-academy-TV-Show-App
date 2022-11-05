@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute, ParamMap } from "@angular/router";
 
-import { EMPTY, map, tap, BehaviorSubject, switchMap, Observable } from "rxjs";
+import { EMPTY, map, BehaviorSubject, switchMap, Observable } from "rxjs";
 
 import { ShowService } from "src/app/services/show/show.service";
 import { Show } from "src/app/interfaces/show.model";
@@ -20,9 +20,10 @@ export class ShowDetailsComponent {
 	constructor(private showService: ShowService, private route: ActivatedRoute) {
 		this.routeId$ = this.route.paramMap.pipe(
 			map((params: ParamMap) => {
-				return params.get("id") as string;
-			}),
-			tap((id: string) => this.trigger$.next(id))
+				const id: string = params.get("id") as string;
+				this.trigger$.next(id);
+				return id;
+			})
 		);
 		this.show$ = this.routeId$.pipe(
 			switchMap((id: string | null) => {

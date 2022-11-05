@@ -2,8 +2,8 @@ import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 
 import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, UserCredential } from "@angular/fire/auth";
-import { doc, DocumentData, Firestore, getDoc } from "@angular/fire/firestore";
-import { BehaviorSubject, from, map, Observable } from "rxjs";
+import { doc, DocumentData, DocumentSnapshot, Firestore, getDoc } from "@angular/fire/firestore";
+import { BehaviorSubject, from, map, tap, Observable, switchMap } from "rxjs";
 
 import { User } from "src/app/interfaces/user.model";
 import { IUser } from "src/app/interfaces/user.interface";
@@ -23,27 +23,30 @@ export class AuthService {
 		}
 	}
 
-	private authSuccessful(userCredential: UserCredential): User {
+	private authSuccessful(userCredential: UserCredential): Observable<User> {
 		const uid: string = userCredential.user.uid;
 		const email: string = userCredential.user.email as string;
 		let photoURL: string = "";
 
-		const userData: DocumentData = async () => {
-			(await getDoc(doc(this.fbFirestore, "Users", uid))).data();
-		};
-
-		if (userData) {
-			photoURL = userData["photoURL"];
-		}
-
 		const user: User = new User({ uid: uid, email: email, photoURL: photoURL });
 		this._user$.next(user);
-		return user;
+
+		return from(getDoc(doc(this.fbFirestore, "Users", uid))).pipe(
+			map((docSnapshot: DocumentSnapshot<DocumentData>) => {
+				const userData: DocumentData | undefined = docSnapshot.data();
+				if (userData) {
+					photoURL = userData["photoURL"];
+				}
+				const user: User = new User({ uid: uid, email: email, photoURL: photoURL });
+				this._user$.next(user);
+				return user;
+			})
+		);
 	}
 
 	public registerUser(email: string, password: string): Observable<User> {
 		return from(createUserWithEmailAndPassword(this.fbAuth, email, password)).pipe(
-			map((userCredential: UserCredential) => {
+			switchMap((userCredential: UserCredential) => {
 				localStorage.setItem("userCredential", JSON.stringify(userCredential));
 				return this.authSuccessful(userCredential);
 			})
@@ -52,7 +55,7 @@ export class AuthService {
 
 	public loginUser(email: string, password: string): Observable<User> {
 		return from(signInWithEmailAndPassword(this.fbAuth, email, password)).pipe(
-			map((userCredential: UserCredential) => {
+			switchMap((userCredential: UserCredential) => {
 				localStorage.setItem("userCredential", JSON.stringify(userCredential));
 				return this.authSuccessful(userCredential);
 			})
