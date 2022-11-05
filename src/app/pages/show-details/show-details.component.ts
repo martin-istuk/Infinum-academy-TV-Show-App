@@ -1,7 +1,7 @@
-import { Component } from "@angular/core";
+import { Component, OnDestroy } from "@angular/core";
 import { ActivatedRoute, ParamMap } from "@angular/router";
 
-import { EMPTY, map, BehaviorSubject, switchMap, Observable } from "rxjs";
+import { EMPTY, map, BehaviorSubject, switchMap, Observable, Subscription } from "rxjs";
 
 import { ShowService } from "src/app/services/show/show.service";
 import { Show } from "src/app/interfaces/show.model";
@@ -12,16 +12,15 @@ import { Review } from "src/app/interfaces/review.model";
 	templateUrl: "./show-details.component.html",
 	styleUrls: ["./show-details.component.scss"]
 })
-export class ShowDetailsComponent {
-	private trigger$ = new BehaviorSubject<string | null>(null);
+export class ShowDetailsComponent implements OnDestroy {
 	private routeId$: Observable<string | null>;
 	public show$: Observable<Show>;
+	private subscription?: Subscription;
 
 	constructor(private showService: ShowService, private route: ActivatedRoute) {
 		this.routeId$ = this.route.paramMap.pipe(
 			map((params: ParamMap) => {
 				const id: string = params.get("id") as string;
-				this.trigger$.next(id);
 				return id;
 			})
 		);
@@ -32,25 +31,21 @@ export class ShowDetailsComponent {
 		);
 	}
 
-	public reviews$ = this.trigger$.pipe(
-		switchMap((id: string | null) => {
-			// if (!id) {
-			// 	return EMPTY;
-			// }
-			// return this.reviewService.getReviewsByShowId(id);
-			return EMPTY;
-		})
-	);
-
-	public addReview(reviewData: any): void {
-		// this.reviewService.addNewReview(reviewData).subscribe({
-		// 	next: () => this.trigger$.next(reviewData.show_id)
-		// });
-	}
+	public addReview(reviewData: any): void {}
 
 	public requestDeleteReview(review: Review): void {
-		// this.reviewService.deleteReview(review).subscribe({
-		// 	next: () => this.trigger$.next(review.showId),
-		// });
+		this.subscription = this.routeId$
+			.pipe(
+				switchMap((showId: string | null) => {
+					return !showId ? EMPTY : this.showService.deleteReview(showId, review);
+				})
+			)
+			.subscribe({
+				next: () => console.log("EEEEEE")
+			});
+	}
+
+	ngOnDestroy(): void {
+		this.subscription?.unsubscribe();
 	}
 }
