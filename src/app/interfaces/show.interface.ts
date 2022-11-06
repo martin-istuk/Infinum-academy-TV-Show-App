@@ -5,6 +5,6 @@ export interface IShow {
 	urlTitle: string;
 	description: string;
 	imageUrl: string | null;
-	rating: number | null;
 	reviews: Array<IReview>;
+	rating: number | null;
 }

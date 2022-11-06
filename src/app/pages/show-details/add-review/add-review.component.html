@@ -5,7 +5,7 @@
 		<mat-form-field class="comment" appearance="fill">
 			<mat-label>Comment</mat-label>
 			<textarea formControlName="comment" matInput rows="3" required></textarea>
-			<mat-error *ngIf="addReviewForm.controls.comment.invalid"></mat-error>
+			<mat-error *ngIf="addReviewForm.controls['comment'].invalid"></mat-error>
 		</mat-form-field>
 
 		<app-rating-input class="rating" formControlName="rating" required> </app-rating-input>

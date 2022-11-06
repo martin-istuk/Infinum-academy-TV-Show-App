@@ -6,6 +6,8 @@ import { EMPTY, map, BehaviorSubject, switchMap, Observable, Subscription } from
 import { ShowService } from "src/app/services/show/show.service";
 import { Show } from "src/app/interfaces/show.model";
 import { Review } from "src/app/interfaces/review.model";
+import { AuthService } from "src/app/services/auth/auth.service";
+import { User } from "src/app/interfaces/user.model";
 
 @Component({
 	selector: "app-show-details",
@@ -15,9 +17,10 @@ import { Review } from "src/app/interfaces/review.model";
 export class ShowDetailsComponent implements OnDestroy {
 	private routeId$: Observable<string | null>;
 	public show$: Observable<Show>;
-	private subscription?: Subscription;
+	private addReviewSubs?: Subscription;
+	private deleteReviewSubs?: Subscription;
 
-	constructor(private showService: ShowService, private route: ActivatedRoute) {
+	constructor(private showService: ShowService, private authService: AuthService, private route: ActivatedRoute) {
 		this.routeId$ = this.route.paramMap.pipe(
 			map((params: ParamMap) => {
 				const id: string = params.get("id") as string;
@@ -26,26 +29,41 @@ export class ShowDetailsComponent implements OnDestroy {
 		);
 		this.show$ = this.routeId$.pipe(
 			switchMap((id: string | null) => {
-				return !id ? EMPTY : this.showService.getShowById(id);
+				if (!id) {
+					return EMPTY;
+				} else {
+					return this.showService.getShowById(id);
+				}
 			})
 		);
 	}
 
-	public addReview(reviewData: any): void {}
+	public addReview(reviewData: any): void {
+		this.addReviewSubs = this.authService.user$
+			.pipe(
+				switchMap((user) => {
+					return !user ? EMPTY : this.showService.addReview(user.email, reviewData.showTitle, reviewData);
+				})
+			)
+			.subscribe({
+				next: () => window.location.reload()
+			});
+	}
 
 	public requestDeleteReview(review: Review): void {
-		this.subscription = this.routeId$
+		this.deleteReviewSubs = this.routeId$
 			.pipe(
 				switchMap((showId: string | null) => {
 					return !showId ? EMPTY : this.showService.deleteReview(showId, review);
 				})
 			)
 			.subscribe({
-				next: () => console.log("EEEEEE")
+				next: () => window.location.reload()
 			});
 	}
 
 	ngOnDestroy(): void {
-		this.subscription?.unsubscribe();
+		this.deleteReviewSubs?.unsubscribe();
+		this.addReviewSubs?.unsubscribe();
 	}
 }

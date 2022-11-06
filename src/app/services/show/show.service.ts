@@ -10,7 +10,9 @@ import {
 	query,
 	where,
 	updateDoc,
-	setDoc
+	setDoc,
+	arrayUnion,
+	arrayRemove
 } from "@angular/fire/firestore";
 import { BehaviorSubject, from, map, switchMap, Observable, of } from "rxjs";
 
@@ -49,9 +51,11 @@ export class ShowService {
 	public getTopRatedShows(): Observable<Array<Show>> {
 		return this.getAllShows().pipe(
 			map((shows: Array<Show>) => {
-				return shows.filter((show: Show) => {
-					return show.rating !== null && show.rating >= 4;
-				});
+				return shows
+					.filter((show: Show) => {
+						return show.rating !== null && show.rating >= 4;
+					})
+					.sort((a, b) => (b.rating as number) - (a.rating as number));
 			})
 		);
 	}
@@ -66,23 +70,27 @@ export class ShowService {
 		);
 	}
 
-	public deleteReview(showId: string, reviewToDelete: Review): Observable<null> {
-		return this.getShowById(showId).pipe(
-			switchMap((show: Show) => {
-				const newReviews = show.reviews
-					.filter((review: Review) => {
-						return review.email !== reviewToDelete.email;
-					})
-					.map((review: Review) => {
-						return {
-							comment: review.comment,
-							email: review.email,
-							rating: review.rating
-						};
-					});
-
-				return from(updateDoc(doc(this.firestore, "Shows", showId), { reviews: newReviews })).pipe(map(() => null));
+	public addReview(userEmail: string, showTitle: string, reviewData: any): Observable<null> {
+		return from(
+			updateDoc(doc(this.firestore, "Shows", showTitle), {
+				reviews: arrayUnion({
+					comment: reviewData.comment,
+					email: userEmail,
+					rating: reviewData.rating
+				})
 			})
-		);
+		).pipe(map(() => null));
+	}
+
+	public deleteReview(showId: string, reviewToDelete: Review): Observable<null> {
+		return from(
+			updateDoc(doc(this.firestore, "Shows", showId), {
+				reviews: arrayRemove({
+					comment: reviewToDelete.comment,
+					email: reviewToDelete.email,
+					rating: reviewToDelete.rating
+				})
+			})
+		).pipe(map(() => null));
 	}
 }

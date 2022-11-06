@@ -1,9 +1,7 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { ActivatedRoute } from "@angular/router";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
-import { IReview } from "src/app/interfaces/review.interface";
-import { Review } from "src/app/interfaces/review.model";
+import { AuthService } from "src/app/services/auth/auth.service";
 
 @Component({
 	selector: "app-add-review",
@@ -11,37 +9,25 @@ import { Review } from "src/app/interfaces/review.model";
 	styleUrls: ["./add-review.component.scss"]
 })
 export class AddReviewComponent {
-	constructor(private route: ActivatedRoute) {}
+	@Input() showTitle?: string;
+	@Output() addReviewEmitter = new EventEmitter<any>();
+	public addReviewForm: FormGroup;
 
-	public ratingOptions: Array<number> = [1, 2, 3, 4, 5];
-	@Input() showId: string = "";
-	private comment: string = "";
-	private rating: number = 0;
-	@Output() postReviewEmitter = new EventEmitter<any>();
-
-	public addReviewForm = new FormGroup({
-		comment: new FormControl("", [Validators.required]),
-		rating: new FormControl("", [Validators.required])
-	});
+	constructor(private formBuilder: FormBuilder, private authService: AuthService) {
+		this.addReviewForm = this.formBuilder.group({
+			comment: ["", [Validators.required]],
+			rating: ["", [Validators.required]]
+		});
+	}
 
 	public onPostReview(event: Event): void {
 		event.preventDefault();
 
-		if (this.addReviewForm.controls.comment.value) {
-			this.comment = this.addReviewForm.controls.comment.value;
-		}
-
-		if (this.addReviewForm.controls.rating.value) {
-			this.rating = Number(this.addReviewForm.controls.rating.value);
-		}
-
-		const reviewData = {
-			rating: this.rating,
-			comment: this.comment,
-			show_id: this.showId
-		};
-
-		this.postReviewEmitter.emit(reviewData);
+		this.addReviewEmitter.emit({
+			showTitle: this.showTitle,
+			comment: this.addReviewForm.controls["comment"].value,
+			rating: this.addReviewForm.controls["rating"].value
+		});
 
 		this.addReviewForm.reset();
 	}
