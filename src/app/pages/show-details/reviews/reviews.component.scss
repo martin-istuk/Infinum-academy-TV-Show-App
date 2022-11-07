@@ -58,11 +58,10 @@
 			width: 100%;
 			.review-post-data {
 				grid-template:
-					"profilePic rating"
-					"profilePic email"
-					"comment comment"
-					"delete-btn delete-btn";
-				grid-template-columns: 30% 70%;
+					"profilePic rating delete-btn"
+					"profilePic email delete-btn"
+					"comment comment comment";
+				grid-template-columns: 25% 65% 10%;
 				align-items: center;
 				.profile-pic {
 					width: 50px;
