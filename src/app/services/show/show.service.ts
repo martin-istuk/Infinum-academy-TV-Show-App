@@ -70,7 +70,7 @@ export class ShowService {
 		);
 	}
 
-	public addReview(userEmail: string, showTitle: string, reviewData: any): Observable<null> {
+	public addReview(userEmail: string, showTitle: string, reviewData: any): Observable<any> {
 		return from(
 			updateDoc(doc(this.firestore, "Shows", showTitle), {
 				reviews: arrayUnion({
@@ -79,18 +79,18 @@ export class ShowService {
 					rating: reviewData.rating
 				})
 			})
-		).pipe(map(() => null));
+		);
 	}
 
-	public deleteReview(showId: string, reviewToDelete: Review): Observable<null> {
+	public deleteReview(showTitle: string, reviewToDelete: Review): Observable<any> {
 		return from(
-			updateDoc(doc(this.firestore, "Shows", showId), {
+			updateDoc(doc(this.firestore, "Shows", showTitle.replaceAll("_", " ")), {
 				reviews: arrayRemove({
 					comment: reviewToDelete.comment,
 					email: reviewToDelete.email,
 					rating: reviewToDelete.rating
 				})
 			})
-		).pipe(map(() => null));
+		);
 	}
 }

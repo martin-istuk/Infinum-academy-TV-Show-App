@@ -46,7 +46,8 @@ export class ShowDetailsComponent implements OnDestroy {
 				})
 			)
 			.subscribe({
-				next: () => window.location.reload()
+				next: () => window.location.reload(),
+				error: (error) => window.alert(error)
 			});
 	}
 
@@ -58,7 +59,8 @@ export class ShowDetailsComponent implements OnDestroy {
 				})
 			)
 			.subscribe({
-				next: () => window.location.reload()
+				next: () => window.location.reload(),
+				error: (error) => window.alert(error)
 			});
 	}
 
