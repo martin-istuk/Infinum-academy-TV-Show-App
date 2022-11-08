@@ -1,12 +1,19 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, UserCredential } from "@angular/fire/auth";
+import {
+	Auth,
+	createUserWithEmailAndPassword,
+	getAuth,
+	signInWithEmailAndPassword,
+	UserCredential,
+	updateProfile
+} from "@angular/fire/auth";
 import { doc, DocumentData, DocumentSnapshot, Firestore, getDoc } from "@angular/fire/firestore";
-import { BehaviorSubject, from, map, tap, Observable, switchMap } from "rxjs";
+import { deleteObject, getStorage, ref, uploadBytes, getDownloadURL } from "@angular/fire/storage";
+import { BehaviorSubject, from, of, Observable, switchMap, EMPTY } from "rxjs";
 
 import { User } from "src/app/interfaces/user.model";
-import { IUser } from "src/app/interfaces/user.interface";
 
 @Injectable({ providedIn: "root" })
 export class AuthService {
@@ -24,24 +31,25 @@ export class AuthService {
 	}
 
 	private authSuccessful(userCredential: UserCredential): Observable<User> {
-		const uid: string = userCredential.user.uid;
+		const uid: string = userCredential.user.uid as string;
 		const email: string = userCredential.user.email as string;
 		let photoURL: string = "";
 
-		const user: User = new User({ uid: uid, email: email, photoURL: photoURL });
-		this._user$.next(user);
-
-		return from(getDoc(doc(this.fbFirestore, "Users", uid))).pipe(
-			map((docSnapshot: DocumentSnapshot<DocumentData>) => {
-				const userData: DocumentData | undefined = docSnapshot.data();
-				if (userData) {
-					photoURL = userData["photoURL"];
-				}
+		const fbUser = getAuth().currentUser;
+		const storage = getStorage();
+		if (fbUser !== null) {
+			const pathReference = ref(storage, "UsersProfilePhotos/" + fbUser.uid);
+			getDownloadURL(pathReference).then( (url) => {
+				photoURL = url;
 				const user: User = new User({ uid: uid, email: email, photoURL: photoURL });
 				this._user$.next(user);
-				return user;
-			})
-		);
+				return of(user);
+			} );
+		}
+
+		const user: User = new User({ uid: uid, email: email, photoURL: photoURL });
+		this._user$.next(user);
+		return of(user);
 	}
 
 	public registerUser(email: string, password: string): Observable<User> {
@@ -67,5 +75,17 @@ export class AuthService {
 		this.fbAuth.signOut();
 		this._user$.next(null);
 		this.router.navigate(["auth", "login"]);
+	}
+
+	public uploadPhoto(file: File): Observable<any> {
+		const fbUser = getAuth().currentUser;
+		const storage = getStorage();
+		if (fbUser !== null) {
+			uploadBytes(ref(storage, "UsersProfilePhotos/" + fbUser.uid), file);
+			const photoURL: string = "gs://tv-show-app-a17a3.appspot.com/UsersProfilePhotos/" + fbUser.uid;
+			updateProfile(fbUser, { photoURL: photoURL });
+		}
+		// return
+		return EMPTY;
 	}
 }

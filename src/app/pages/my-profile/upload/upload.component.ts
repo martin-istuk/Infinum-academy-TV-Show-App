@@ -1,8 +1,7 @@
 import { Component } from "@angular/core";
 
 import { MatDialogRef } from "@angular/material/dialog";
-
-import { FileUploadService } from "src/app/services/file-upload/file-upload.service";
+import { AuthService } from "src/app/services/auth/auth.service";
 
 @Component({
 	selector: "app-upload",
@@ -10,7 +9,7 @@ import { FileUploadService } from "src/app/services/file-upload/file-upload.serv
 	styleUrls: ["./upload.component.scss"]
 })
 export class UploadComponent {
-	constructor(public dialogRef: MatDialogRef<UploadComponent>, private readonly fileUploadService: FileUploadService) {}
+	constructor(public dialogRef: MatDialogRef<UploadComponent>, private authService: AuthService) {}
 
 	public file: File | undefined;
 
@@ -58,8 +57,9 @@ export class UploadComponent {
 	}
 
 	public onUploadImg(): void {
-		this.fileUploadService.upload(this.file).subscribe({
-			complete: () => window.location.reload()
+		this.authService.uploadPhoto(this.file as File).subscribe({
+			// complete: () => window.location.reload()
+			complete: () => console.log("jj")
 		});
 		this.onCancel();
 	}
