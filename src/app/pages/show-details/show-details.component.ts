@@ -7,7 +7,7 @@ import { ShowService } from "src/app/services/show/show.service";
 import { Show } from "src/app/interfaces/show.model";
 import { Review } from "src/app/interfaces/review.model";
 import { AuthService } from "src/app/services/auth/auth.service";
-import { User } from "src/app/interfaces/user.model";
+import { AppUser } from "src/app/interfaces/appUser.model";
 
 @Component({
 	selector: "app-show-details",

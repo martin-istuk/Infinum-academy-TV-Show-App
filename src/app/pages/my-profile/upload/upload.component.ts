@@ -58,10 +58,10 @@ export class UploadComponent {
 
 	public onUploadImg(): void {
 		this.authService.uploadPhoto(this.file as File).subscribe({
-			// complete: () => window.location.reload()
-			complete: () => console.log("jj")
+			complete: () => {
+				this.onCancel()
+			}
 		});
-		this.onCancel();
 	}
 
 	onCancel(): void {

@@ -3,12 +3,9 @@
 <div *ngIf="user$ | async as user">
 	<p class="email">{{ user.email }}</p>
 	<div
-		*ngIf="user.photoURL; else placeholderPic"
+		*ngIf="user.photoURL"
 		class="profilePic"
-		[ngStyle]="{ 'background-image': 'url(' + user.photoURL + ')' }"
+		[ngStyle]="{ 'background-image': 'url(' + user.photoURL + '.jpg)' }"
 	></div>
-	<ng-template #placeholderPic>
-		<div class="profilePic placeholderPic"></div>
-	</ng-template>
 	<button mat-raised-button color="primary" id="upload-btn" (click)="openDialog()">UPLOAD IMAGE</button>
 </div>

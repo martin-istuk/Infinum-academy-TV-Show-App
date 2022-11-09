@@ -1,11 +1,11 @@
-import { IUser } from "./user.interface";
+import { IAppUser } from "./appUser.interface";
 
-export class User {
+export class AppUser {
 	public uid: string;
 	public email: string;
 	public photoURL: string;
 
-	constructor(user: IUser) {
+	constructor(user: IAppUser) {
 		this.uid = user.uid;
 		this.email = user.email;
 		this.photoURL = user.photoURL;

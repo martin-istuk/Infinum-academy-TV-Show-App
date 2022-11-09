@@ -2,8 +2,8 @@ import { Component } from "@angular/core";
 
 import { MatDialog } from "@angular/material/dialog";
 import { Observable } from "rxjs";
-import { User } from "src/app/interfaces/user.model";
 
+import { AppUser } from "src/app/interfaces/appUser.model";
 import { AuthService } from "src/app/services/auth/auth.service";
 import { UploadComponent } from "./upload/upload.component";
 
@@ -13,7 +13,7 @@ import { UploadComponent } from "./upload/upload.component";
 	styleUrls: ["./my-profile.component.scss"]
 })
 export class MyProfileComponent {
-	public user$: Observable<User | null>;
+	public user$: Observable<AppUser | null>;
 
 	constructor(private authService: AuthService, public dialog: MatDialog) {
 		this.user$ = this.authService.user$;
