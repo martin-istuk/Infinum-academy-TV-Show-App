@@ -14,6 +14,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "@angular/fire/stor
 import { BehaviorSubject, from, of, Observable, switchMap, EMPTY, tap, map } from "rxjs";
 
 import { AppUser } from "src/app/interfaces/appUser.model";
+import { user } from "rxfire/auth";
 
 @Injectable({ providedIn: "root" })
 export class AuthService {
@@ -23,24 +24,27 @@ export class AuthService {
 	constructor(private afAuth: Auth, private router: Router) {}
 
 	public init(): void {
-		console.log(this.afAuth.currentUser)
-		const check: string | null = localStorage.getItem("userCredential");
-		if (check) {
-			const userCredential: UserCredential = JSON.parse(check);
-			onAuthStateChanged(this.afAuth, (user) => {
-				if (user) {
-					this.authSuccessful(userCredential);
-				}
-			} )
-		}
+		onAuthStateChanged(this.afAuth, (user) => {
+			if (user) {
+				const newUser = new AppUser({
+					uid: user.uid,
+					email: user.email as string,
+					photoURL: user.photoURL as string
+				});
+				this._user$.next(newUser);
+				this.router.navigate([""])
+			}
+		} )
 	}
 
 	private authSuccessful(userCredential: UserCredential): Observable<AppUser> {
-		console.log(this.afAuth.currentUser)
+		const afStorage = getStorage();
+		const pathRef = ref(afStorage, "UsersProfilePhotos/" + userCredential.user.uid);
+		// getDownloadURL() .....................
 		const user = new AppUser({
 			uid: userCredential.user.uid,
 			email: userCredential.user.email as string,
-			photoURL: this.afAuth.currentUser?.photoURL || ""
+			photoURL: this.afAuth.currentUser?.photoURL as string
 		});
 		this._user$.next(user);
 		return of(user);
@@ -73,9 +77,9 @@ export class AuthService {
 
 	public uploadPhoto(file: File): Observable<any> {
 		const fbUser = getAuth().currentUser;
-		const storage = getStorage();
+		const afStorage = getStorage();
 		if (fbUser !== null) {
-			uploadBytes(ref(storage, "UsersProfilePhotos/" + fbUser.uid), file);
+			uploadBytes(ref(afStorage, "UsersProfilePhotos/" + fbUser.uid), file);
 			const photoURL: string =
 				"gs://tv-show-app-a17a3.appspot.com/UsersProfilePhotos/" + fbUser.uid;
 			updateProfile(fbUser, { photoURL: photoURL });
