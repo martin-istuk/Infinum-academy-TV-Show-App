@@ -36,12 +36,16 @@ export class AuthService {
 		}
 		onAuthStateChanged(this.afAuth, (user) => {
 			if (user) {
-				const newUser = new AppUser({
-					uid: user.uid,
-					email: user.email as string,
-					photoURL: user.photoURL as string
-				});
-				this._user$.next(newUser);
+				this.getUserPhotoUrl(user.uid).subscribe({
+					next: (url: string) => {
+						const newUser = new AppUser({
+							uid: user.uid,
+							email: user.email as string,
+							photoURL: url
+						});
+						this._user$.next(newUser);
+					}
+				})
 			}
 		} )
 	}
