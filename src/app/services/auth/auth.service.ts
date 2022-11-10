@@ -24,6 +24,16 @@ export class AuthService {
 	constructor(private afAuth: Auth, private router: Router) {}
 
 	public init(): void {
+		const check = localStorage.getItem("userCredential");
+		if (check) {
+			const userCredential: UserCredential = JSON.parse(check);
+			const newUser = new AppUser({
+				uid: userCredential.user.uid,
+				email: userCredential.user.email as string,
+				photoURL: userCredential.user.photoURL as string
+			});
+			this._user$.next(newUser);
+		}
 		onAuthStateChanged(this.afAuth, (user) => {
 			if (user) {
 				const newUser = new AppUser({
@@ -32,29 +42,31 @@ export class AuthService {
 					photoURL: user.photoURL as string
 				});
 				this._user$.next(newUser);
-				this.router.navigate([""])
 			}
 		} )
 	}
 
-	private authSuccessful(userCredential: UserCredential): Observable<AppUser> {
+	public getUserPhotoUrl(uid: string): Observable<string> {
 		const afStorage = getStorage();
-		const pathRef = ref(afStorage, "UsersProfilePhotos/" + userCredential.user.uid);
-		// getDownloadURL() .....................
-		const user = new AppUser({
+		const pathRef = ref(afStorage, "UsersProfilePhotos/" + uid);
+		return from(getDownloadURL(pathRef))
+	}
+
+	public createAppUser(userCredential: UserCredential): AppUser {
+		localStorage.setItem("userCredential", JSON.stringify(userCredential));
+		const appUser = new AppUser({
 			uid: userCredential.user.uid,
 			email: userCredential.user.email as string,
-			photoURL: this.afAuth.currentUser?.photoURL as string
+			photoURL: userCredential.user.photoURL as string
 		});
-		this._user$.next(user);
-		return of(user);
+		this._user$.next(appUser);
+		return appUser;
 	}
 
 	public registerUser(email: string, password: string): Observable<AppUser> {
 		return from(createUserWithEmailAndPassword(this.afAuth, email, password)).pipe(
 			switchMap((userCredential: UserCredential) => {
-				localStorage.setItem("userCredential", JSON.stringify(userCredential));
-				return this.authSuccessful(userCredential);
+				return of(this.createAppUser(userCredential));
 			})
 		);
 	}
@@ -62,8 +74,7 @@ export class AuthService {
 	public loginUser(email: string, password: string): Observable<AppUser> {
 		return from(signInWithEmailAndPassword(this.afAuth, email, password)).pipe(
 			switchMap((userCredential: UserCredential) => {
-				localStorage.setItem("userCredential", JSON.stringify(userCredential));
-				return this.authSuccessful(userCredential);
+				return of(this.createAppUser(userCredential));
 			})
 		);
 	}
